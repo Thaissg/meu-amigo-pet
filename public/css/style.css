@@ -152,7 +152,8 @@ fieldset {
   margin: 0.5rem;
 }
 
-input {
+input,
+select {
   margin: 0.4rem;
 }
 
