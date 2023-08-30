@@ -3,7 +3,7 @@
 
 <head>
   <title>Meu amigo pet</title>
-  <link rel="stylesheet" href="../../public/css/style.css" />
+  <link rel="stylesheet" href="/meu-amigo-pet/public/css/style.css" />
   <?php
   include('head.php');
   ?>
