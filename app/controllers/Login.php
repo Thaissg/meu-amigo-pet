@@ -27,7 +27,7 @@ class LoginController extends Controller
      * Função que coloca o usuário na home page do site
      */
     public function home(): void
-    {   
+    {
         $this->view('home');
     }
 
@@ -72,16 +72,22 @@ class LoginController extends Controller
     public function cadastrar(): void
     {
         try {
-            $endereco = $_POST['rua'] . ', ' .  $_POST['num'] . ', ' . $_POST['compl'] . ', ' . $_POST['bairro'] . ', ' . $_POST['cidade'] . '/' . $_POST['uf'];
+            $endereco = $_POST['tipoLogradouro'] . ' ' . $_POST['nomeLogradouro'] . ', ' . $_POST['num'] . ', ' . $_POST['bairro'] . ', ' . $_POST['cidade'] . '/' . $_POST['uf'];
             $user = new Usuario(
-                $_POST['email'], $_POST['senha'], $_POST['nome'],
-                $_POST['cpf-cnpj'], $endereco , $_POST['tel'], $_POST['tipo_cadastro']
+                $_POST['email'],
+                $_POST['senha'],
+                $_POST['nome'],
+                $_POST['cpf-cnpj'],
+                $endereco,
+                $_POST['compl'],
+                $_POST['tel'],
+                $_POST['tipo_cadastro']
             );
             $user->salvar();
-            header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Usuário cadastrado com sucesso!');
+            header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . 'cidade=' . $_POST['cidade'] . '&mensagem=Usuário cadastrado com sucesso!');
         } catch (\Exception $e) {
             //header('Location: ' . BASEPATH . 'user/register?email=' . $_POST['email'] . '&mensagem=Email já cadastrado!');
-            echo($e->getMessage());
+            echo ($e->getMessage());
             //var_dump($th);
         }
     }

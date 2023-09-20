@@ -47,13 +47,14 @@ class Usuario
      *  Contrutor da classe, responsável por inicializar os dados.
      *  A senha é codificada usando sha256.
      */
-    function __construct(string $email, string $senha, string $nome, string $documento, string $endereco, string $telefone, string $tipo)
+    function __construct(string $email, string $senha, string $nome, string $documento, string $endereco, string $complemento, string $telefone, string $tipo)
     {
         $this->email = $email;
         $this->senha = hash('sha256', $senha);
         $this->nome = $nome;
         $this->documento = $documento;
         $this->endereco = $endereco;
+        $this->complemento = $complemento;
         $this->telefone = $telefone;
         $this->tipo = $tipo;
     }
@@ -91,30 +92,32 @@ class Usuario
     public function salvar(): void
     {
         $con = Database::getConnection();
-        if ($this->tipo == 'ong_protetor'){
+        if ($this->tipo == 'ong_protetor') {
             $stm = $con->prepare
-            ('INSERT INTO ong_protetora (nome, cpf_cnpj, endereco, telefone, email, senha) 
-            VALUES (:nome, :documento, :endereco, :telefone, :email, :senha)');
+            ('INSERT INTO ong_protetora (nome, cpf_cnpj, endereco, complemento,  telefone, email, senha) 
+            VALUES (:nome, :documento, :endereco, :complemento, :telefone, :email, :senha)');
             $stm->bindValue(':nome', $this->nome);
             $stm->bindValue(':documento', $this->documento);
             $stm->bindValue(':endereco', $this->endereco);
+            $stm->bindValue(':complemento', $this->complemento);
             $stm->bindValue(':telefone', $this->telefone);
             $stm->bindValue(':email', $this->email);
             $stm->bindValue(':senha', $this->senha);
-            
-        } else if ($this->tipo == 'adotante'){
+
+        } else if ($this->tipo == 'adotante') {
             $stm = $con->prepare
-            ('INSERT INTO populacao (nome, cpf, endereco, telefone, email, senha) 
-            VALUES (:nome, :documento, :endereco, :telefone, :email, :senha)');
+            ('INSERT INTO populacao (nome, cpf, endereco, complemento, telefone, email, senha) 
+            VALUES (:nome, :documento, :endereco, :complemento, :telefone, :email, :senha)');
             $stm->bindValue(':nome', $this->nome);
             $stm->bindValue(':documento', $this->documento);
             $stm->bindValue(':endereco', $this->endereco);
+            $stm->bindValue(':complemento', $this->complemento);
             $stm->bindValue(':telefone', $this->telefone);
             $stm->bindValue(':email', $this->email);
             $stm->bindValue(':senha', $this->senha);
         }
         $stm->execute();
-        
+
     }
 
 
@@ -122,28 +125,28 @@ class Usuario
      *  Função que busca por um usuário a partir do email fornecido.
      *  Se não existir, emite um erro.
      */
-    static public function buscarUsuario($email,$tipo): ?Usuario
+    static public function buscarUsuario($email, $tipo): ?Usuario
     {
         $con = Database::getConnection();
-        if($tipo=='adotante'){
+        if ($tipo == 'adotante') {
             $stm = $con->prepare('SELECT * FROM populacao WHERE email = :email');
             $stm->bindParam(':email', $email);
         } else {
             $stm = $con->prepare('SELECT * FROM ong_protetora WHERE email = :email');
             $stm->bindParam(':email', $email);
         }
-        
+
 
         $stm->execute();
         $resultado = $stm->fetch();
 
         if ($resultado) {
-            if($tipo=='adotante'){
-                $documento=$resultado['cpf'];
+            if ($tipo == 'adotante') {
+                $documento = $resultado['cpf'];
             } else {
-                $documento=$resultado['cpf-cnpj'];
+                $documento = $resultado['cpf-cnpj'];
             }
-            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'],$resultado['telefone'],$resultado['tipo']);
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
             $usuario->senha = $resultado['senha'];
             return $usuario;
         } else {
@@ -155,7 +158,7 @@ class Usuario
      *  Função que busca por um usuário a partir do id fornecido.
      *  Se não existir, emite um erro.
      */
-    static public function buscarUsuarioPorId($id,$tipo): ?Usuario
+    static public function buscarUsuarioPorId($id, $tipo): ?Usuario
     {
         $con = Database::getConnection();
         $stm = $con->prepare('SELECT id, email, nome, senha FROM Usuarios WHERE id = :id');
@@ -165,12 +168,12 @@ class Usuario
         $resultado = $stm->fetch();
 
         if ($resultado) {
-            if($tipo=='adotante'){
-                $documento=$resultado['cpf'];
+            if ($tipo == 'adotante') {
+                $documento = $resultado['cpf'];
             } else {
-                $documento=$resultado['cpf-cnpj'];
+                $documento = $resultado['cpf-cnpj'];
             }
-            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'],$resultado['telefone'],$resultado['tipo']);
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
             $usuario->id = $resultado['id'];
             $usuario->senha = $resultado['senha'];
             return $usuario;
@@ -185,34 +188,34 @@ class Usuario
     static public function buscarTodosUsuarios($tipo): array
     {
         $con = Database::getConnection();
-        if($tipo=='adotante'){
+        if ($tipo == 'adotante') {
             $stm = $con->prepare('SELECT * FROM populacao');
         } else {
             $stm = $con->prepare('SELECT * FROM ong_protetora');
         }
-        
+
         $stm->execute();
-        
+
         $resultado = $stm->fetchAll();
-        if (!$resultado){
+        if (!$resultado) {
             return [];
         }
 
         $usuarios = array();
-        
+
         foreach ($resultado as $user) {
-            if($tipo=='adotante'){
-                $documento=$resultado['cpf'];
+            if ($tipo == 'adotante') {
+                $documento = $resultado['cpf'];
             } else {
-                $documento=$resultado['cpf-cnpj'];
+                $documento = $resultado['cpf-cnpj'];
             }
-            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'],$resultado['telefone'],$resultado['tipo']);
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
             $usuario->id = $user['id'];
             $usuario->senha = $user['senha'];
 
             array_push($usuarios, $usuario);
         }
-        
+
         return $usuarios;
     }
 }

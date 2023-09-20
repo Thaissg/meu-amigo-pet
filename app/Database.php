@@ -27,7 +27,8 @@ class Database
             ong_protetora_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             nome VARCHAR(60) NOT NULL,
             cpf_cnpj VARCHAR(14) NOT NULL,
-            endereco VARCHAR(255) NOT NULL, 
+            endereco VARCHAR(255) NOT NULL,
+            complemento  VARCHAR(255),
             telefone INTEGER NOT NULL, 
             email VARCHAR(60) NOT NULL,
             senha TEXT NOT NULL
@@ -39,6 +40,7 @@ class Database
             nome VARCHAR(60) NOT NULL,
             cpf VARCHAR(11) NOT NULL,
             endereco VARCHAR(255) NOT NULL,
+            complemento  VARCHAR(255),
             telefone INTEGER NOT NULL, 
             email VARCHAR(60) NOT NULL,
             senha TEXT NOT NULL
