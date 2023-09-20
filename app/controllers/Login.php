@@ -27,7 +27,7 @@ class LoginController extends Controller
      * Função que coloca o usuário na home page do site
      */
     public function home(): void
-    {
+    {   
         $this->view('home');
     }
 
@@ -62,7 +62,7 @@ class LoginController extends Controller
      */
     public function cadastroUsuario(): void
     {
-        $this->view('user/register_page');
+        $this->view('cadastro');
     }
 
     /**
@@ -72,15 +72,17 @@ class LoginController extends Controller
     public function cadastrar(): void
     {
         try {
+            $endereco = $_POST['rua'] . ', ' .  $_POST['num'] . ', ' . $_POST['compl'] . ', ' . $_POST['bairro'] . ', ' . $_POST['cidade'] . '/' . $_POST['uf'];
             $user = new Usuario(
-                $_POST['email'], $_POST['password'], $_POST['name'],
-                $_POST['documento'], $_POST['endereco'], $_POST['telefone'], $_POST['tipo']
+                $_POST['email'], $_POST['senha'], $_POST['nome'],
+                $_POST['cpf-cnpj'], $endereco , $_POST['tel'], $_POST['tipo_cadastro']
             );
             $user->salvar();
             header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Usuário cadastrado com sucesso!');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             //header('Location: ' . BASEPATH . 'user/register?email=' . $_POST['email'] . '&mensagem=Email já cadastrado!');
-            var_dump($th);
+            echo($e->getMessage());
+            //var_dump($th);
         }
     }
 
@@ -121,5 +123,10 @@ class LoginController extends Controller
         }
         unset($_SESSION['user']);
         header('Location: ' . BASEPATH . 'login?mensagem=Usuário deslogado com sucesso!');
+    }
+
+    public function visualizar($view): void
+    {
+        $this->view($view);
     }
 }

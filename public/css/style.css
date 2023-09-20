@@ -173,3 +173,24 @@ button {
   display: flex;
   align-self: flex-end;
 }
+.alert{
+  font-size: 10px;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 0.5rem;
+}
+.invalido{
+  color: red;
+}
+
+.valido{
+  color: green;
+}
+
+.mostrar-senha, .checkMostrarSenha{
+  height: 0.7rem;
+  font-size: 0.7rem;
+  vertical-align: top;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}

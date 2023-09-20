@@ -24,7 +24,7 @@ class Database
     {
         $con = self::getConnection();
         $con->exec('CREATE TABLE IF NOT EXISTS ong_protetora (
-            ong_protetora_id SERIAL NOT NULL PRIMARY KEY,
+            ong_protetora_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             nome VARCHAR(60) NOT NULL,
             cpf_cnpj VARCHAR(14) NOT NULL,
             endereco VARCHAR(255) NOT NULL, 
@@ -35,7 +35,7 @@ class Database
         ');
 
         $con->exec('CREATE TABLE IF NOT EXISTS populacao (
-            populacao_id SERIAL NOT NULL PRIMARY KEY,
+            populacao_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             nome VARCHAR(60) NOT NULL,
             cpf VARCHAR(11) NOT NULL,
             endereco VARCHAR(255) NOT NULL,

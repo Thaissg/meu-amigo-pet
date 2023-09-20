@@ -93,7 +93,7 @@ class Usuario
         $con = Database::getConnection();
         if ($this->tipo == 'ong_protetor'){
             $stm = $con->prepare
-            ('INSERT INTO ong_protetora (nome, cpf-cpnj, endereco, telefone, email, senha) 
+            ('INSERT INTO ong_protetora (nome, cpf_cnpj, endereco, telefone, email, senha) 
             VALUES (:nome, :documento, :endereco, :telefone, :email, :senha)');
             $stm->bindValue(':nome', $this->nome);
             $stm->bindValue(':documento', $this->documento);
@@ -195,7 +195,7 @@ class Usuario
         
         $resultado = $stm->fetchAll();
         if (!$resultado){
-            return NULL;
+            return [];
         }
 
         $usuarios = array();

@@ -3,7 +3,7 @@
 
 <head>
   <title>Meu amigo pet</title>
-  <link rel="stylesheet" href="/meu-amigo-pet/public/css/style.css" />
+  <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style.css" />
   <?php
   include('head.php');
   ?>
@@ -22,7 +22,7 @@
 
       <hr>
 
-      <form action="#" class="login__form" method="POST">
+      <form class="cadastro__form" method="POST">
         <fieldset class="tipo_cadastro">
           <legend>Tipo de Cadastro</legend>
           <div class="form__field">
@@ -44,12 +44,19 @@
 
           <div class="form__field">
             <label for="cpf-cnpj">CPF/CNPJ</label>
-            <input type="text" name="cpf-cnpj" id="cpf-cnpj">
+            <input type="text" name="cpf-cnpj" id="cpf-cnpj" onchange="testaDocumento(this.value)">
+            <div id="validaDoc" class="alert invalido"></div>
           </div>
 
           <div class="form__field">
             <label for="tel">Telefone</label>
-            <input type="text" name="tel" id="tel">
+            <input type="text" name="tel" id="tel" onkeyup="telMask(event)" maxlength="15">
+          </div>
+
+          <div class="form__field">
+            <label for="email">E-mail</label>
+            <input type="text" name="email" id="email" onchange="validacaoEmail(this.value)">
+            <div id="validaEmail" class="alert invalido"></div>
           </div>
           <fieldset class="endereco">
             <legend>Endereço</legend>
@@ -58,7 +65,7 @@
               <input type="text" name="rua" id="rua">
             </div>
             <div class="form__field">
-              <label for="nukm">Número</label>
+              <label for="num">Número</label>
               <input type="text" name="num" id="num">
             </div>
             <div class="form__field">
@@ -112,26 +119,38 @@
               <input type="text" name="cep" id="cep">
             </div>
           </fieldset>
-          <div class="form__field">
-            <label for="email">E-mail</label>
-            <input type="text" name="email" id="email">
-          </div>
 
           <div class="form__field">
             <label for="senha">Senha</label>
-            <input type="password" name="senha" id="senha">
+            <input type="password" name="senha" id="senha" onchange="validaSenha(this.value)">
+          </div>
+          <div class="form__field">
+            <input class="checkMostrarSenha" type="checkbox" name="mostrar-senha" id="mostrar-senha"
+              onclick="mostrarSenha('senha',this)">
+            <label class="mostrar-senha" for="mostrar-senha">Mostrar senha</label>
           </div>
           <div class="form__field">
             <label for="conf-senha">Confirmar senha</label>
-            <input type="password" name="conf-senha" id="conf-senha">
+            <input type="password" name="conf-senha" id="conf-senha" onkeyup="validaConfSenha(this.value)">
+            <div id="validaConf" class="alert invalido"></div>
+          </div>
+          <div class="form__field">
+            <input class="checkMostrarSenha" type="checkbox" name="mostrar-confSenha" id="mostrar-confSenha"
+              onclick="mostrarSenha('conf-senha',this)">
+            <label class="mostrar-senha" for="mostrar-confSenha">Mostrar senha</label>
+          </div>
+          <div>
+            <p id="validaTamanho" class="alert">Senha deve conter no mínimo 8 caracteres</p>
           </div>
         </fieldset>
         <button class="btn" type="submit">Cadastrar</button>
       </form>
     </section>
   </main>
-  <script src="/meu-amigo-pet/public/js/app.js"></script>
-  <script src="/meu-amigo-pet/public/js/cidades.js"></script>
+  <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="/meu-amigo-pet2.0/public/js/app.js"></script>
+  <script src="/meu-amigo-pet2.0/public/js/cidades.js"></script>
+  <script src="/meu-amigo-pet2.0/public/js/cadastro.js"></script>
 </body>
 
 </html>
