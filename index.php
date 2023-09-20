@@ -5,7 +5,7 @@
 error_reporting(E_ALL ^ E_WARNING);
 
 // Define o basepath globalmente
-define('BASEPATH', '/meu-amigo-pet2.0/');
+define('BASEPATH', '/meu-amigo-pet/');
 
 include_once __DIR__ . '/app/Database.php';
 include_once __DIR__ . '/libs/Route.php';

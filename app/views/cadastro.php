@@ -148,9 +148,9 @@
     </section>
   </main>
   <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="/meu-amigo-pet2.0/public/js/app.js"></script>
-  <script src="/meu-amigo-pet2.0/public/js/cidades.js"></script>
-  <script src="/meu-amigo-pet2.0/public/js/cadastro.js"></script>
+  <script src="<?= BASEPATH  ?>public/js/app.js"></script>
+  <script src="<?= BASEPATH  ?>public/js/cidades.js"></script>
+  <script src="<?= BASEPATH  ?>public/js/cadastro.js"></script>
 </body>
 
 </html>

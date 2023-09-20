@@ -30,6 +30,6 @@
         </div>
       </div>
     </main>
-    <script src="../../public/js/app.js"></script>
+    <script src="<?= BASEPATH  ?>public/js/app.js"></script>
   </body>
 </html>

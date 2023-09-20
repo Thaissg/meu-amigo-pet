@@ -4,7 +4,7 @@
 <head>
     <?php require('../head.php'); ?>
     <title>Meu amigo pet - Login</title>
-    <link rel="stylesheet" href="/meu-amigo-pet/public/css/style.css">
+    <link rel="stylesheet" href="<?= BASEPATH  ?>public/css/style.css">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
                     <label for="password">Senha</label>
                     <input type="password" name="password" id="password">
                 </div>
-                <p>Não possui conta? <a href="/meu-amigo-pet/app/views/cadastro.php">Cadastre-se</a> </p>
+                <p>Não possui conta? <a href="<?= BASEPATH  ?>app/views/cadastro.php">Cadastre-se</a> </p>
                 <button class="btn" type="submit">Entrar</button>
             </form>
         </section>

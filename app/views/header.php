@@ -1,6 +1,6 @@
 <nav>
     <div class="logo-container">
-        <img class="logo" src="/meu-amigo-pet2.0/public/images/Logo Meu amigo pet.png" alt="Logo Meu amigo pet">
+        <img class="logo" src="<?= BASEPATH  ?>public/images/Logo Meu amigo pet.png" alt="Logo Meu amigo pet">
     </div>
 
     <div class="menu-superior">
