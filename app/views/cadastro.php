@@ -26,17 +26,17 @@
         <fieldset class="tipo_cadastro">
           <table>
             <tbody>
-              <legend>Tipo de Cadastro</legend>
+              <legend>O que você deseja?</legend>
               <tr>
-                <td class="coluna1"><input class="required" type="radio" name="tipo_cadastro" title="tipo_cadastro"
+                <td class="coluna1"><input required type="radio" name="tipo_cadastro" title="tipo_cadastro"
                     value="adotante">
                 </td>
-                <td><label for="tipo_cadastro">Adotante</label></td>
+                <td><label for="tipo_cadastro">Quero adotar!</label></td>
               </tr>
               <tr>
-                <td class="coluna1"><input class="required" type="radio" name="tipo_cadastro" title="tipo_cadastro"
+                <td class="coluna1"><input required type="radio" name="tipo_cadastro" title="tipo_cadastro"
                     value="ong_protetor"></td>
-                <td><label for="tipo_cadastro">ONG/Protetor(a)</label></td>
+                <td><label for="tipo_cadastro">Quero doar!</label></td>
               </tr>
             </tbody>
           </table>
@@ -47,12 +47,13 @@
             <tbody>
               <tr>
                 <td class="coluna1"><label for="nome">Nome</label></td>
-                <td><input class="required" type="text" name="nome" id="nome"></td>
+                <td><input required type="text" name="nome" id="nome"></td>
               </tr>
               <tr>
                 <td class="coluna1"><label for="cpf-cnpj">CPF/CNPJ</label></td>
-                <td><input class="required" type="text" name="cpf-cnpj" id="cpf-cnpj"
-                    onchange="testaDocumento(this.value)"></td>
+                <td><input required type="text" name="cpf-cnpj" id="cpf-cnpj" onchange="testaDocumento(this.value)"
+                    onkeyup="docMaskEvent(event)">
+                </td>
               </tr>
               <tr>
                 <td class="coluna1"></td>
@@ -62,12 +63,21 @@
               </tr>
               <tr>
                 <td class="coluna1"><label for="tel">Telefone</label></td>
-                <td><input class="required" type="text" name="tel" id="tel" onkeyup="telMask(event)" maxlength="15">
+                <td><input required type="text" name="tel" id="tel" onkeyup="telMaskEvent(event)" maxlength="15"
+                    minlength="14" onchange="testaTelefone(this.value)">
                 </td>
               </tr>
               <tr>
+                <td class="coluna1"></td>
+                <td>
+                  <div id="validaTelefone" class="alert invalido"></div>
+                  <div id="validaTelefone2" class="alert invalido"></div>
+                </td>
+              </tr>
+              <tr>
+              <tr>
                 <td class="coluna1"><label for="email">E-mail</label></td>
-                <td><input class="required" type="text" name="email" id="email" onchange="validacaoEmail(this.value)">
+                <td><input required type="text" name="email" id="email" onchange="testaEmail(this.value)">
                 </td>
               </tr>
               <tr>
@@ -78,7 +88,7 @@
               </tr>
               <tr>
                 <td class="coluna1"><label for="tipoLogradouro">Tipo Logradouro</label></td>
-                <td><select class="required" name="tipoLogradouro" id="tipoLogradouro">
+                <td><select required name="tipoLogradouro" id="tipoLogradouro">
                     <option value="">Tipo</option>
                     <option value="Aeroporto">Aeroporto</option>
                     <option value="Alameda">Alameda</option>
@@ -128,23 +138,23 @@
               </tr>
               <tr>
                 <td class="coluna1"><label for="nomeLogradouro">Logradouro</label></td>
-                <td><input class="required" type="text" name="nomeLogradouro" id="nomeLogradouro"></td>
+                <td><input required type="text" name="nomeLogradouro" id="nomeLogradouro"></td>
               </tr>
               <tr>
                 <td class="coluna1"><label for="num">Número</label></td>
-                <td><input class="required" type="text" name="num" id="num"></td>
+                <td><input required type="number" name="num" id="num"></td>
               </tr>
               <tr>
                 <td class="coluna1"><label for="compl">Complemento</label></td>
-                <td><input class="required" type="text" name="compl" id="compl"></td>
+                <td><input type="text" name="compl" id="compl"></td>
               </tr>
               <tr>
                 <td class="coluna1"><label for="bairro">Bairro</label></td>
-                <td><input class="required" type="text" name="bairro" id="bairro"></td>
+                <td><input required type="text" name="bairro" id="bairro"></td>
               </tr>
               <tr>
                 <td class="coluna1"><label for="uf">UF:</label></td>
-                <td><select class="required" name="uf" id="uf" onchange="buscaCidades(this.value)">
+                <td><select required name="uf" id="uf" onchange="buscaCidades(this.value)">
                     <option value="">Selecione o Estado</option>
                     <option value="AC">Acre</option>
                     <option value="AL">Alagoas</option>
@@ -177,26 +187,28 @@
               </tr>
               <tr>
                 <td class="coluna1"><label for="cidade">Cidade:</label></td>
-                <td><select class="required" name="cidade" id="cidade"></select></td>
+                <td><select required name="cidade" id="cidade"></select></td>
               </tr>
               <tr>
                 <td class="coluna1"><label for="cep">CEP</label></td>
-                <td><input class="required" type="text" name="cep" id="cep"></td>
+                <td><input required type="text" name="cep" id="cep" onkeyup="cepMaskEvent(event)" maxlength="9"
+                    minlength="9"></td>
               </tr>
               <tr>
                 <td class="coluna1"><label for="senha">Senha</label></td>
-                <td><input class="required" type="password" name="senha" id="senha" onchange="validaSenha(this.value)">
+                <td><input required type="password" name="senha" id="senha" onchange="testaSenha(this.value)"
+                    minlength="8">
                 </td>
               </tr>
               <tr>
-                <td class="coluna1"><input class="checkMostrarSenha required" type="checkbox" name="mostrar-senha"
+                <td class="coluna1"><input class="checkMostrarSenha" type="checkbox" name="mostrar-senha"
                     id="mostrar-senha" onclick="mostrarSenha('senha',this)"></td>
                 <td><label class="mostrar-senha" for="mostrar-senha">Mostrar senha</label></td>
               </tr>
               <tr>
                 <td class="coluna1"><label for="conf-senha">Confirmar senha</label></td>
-                <td><input class="required" type="password" name="conf-senha" id="conf-senha"
-                    onkeyup="validaConfSenha(this.value)"></td>
+                <td><input required type="password" name="conf-senha" id="conf-senha"
+                    onkeyup="testaConfSenha(this.value)"></td>
               </tr>
               <tr>
                 <td class="coluna1"></td>
@@ -205,7 +217,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="coluna1"><input class="checkMostrarSenha required" type="checkbox" name="mostrar-confSenha"
+                <td class="coluna1"><input class="checkMostrarSenha" type="checkbox" name="mostrar-confSenha"
                     id="mostrar-confSenha" onclick="mostrarSenha('conf-senha',this)"></td>
                 <td><label class="mostrar-senha " for="mostrar-confSenha">Mostrar senha</label></td>
               </tr>
@@ -220,8 +232,16 @@
             </tbody>
           </table>
         </fieldset>
-        <button class="btn" type="submit">Cadastrar</button>
-
+        <button class="btn" type="submit" id="submit">Cadastrar</button>
+        <span role="alert" id="documentError" aria-hidden="true">
+          Por favor adicione um documento válido.
+        </span>
+        <span role="alert" id="phoneError" aria-hidden="true">
+          Por favor adicione um telefone válido.
+        </span>
+        <span role="alert" id="emailError" aria-hidden="true">
+          Por favor adicione um email válido.
+        </span>
       </form>
     </section>
   </main>

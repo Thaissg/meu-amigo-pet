@@ -218,3 +218,18 @@ tr{
   display: table-row;
   vertical-align: inherit;
 }
+
+
+/* alertas */
+#documentError, #phoneError, #emailError {
+  display: none;
+  font-size: 0.8em;
+}
+
+#documentError.visible, #phoneError.visible, #emailError.visible {
+  display: block;
+}
+
+input.invalid {
+  border-color: red;
+}
