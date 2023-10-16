@@ -40,59 +40,6 @@ h1 {
   margin: 0.5rem;
 }
 
-/*Header -----------------------------------------------*/
-nav {
-  display: flex;
-  align-items: center;
-  background-color: var(--header-bg-color);
-  height: max-content;
-  width: 100%;
-}
-
-.logo-container {
-  width: 20%;
-  height: 7rem;
-}
-
-.menu-superior {
-  height: max-content;
-  width: 80%;
-  margin: 2.5%;
-}
-
-.logo {
-  height: 90%;
-  margin: 5%;
-}
-
-.lista-links {
-  justify-content: space-between;
-  list-style: none;
-  display: flex;
-  font-size: 90%;
-  align-items: center;
-}
-
-.link-menu-superior {
-  color: var(--main-text-color);
-  text-decoration: none;
-  border: 2px solid var(--main-text-color);
-  border-radius: 5px;
-  padding: 3px;
-  width: 90%;
-  height: 2.5rem;
-  display: flex;
-  margin: 5px;
-  font-size: small;
-  align-items: center;
-  vertical-align: middle;
-}
-
-.link-menu-superior:hover {
-  color: var(--hover-color)
-}
-
-
 /* Body ------------------------------------------------*/
 .acoes {
   display: flex;
