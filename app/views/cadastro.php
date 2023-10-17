@@ -22,7 +22,7 @@
 
       <hr>
 
-      <form class="cadastro__form" method="POST">
+      <form class="cadastro__form" id="cadastro__form" method="POST">
         <fieldset class="tipo_cadastro">
           <table>
             <tbody>
@@ -232,7 +232,7 @@
             </tbody>
           </table>
         </fieldset>
-        <button class="btn" type="submit" id="submit">Cadastrar</button>
+        <button class="btn" type="submit" id="enviar">Cadastrar</button>
         <span role="alert" id="documentError" aria-hidden="true">
           Por favor adicione um documento válido.
         </span>

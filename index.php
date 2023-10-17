@@ -26,8 +26,8 @@ Route::add('/home', fn () => $controller->home(), ['get']);
 Route::add('/adote', fn () => $controller->visualizar('adote'), ['get']);
 Route::add('/ongs-e-protetoras', fn () => $controller->visualizar('ongs-e-protetoras'), ['get']);
 Route::add('/login', fn () => $controller->visualizar('login'), ['get']);
-
 Route::add('/cadastro', fn() => $controller->cadastroUsuario(), ['get']);
+
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
 
 // Rota auxiliar para redirecionar o usuário.

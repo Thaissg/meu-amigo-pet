@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style-header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 <nav>
-    <input type="checkbox" id="check">
+    <input type="checkbox" id="check" title="check">
     <label for="check" class="checkbtn">
         <i class="fas fa-bars"></i>
     </label>

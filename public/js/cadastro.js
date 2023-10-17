@@ -181,9 +181,9 @@ function testaTelefone(tel) {
 }
 
 
-const submit = document.getElementById("submit");
+const cadastroForm = document.getElementById("cadastro__form");
 
-submit.addEventListener("click", validate);
+cadastroForm.addEventListener("submit", validate);
 
 function validate(e) {
     e.preventDefault();
@@ -202,6 +202,7 @@ function validate(e) {
         documento.classList.add("invalid");
         documentError.setAttribute("aria-hidden", false);
         documentError.setAttribute("aria-invalid", true);
+        valid = false;
     } else {
         const documentError = document.getElementById("documentError");
         documentError.classList.remove("visible");
@@ -215,6 +216,7 @@ function validate(e) {
         telefone.classList.add("invalid");
         phoneError.setAttribute("aria-hidden", false);
         phoneError.setAttribute("aria-invalid", true);
+        valid = false;
     } else {
         const phoneError = document.getElementById("phoneError");
         phoneError.classList.remove("visible");
@@ -228,6 +230,7 @@ function validate(e) {
         email.classList.add("invalid");
         emailError.setAttribute("aria-hidden", false);
         emailError.setAttribute("aria-invalid", true);
+        valid = false;
     } else {
         const emailError = document.getElementById("emailError");
         emailError.classList.remove("visible");
@@ -235,6 +238,8 @@ function validate(e) {
         emailError.setAttribute("aria-hidden", true);
         emailError.setAttribute("aria-invalid", false);
     }
-
+    if (valid==true){
+        e.target.submit();
+    }
     return valid;
 }

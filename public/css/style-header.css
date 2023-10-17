@@ -1,3 +1,9 @@
+.logo {
+	height: 90%;
+	margin: 0.5%;
+	float: right;
+}
+
 * {
 	padding: 0;
 	margin: 0;
@@ -18,7 +24,7 @@ label.logo {
 	color: white;
 	font-size: 35px;
 	line-height: 80px;
-	padding: 0 100px;
+	padding: 0 10px;
 	font-weight: bold;
 }
 nav ul {
@@ -44,9 +50,9 @@ a:hover {
 .checkbtn {
 	font-size: 30px;
 	color: white;
-	float: right;
+	float: left;
 	line-height: 80px;
-	margin-left: 25px;
+	margin-left: 20px;
 	cursor: pointer;
 	display: none;
 }
@@ -55,6 +61,7 @@ a:hover {
 }
 @media (max-width: 952px){
 	label.logo{
+		float: right;
 		font-size: 30px;
 		padding-left: 10px;
 	}

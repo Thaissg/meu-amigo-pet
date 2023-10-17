@@ -1,7 +1,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-<link rel="manifest" href="<?= BASEPATH  ?>public/js/manifest.webmanifest" />
+<link rel="manifest" href="<?= BASEPATH  ?>public/js/manifest.json" />
 <!-- ios support -->
 <link rel="apple-touch-icon" href="<?= BASEPATH  ?>public/images/icons/icon-72x72.png" />
 <link rel="apple-touch-icon" href="<?= BASEPATH  ?>public/images/icons/icon-96x96.png" />
@@ -12,4 +11,3 @@
 <link rel="apple-touch-icon" href="<?= BASEPATH  ?>public/images/icons/icon-384x384.png" />
 <link rel="apple-touch-icon" href="<?= BASEPATH  ?>public/images/icons/icon-512x512.png" />
 <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
-<meta name="theme-color" content="#db4938" />
