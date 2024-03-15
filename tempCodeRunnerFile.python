@@ -1,4 +1,0 @@
-
-actors = open('actors.csv')
-
-print(actors)

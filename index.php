@@ -29,6 +29,7 @@ Route::add('/login', fn () => $controller->visualizar('login'), ['get']);
 Route::add('/cadastro', fn() => $controller->cadastroUsuario(), ['get']);
 
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
+Route::add('/login', fn() => $controller->login(), ['post']);
 
 // Rota auxiliar para redirecionar o usuário.
 Route::add('/', function () {

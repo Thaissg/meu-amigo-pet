@@ -23,22 +23,11 @@ class Database
     static public function createSchema(): void
     {
         $con = self::getConnection();
-        $con->exec('CREATE TABLE IF NOT EXISTS ong_protetora (
-            ong_protetora_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        $con->exec('CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            tipo VARCHAR(60) NOT NULL,
             nome VARCHAR(60) NOT NULL,
             cpf_cnpj VARCHAR(14) NOT NULL,
-            endereco VARCHAR(255) NOT NULL,
-            complemento  VARCHAR(255),
-            telefone INTEGER NOT NULL, 
-            email VARCHAR(60) NOT NULL,
-            senha TEXT NOT NULL
-        );
-        ');
-
-        $con->exec('CREATE TABLE IF NOT EXISTS populacao (
-            populacao_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            nome VARCHAR(60) NOT NULL,
-            cpf VARCHAR(11) NOT NULL,
             endereco VARCHAR(255) NOT NULL,
             complemento  VARCHAR(255),
             telefone INTEGER NOT NULL, 
