@@ -5,7 +5,7 @@
   <title>Meu amigo pet</title>
   <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style.css" />
   <?php
-  include('head.php');
+  include ('head.php');
   ?>
 
 </head>
@@ -14,13 +14,16 @@
   <main>
     <div class="header">
       <?php
-      include('header.php');
+      if (isset ($_SESSION['user'])) {
+        include ('headerLogado.php');
+      } else {
+        include ('header.php');
+      }
+      ;
       ?>
     </div>
     <section id="form">
       <h1 class="form__title">Cadastro</h1>
-
-      <hr>
 
       <form class="cadastro__form" id="cadastro__form" method="POST">
         <fieldset class="tipo_cadastro">

@@ -114,8 +114,9 @@ class Usuario
     static public function buscarUsuario($email, $tipo): ?Usuario
     {
         $con = Database::getConnection();
-        $stm = $con->prepare('SELECT * FROM usuarios WHERE email = :email');
+        $stm = $con->prepare('SELECT * FROM usuarios WHERE email = :email AND tipo = :tipo');
         $stm->bindParam(':email', $email);
+        $stm->bindParam(':tipo', $tipo);
 
 
         $stm->execute();

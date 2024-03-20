@@ -28,7 +28,11 @@ class LoginController extends Controller
      */
     public function home(): void
     {
-        $this->view('home');
+        if (isset($_SESSION['user'])){
+            $this->view('homeLogado');
+        } else {
+            $this->view('home');
+        }
     }
 
     /**
@@ -47,11 +51,12 @@ class LoginController extends Controller
 
     public function login(): void
     {
-        $usuario = Usuario::buscarUsuario($_POST['email'], $_POST['tipo']);
+        $usuario = Usuario::buscarUsuario($_POST['email'], $_POST['tipo_cadastro']);
 
         if ($usuario && $usuario->igual($_POST['email'], $_POST['password'])) {
             $_SESSION['user'] = $this->loggedUser = $usuario;
             $this->view('home');
+            header('Location: ' . BASEPATH . 'home?email=' . $_POST['email'] . '&mensagem=Usuário logado!');
         } else {
             header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Usuário e/ou senha incorreta!');
         }

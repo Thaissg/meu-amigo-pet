@@ -1,10 +1,30 @@
-const cadastroForm = document.getElementById("login__form");
+function logado() {
+    const login = document.getElementById("login");
+    if (session != null){
+        login.classList.add("invisible");
+        alert(session)
+    } else {
+        login.classList.remove("invisible");
+    }
+}
 
-cadastroForm.addEventListener("submit", validate);
+window.onload = function () {
+    //Array de parametros 'chave=valor'
+    var params = window.location.search.substring(1).split('&');
+    //Criar objeto que vai conter os parametros
+    var paramArray = {};
 
-function validate(e){
-    e.preventDefault();
-    const teste = document.getElementById("teste")
-    teste.contains = "login";
-    return false;
+    //Passar por todos os parametros
+    for(var i=0; i<params.length; i++) {
+        //Dividir os parametros chave e valor
+        var param = params[i].split('=');
+
+        //Adicionar ao objeto criado antes
+        paramArray[param[0]] = param[1];
+    }
+
+    if ('mensagem' in paramArray){
+        msg = decodeURIComponent(paramArray['mensagem'])
+        alert(msg)
+    }
 }

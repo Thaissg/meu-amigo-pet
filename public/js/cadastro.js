@@ -240,6 +240,7 @@ function validate(e) {
     }
     if (valid==true){
         e.target.submit();
+        alert("Usuario cadastrado com sucesso!")
     }
     return valid;
 }

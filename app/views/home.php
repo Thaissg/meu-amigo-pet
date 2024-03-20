@@ -11,7 +11,11 @@
     <main>
       <div class="header">
         <?php 
-            include('header.php');
+            if(isset($_SESSION['user'])){
+              include('headerLogado.php');
+            } else {
+              include('header.php');
+            };
         ?>
       </div>
       <div class="container">

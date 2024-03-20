@@ -1,4 +1,5 @@
 <?php
+use App\Models\Usuario;
 
 
 // Desabilita warnings
@@ -27,9 +28,12 @@ Route::add('/adote', fn () => $controller->visualizar('adote'), ['get']);
 Route::add('/ongs-e-protetoras', fn () => $controller->visualizar('ongs-e-protetoras'), ['get']);
 Route::add('/login', fn () => $controller->visualizar('login'), ['get']);
 Route::add('/cadastro', fn() => $controller->cadastroUsuario(), ['get']);
+Route::add('/cadastrarPet', fn () => $controller->visualizar('cadastroPet'), ['get']);
 
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
 Route::add('/login', fn() => $controller->login(), ['post']);
+Route::add('/logout', fn() => $controller->sair(), ['get']);
+
 
 // Rota auxiliar para redirecionar o usuário.
 Route::add('/', function () {
