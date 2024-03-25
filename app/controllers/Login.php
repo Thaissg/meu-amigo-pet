@@ -63,22 +63,6 @@ class LoginController extends Controller
     }
 
     /**
-     *  Função que renderiza a página (visão) de cadastro de usuário
-     */
-    public function cadastroUsuario(): void
-    {
-        $this->view('cadastro');
-    }
-
-    /**
-     *  Função que renderiza a página (visão) de cadastro de pet
-     */
-    public function cadastroPet(): void
-    {
-        $this->view('cadastroPet');
-    }
-
-    /**
      *  Função que trata de cadastrar um novo usuário na base de dados (atualmente na sessão).
      *  Verifica se o email já está cadastrado, se sim, informa o usuário.
      */

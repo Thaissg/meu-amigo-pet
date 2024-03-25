@@ -28,7 +28,7 @@ Route::add('/adote', fn () => $controller->visualizar('adote'), ['get']);
 Route::add('/ongs-e-protetoras', fn () => $controller->visualizar('ongs-e-protetoras'), ['get']);
 Route::add('/login', fn () => $controller->visualizar('login'), ['get']);
 Route::add('/cadastro', fn() => $controller->visualizar('cadastro'), ['get']);
-Route::add('/cadastroPet', fn () => $controller->cadastroPet(), ['get']);
+Route::add('/cadastroPet', fn () => $controller->visualizar('cadastroPet'), ['get']);
 
 Route::add('/cadastroPet', fn() => $controller->cadastrarPet(), ['post']);
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
