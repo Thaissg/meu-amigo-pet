@@ -25,7 +25,7 @@
         <section id="form">
             <h1 class="form__title">Cadastro</h1>
 
-            <form class="cadastroPet__form" id="cadastroPet__form" method="POST">
+            <form class="cadastroPet__form" id="cadastroPet__form" method="POST" enctype="multipart/form-data">
                 <fieldset class="Dados">
                     <table>
                         <tbody>
@@ -108,49 +108,49 @@
                                             <tbody>
                                                 <legend>Doenças em tratamento (opcional)</legend>
                                                 <tr>
-                                                    <td><input type="checkbox" name="doencas" title="doencas"
+                                                    <td><input type="checkbox" name="doencas[]" title="doencas[]"
                                                             value="Erlichiose (doença do carrapato)">
                                                     </td>
-                                                    <td><label for="doencas">Erlichiose (doença do carrapato)</label>
+                                                    <td><label for="doencas[]">Erlichiose (doença do carrapato)</label>
                                                     </td>
 
-                                                    <td><input type="checkbox" name="doencas" title="doencas"
+                                                    <td><input type="checkbox" name="doencas[]" title="doencas[]"
                                                             value="Insuficiência renal">
                                                     </td>
-                                                    <td><label for="doencas">Insuficiência renal</label></td>
+                                                    <td><label for="doencas[]">Insuficiência renal</label></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="checkbox" name="doencas" title="doencas"
+                                                    <td><input type="checkbox" name="doencas[]" title="doencas[]"
                                                             value="Cinomose">
                                                     </td>
-                                                    <td><label for="doencas">Cinomose</label></td>
+                                                    <td><label for="doencas[]">Cinomose</label></td>
 
-                                                    <td><input type="checkbox" name="doencas" title="doencas"
+                                                    <td><input type="checkbox" name="doencas[]" title="doencas[]"
                                                             value="Leishmaniose ">
                                                     </td>
-                                                    <td><label for="doencas">Leishmaniose</label></td>
+                                                    <td><label for="doencas[]">Leishmaniose</label></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="checkbox" name="doencas" title="doencas"
+                                                    <td><input type="checkbox" name="doencas[]" title="doencas[]"
                                                             value="FIV">
                                                     </td>
-                                                    <td><label for="doencas">FIV</label></td>
+                                                    <td><label for="doencas[]">FIV</label></td>
 
-                                                    <td><input type="checkbox" name="doencas" title="doencas"
+                                                    <td><input type="checkbox" name="doencas[]" title="doencas[]"
                                                             value="FELV">
                                                     </td>
-                                                    <td><label for="doencas">FELV</label></td>
+                                                    <td><label for="doencas[]">FELV</label></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="checkbox" name="doencas" title="doencas"
+                                                    <td><input type="checkbox" name="doencas[]" title="doencas[]"
                                                             value="Raiva">
                                                     </td>
-                                                    <td><label for="doencas">Raiva</label></td>
+                                                    <td><label for="doencas[]">Raiva</label></td>
 
-                                                    <td><input type="checkbox" name="doencas" title="doencas"
+                                                    <td><input type="checkbox" name="doencas[]" title="doencas[]"
                                                             value="Escabiose (Sarna)">
                                                     </td>
-                                                    <td><label for="doencas">Escabiose (Sarna)</label></td>
+                                                    <td><label for="doencas[]">Escabiose (Sarna)</label></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -170,7 +170,7 @@
                                     </tr>
                                     <tr>
                                         <td><label for="foto">Foto do pet (opcional)</label></td>
-                                        <td><input type="file" name="foto" accept="image/png, image/jpeg"></td>
+                                        <td><input type="file" name="foto" id="foto" accept="image/png, image/jpeg"></td>
                                     </tr>
                                 </tbody>
                             </table>

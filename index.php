@@ -1,7 +1,4 @@
 <?php
-use App\Models\Usuario;
-
-
 // Desabilita warnings
 error_reporting(E_ALL ^ E_WARNING);
 
@@ -13,6 +10,7 @@ include_once __DIR__ . '/libs/Route.php';
 include_once __DIR__ . '/app/controllers/Controller.php';
 include_once __DIR__ . '/app/controllers/Login.php';
 include_once __DIR__ . '/app/models/Usuario.php';
+include_once __DIR__ . '/app/models/Pet.php';
 
 use App\Database;
 use Steampixel\Route;

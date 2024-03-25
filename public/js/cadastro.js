@@ -209,50 +209,27 @@ function validate(e) {
     let valid = true;
 
     if (!testaDocumento(documento.value)) {
-        const documentError = document.getElementById("documentError");
-        documentError.classList.add("visible");
         documento.classList.add("invalid");
-        documentError.setAttribute("aria-hidden", false);
-        documentError.setAttribute("aria-invalid", true);
         valid = false;
     } else {
-        const documentError = document.getElementById("documentError");
-        documentError.classList.remove("visible");
         documento.classList.remove("invalid");
-        documentError.setAttribute("aria-hidden", true);
-        documentError.setAttribute("aria-invalid", false);
     }
     if (!testaTelefone(telefone.value)) {
-        const phoneError = document.getElementById("phoneError");
-        phoneError.classList.add("visible");
         telefone.classList.add("invalid");
-        phoneError.setAttribute("aria-hidden", false);
-        phoneError.setAttribute("aria-invalid", true);
         valid = false;
     } else {
-        const phoneError = document.getElementById("phoneError");
-        phoneError.classList.remove("visible");
         telefone.classList.remove("invalid");
-        phoneError.setAttribute("aria-hidden", true);
-        phoneError.setAttribute("aria-invalid", false);
     }
     if (!testaEmail(email.value)) {
-        const emailError = document.getElementById("emailError");
-        emailError.classList.add("visible");
         email.classList.add("invalid");
-        emailError.setAttribute("aria-hidden", false);
-        emailError.setAttribute("aria-invalid", true);
         valid = false;
     } else {
-        const emailError = document.getElementById("emailError");
-        emailError.classList.remove("visible");
         email.classList.remove("invalid");
-        emailError.setAttribute("aria-hidden", true);
-        emailError.setAttribute("aria-invalid", false);
     }
     if (valid == true) {
         e.target.submit();
-        alert("Usuario cadastrado com sucesso!")
+    } else {
+        alert("Preencha os campos corretamente!")
     }
     return valid;
 }

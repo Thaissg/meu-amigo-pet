@@ -7,6 +7,9 @@ function validate(e) {
     if (!testarData()){
         alert("Verifique os campos!")
     }
+    if (testarData() == true) {
+        e.target.submit();
+    }
     return testarData();
 }
 

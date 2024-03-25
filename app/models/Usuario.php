@@ -89,21 +89,26 @@ class Usuario
     /**
      *  Função que salva os dados do usuário no banco de dados
      */
-    public function salvar(): void
+    public function salvar(): string
     {
-        $con = Database::getConnection();
-        $stm = $con->prepare
-        ('INSERT INTO usuarios (nome, tipo, cpf_cnpj, endereco, complemento,  telefone, email, senha) 
-        VALUES (:nome, :tipo, :documento, :endereco, :complemento, :telefone, :email, :senha)');
-        $stm->bindValue(':nome', $this->nome);
-        $stm->bindValue(':tipo', $this->tipo);
-        $stm->bindValue(':documento', $this->documento);
-        $stm->bindValue(':endereco', $this->endereco);
-        $stm->bindValue(':complemento', $this->complemento);
-        $stm->bindValue(':telefone', $this->telefone);
-        $stm->bindValue(':email', $this->email);
-        $stm->bindValue(':senha', $this->senha);
-        $stm->execute();
+        if ($this->buscarUsuario($this->email, $this->tipo, $this->documento)==null){
+            $con = Database::getConnection();
+            $stm = $con->prepare
+            ('INSERT INTO usuarios (nome, tipo, cpf_cnpj, endereco, complemento,  telefone, email, senha) 
+            VALUES (:nome, :tipo, :documento, :endereco, :complemento, :telefone, :email, :senha)');
+            $stm->bindValue(':nome', $this->nome);
+            $stm->bindValue(':tipo', $this->tipo);
+            $stm->bindValue(':documento', $this->documento);
+            $stm->bindValue(':endereco', $this->endereco);
+            $stm->bindValue(':complemento', $this->complemento);
+            $stm->bindValue(':telefone', $this->telefone);
+            $stm->bindValue(':email', $this->email);
+            $stm->bindValue(':senha', $this->senha);
+            $stm->execute();
+            return 'OK';
+        } else{
+            return 'Email ou CPF/CNPJ já cadastrado para esse tipo de usuário!';
+        }
     }
 
 
@@ -111,7 +116,41 @@ class Usuario
      *  Função que busca por um usuário a partir do email fornecido.
      *  Se não existir, emite um erro.
      */
-    static public function buscarUsuario($email, $tipo): ?Usuario
+    static public function buscarUsuario($email, $tipo, $documento): ?Usuario
+    {
+        $con = Database::getConnection();
+        $stm = $con->prepare('SELECT * FROM usuarios WHERE email = :email AND tipo = :tipo');
+        $stm->bindParam(':email', $email);
+        $stm->bindParam(':tipo', $tipo);
+
+
+        $stm->execute();
+        $resultado = $stm->fetch();
+
+        if ($resultado) {
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
+            $usuario->senha = $resultado['senha'];
+            return $usuario;
+        } else {
+            $stm = $con->prepare('SELECT * FROM usuarios WHERE cpf_cnpj = :documento AND tipo = :tipo');
+            $stm->bindParam(':documento', $documento);
+            $stm->bindParam(':tipo', $tipo);
+
+
+            $stm->execute();
+            $resultado = $stm->fetch();
+            if ($resultado) {
+                $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
+                $usuario->senha = $resultado['senha'];
+                return $usuario;
+            } else{
+                return NULL;
+            }
+            
+        }
+    }
+
+    static public function buscarUsuarioPorEmail($email, $tipo): ?Usuario
     {
         $con = Database::getConnection();
         $stm = $con->prepare('SELECT * FROM usuarios WHERE email = :email AND tipo = :tipo');

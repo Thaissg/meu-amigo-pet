@@ -29,17 +29,17 @@
         <fieldset class="tipo_cadastro">
           <table>
             <tbody>
-              <legend>O que você deseja?</legend>
+              <legend>Tipo de cadastro</legend>
               <tr>
                 <td class="coluna1"><input required type="radio" name="tipo_cadastro" title="tipo_cadastro"
                     value="adotante">
                 </td>
-                <td><label for="tipo_cadastro">Quero adotar!</label></td>
+                <td><label for="tipo_cadastro">Adotante</label></td>
               </tr>
               <tr>
                 <td class="coluna1"><input required type="radio" name="tipo_cadastro" title="tipo_cadastro"
-                    value="ong_protetor"></td>
-                <td><label for="tipo_cadastro">Quero doar!</label></td>
+                    value="doador"></td>
+                <td><label for="tipo_cadastro">Doador</label></td>
               </tr>
             </tbody>
           </table>

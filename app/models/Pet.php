@@ -143,6 +143,32 @@ class Pet
         $stm->bindValue(':idResponsavel', $this->idResponsavel);
         $stm->execute();
 
+        $stm = $con->prepare
+        ('SELECT id FROM pets WHERE nome = :nome 
+        AND genero = :genero 
+        AND castrado = :castrado
+        AND forneceCastracao = :forneceCastracao
+        AND especie = :especie
+        AND dataNascimento = :dataNascimento
+        AND dataResgate = :dataResgate
+        AND custoMensal = :custoMensal
+        AND historia = :historia
+        AND foto = :foto
+        AND idResponsavel = :idResponsavel');
+        $stm->bindValue(':nome', $this->nome);
+        $stm->bindValue(':genero', $this->genero);
+        $stm->bindValue(':castrado', $this->castrado);
+        $stm->bindValue(':forneceCastracao', $this->forneceCastracao);
+        $stm->bindValue(':especie', $this->especie);
+        $stm->bindValue(':dataNascimento', $this->dataNascimento);
+        $stm->bindValue(':dataResgate', $this->dataResgate);
+        $stm->bindValue(':custoMensal', $this->custoMensal);
+        $stm->bindValue(':historia', $this->historia);
+        $stm->bindValue(':foto', $this->foto);
+        $stm->bindValue(':idResponsavel', $this->idResponsavel);
+        $stm->execute();
+        $this->id = $stm->fetch()[0];
+
         foreach ($this->doencas as $i => $value){
             $nomeDoenca = $this->doencas[$i];
             $stm = $con->prepare

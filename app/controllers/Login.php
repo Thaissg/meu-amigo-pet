@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Usuario;
 use App\Models\Pet;
+
 class LoginController extends Controller
 {
 
@@ -19,7 +20,7 @@ class LoginController extends Controller
     function __construct()
     {
         session_start();
-        if (isset($_SESSION['user']))
+        if (isset ($_SESSION['user']))
             $this->loggedUser = $_SESSION['user'];
     }
 
@@ -28,7 +29,7 @@ class LoginController extends Controller
      */
     public function home(): void
     {
-        if (isset($_SESSION['user'])){
+        if (isset ($_SESSION['user'])) {
             $this->view('homeLogado');
         } else {
             $this->view('home');
@@ -51,7 +52,7 @@ class LoginController extends Controller
 
     public function login(): void
     {
-        $usuario = Usuario::buscarUsuario($_POST['email'], $_POST['tipo_cadastro']);
+        $usuario = Usuario::buscarUsuarioPorEmail($_POST['email'], $_POST['tipo_cadastro']);
 
         if ($usuario && $usuario->igual($_POST['email'], $_POST['password'])) {
             $_SESSION['user'] = $this->loggedUser = $usuario;
@@ -80,37 +81,80 @@ class LoginController extends Controller
                 $_POST['tel'],
                 $_POST['tipo_cadastro']
             );
-            $user->salvar();
-            header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . 'cidade=' . $_POST['cidade'] . '&mensagem=Usuário cadastrado com sucesso!');
+            $salvar = $user->salvar();
+            if ($salvar == 'OK') {
+                header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Usuário cadastrado com sucesso!');
+            } else {
+                header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=' . $salvar);
+            }
+
         } catch (\Exception $e) {
-            header('Location: ' . BASEPATH . 'user/register?email=' . $_POST['email'] . '&mensagem=Email já cadastrado!');
+            header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Email ou cpf/cnpj já cadastrado!');
             echo ($e->getMessage());
         }
     }
 
     public function cadastrarPet(): void
     {
-        header('Location: ' . BASEPATH . 'home');
-        // try {
-        //     $pet = new Pet(
-        //         $_SESSION['User']['id'], 
-        //         $_POST['nome'], 
-        //         $_POST['genero'], 
-        //         $_POST['castrado'], 
-        //         $_POST['forneceCastracao'],
-        //         $_POST['especie'],  
-        //         $_POST['dataNascimento'],   
-        //         $_POST['dataResgate'], 
-        //         $_POST['doencas'],  
-        //         $_POST['cutoMensal'],
-        //         $_POST['historia'],
-        //         $_POST['foto']);
-        //     $pet->salvar();
-        //     header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!');
-        // } catch (\Exception $e) {
-        //     header('Location: ' . BASEPATH . 'user/register?email=' . $_POST['email'] . '&mensagem=Email já cadastrado!');
-        //     echo ($e->getMessage());
-        // }
+        try {
+            $dados = ['nome', 'genero', 'castrado', 'forneceCastracao', 'especie', 'dataNascimento', 'dataResgate', 'custoMensal', 'historia', 'foto'];
+            for ($i = 0; $i < count($dados); $i++) {
+                if ($_POST[$dados[$i]] == null) {
+                    $_POST[$dados[$i]] = "";
+                }
+            }
+            $doencas = [];
+            if (is_array($_POST['doencas'])) {
+                foreach ($_POST['doencas'] as $doenca) {
+                    array_push($doencas, $doenca);
+                }
+            }
+            // if ($_FILES["foto"]["tmp_name"] != '' ) {
+            //     $target_dir = BASEPATH . "uploads/";
+            //     $target_file = $target_dir . basename('pet_' . $_POST['nome'] . '_' . date("Y-m-d"));
+            //     $uploadOk = 1;
+            //     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            //     $check = getimagesize($_FILES["foto"]["tmp_name"]);
+            //     if ($check) {
+            //         if ($_FILES["foto"]["size"] > 500000) {
+            //             header('Location: ' . BASEPATH . 'home?foto=muito_grande');
+            //         } else {
+            //             if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
+            //                 header('Location: ' . BASEPATH . 'home?foto=carregada');
+            //             } else{
+            //                 header('Location: ' . BASEPATH . 'home?foto=nao_carregada&fileType=' . $imageFileType);
+            //             }
+            //         }
+            //     } else {
+            //         header('Location: ' . BASEPATH . 'home?fotos=nok');
+            //     }
+            // } else {
+            //     header('Location: ' . BASEPATH . 'home?foto=vazio');
+            // }
+
+            $pet = new Pet(
+                1,
+                $_POST['nome'],
+                $_POST['genero'],
+                $_POST['castrado'],
+                $_POST['forneceCastracao'],
+                $_POST['especie'],
+                $_POST['dataNascimento'],  
+                $_POST['dataResgate'],
+                $doencas,
+                $_POST['custoMensal'],
+                $_POST['historia'],
+                $_POST['foto']);
+            $pet->salvar();
+            $str = '';
+            foreach($_POST['doencas'] as $doenca){
+                $str = $str . $doenca . ' ';
+            }
+            header('Location: ' . BASEPATH . 'home?id='. $pet->__get('id') . '&mensagem=Pet cadastrado com sucesso!' . '&doencas=' . $str);
+        } catch (\Exception $e) {
+            header('Location: ' . BASEPATH . 'cadastroPet?email=' . $_POST['nome'] . '&mensagem=' . $e->getMessage());
+            echo ($e->getMessage());
+        }
     }
 
 
@@ -133,7 +177,7 @@ class LoginController extends Controller
     {
         $usuario = Usuario::buscarUsuarioPorId($id, $tipo);
 
-        if (isset($usuario)) {
+        if (isset ($usuario)) {
             $this->view('users/info', [$usuario]);
         } else {
             header('Location: ' . BASEPATH . 'login?mensagem=Usuario no encontrado');
