@@ -34,6 +34,28 @@ class Database
             email VARCHAR(60) NOT NULL,
             senha TEXT NOT NULL
         );
+        CREATE TABLE IF NOT EXISTS pets (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            idResponsavel INTEGER NOT NULL,
+            nome VARCHAR(60) NOT NULL,
+            genero VARCHAR(1) NOT NULL,
+            castrado VARCHAR(1) NOT NULL,
+            forneceCastracao VARCHAR(1),
+            especie VARCHAR(60) NOT NULL,
+            dataNascimento DATE, 
+            dataResgate DATE NOT NULL,
+            custoMensal FLOAT,
+            historia VARCHAR(255),
+            foto VARCHAR(255),
+            FOREIGN KEY (idResponsavel) REFERENCES usuarios(id)
+        );
+        CREATE TABLE IF NOT EXISTS doencasPet (
+            idPet INTEGER NOT NULL,
+            nomeDoenca INTEGER NOT NULL,
+            FOREIGN KEY (idPet) REFERENCES pets(id),
+            PRIMARY KEY (idPet,nomeDoenca)
+        );
         ');
+
     }
 }

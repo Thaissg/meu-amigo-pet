@@ -77,10 +77,6 @@ a:hover {
 	display: none;
 }
 
-#login.invisible {
-	display: none;
-}
-
 @media (max-width: 952px) {
 	label.logo {
 		float: right;

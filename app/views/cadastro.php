@@ -61,7 +61,7 @@
               <tr>
                 <td class="coluna1"></td>
                 <td>
-                  <div id="validaDoc" class="alert invalido"></div>
+                  <div id="validaDoc" class="alert invalido invisible"></div>
                 </td>
               </tr>
               <tr>
@@ -73,8 +73,8 @@
               <tr>
                 <td class="coluna1"></td>
                 <td>
-                  <div id="validaTelefone" class="alert invalido"></div>
-                  <div id="validaTelefone2" class="alert invalido"></div>
+                  <div id="validaTelefone" class="alert invalido invisible"></div>
+                  <div id="validaTelefone2" class="alert invalido invisible"></div>
                 </td>
               </tr>
               <tr>
@@ -86,7 +86,7 @@
               <tr>
                 <td class="coluna1"></td>
                 <td>
-                  <div id="validaEmail" class="alert invalido"></div>
+                  <div id="validaEmail" class="alert invalido invisible"></div>
                 </td>
               </tr>
               <tr>
@@ -216,7 +216,7 @@
               <tr>
                 <td class="coluna1"></td>
                 <td>
-                  <div id="validaConf" class="alert invalido"></div>
+                  <div id="validaConf" class="alert invalido invisible"></div>
                 </td>
               </tr>
               <tr>

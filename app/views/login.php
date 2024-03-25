@@ -61,7 +61,7 @@
             </form>
         </section>
     </main>
-    <script src="<?= BASEPATH ?>public/js/login.js"></script>
+    <script src="<?= BASEPATH ?>public/js/alertas.js"></script>
 </body>
 
 </html>

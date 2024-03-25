@@ -1,6 +1,7 @@
 function testaDocumento(strDoc) {
     if (strDoc == "") {
         $("#validaDoc").html("É necessário preencher o número do CPF/CNPJ");
+        $("#validaDoc").removeClass("invisible")
         return false
     }
     strDoc = String(strDoc).replace(/\D/g, "")
@@ -14,8 +15,10 @@ function testaDocumento(strDoc) {
     }
     if (teste == false) {
         $("#validaDoc").html("CPF/CNPJ inválido");
+        $("#validaDoc").removeClass("invisible")
     } else {
         $("#validaDoc").html("");
+        $("#validaDoc").addClass("invisible")
     }
     return teste
 }
@@ -120,8 +123,10 @@ function testaEmail(email) {
     var re = /\S+@\S+\.\S+/;
     if (re.test(email)) {
         $("#validaEmail").html("");
+        $("#validaEmail").addClass("invisible");
         return true
     } else {
+        $("#validaEmail").removeClass("invisible");
         $("#validaEmail").html("Email inválido");
         return false
     }
@@ -133,12 +138,14 @@ function testaSenha(senha) {
         if (elem.hasClass('valido')) {
             elem.removeClass('valido');
         }
+        elem.removeClass('invisible');
         elem.addClass('invalido');
         return false;
     } else {
         if (elem.hasClass('invalido')) {
             elem.removeClass('invalido');
         }
+        elem.addClass('invisible');
         elem.addClass('valido');
         return false;
     }
@@ -148,9 +155,11 @@ function testaConfSenha(confSenha) {
     senha = document.getElementById('senha').value
     if (confSenha == senha) {
         $('#validaConf').html("");
+        $('#validaConf').addClass("invisible");
         return true
     } else {
         $('#validaConf').html("As senhas não conferem");
+        $('#validaConf').removeClass("invisible");
         return false
     }
 }
@@ -166,18 +175,21 @@ function mostrarSenha(entrada, checkbox) {
 
 function testaTelefone(tel) {
     tel = String(tel).replace(/\D/g, "");
-    if (tel == ""){
+    if (tel == "") {
         $("#validaTelefone").html("É necessário preencher o número do telefone");
+        $("#validaTelefone").removeClass("invisible");
         return false;
-    } else if (tel.length < 10 || tel.length > 11){
+    } else if (tel.length < 10 || tel.length > 11) {
         $('#validaTelefone').html("Telefone deve conter 10 ou 11 dígitos.");
         $('#validaTelefone2').html("(Exemplo: (xx) xxxx-xxxx ou (xx) xxxxx-xxxx)");
+        $("#validaTelefone").removeClass("invisible");
         return false;
     } else {
         $('#validaTelefone').html("");
         $('#validaTelefone2').html("");
+        $("#validaTelefone").addClass("invisible");
         return true;
-    } 
+    }
 }
 
 
@@ -210,7 +222,7 @@ function validate(e) {
         documentError.setAttribute("aria-hidden", true);
         documentError.setAttribute("aria-invalid", false);
     }
-    if (!testaTelefone(telefone.value)){
+    if (!testaTelefone(telefone.value)) {
         const phoneError = document.getElementById("phoneError");
         phoneError.classList.add("visible");
         telefone.classList.add("invalid");
@@ -238,9 +250,14 @@ function validate(e) {
         emailError.setAttribute("aria-hidden", true);
         emailError.setAttribute("aria-invalid", false);
     }
-    if (valid==true){
+    if (valid == true) {
         e.target.submit();
         alert("Usuario cadastrado com sucesso!")
     }
     return valid;
 }
+
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+};
+

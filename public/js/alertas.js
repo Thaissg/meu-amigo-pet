@@ -1,13 +1,3 @@
-function logado() {
-    const login = document.getElementById("login");
-    if (session != null){
-        login.classList.add("invisible");
-        alert(session)
-    } else {
-        login.classList.remove("invisible");
-    }
-}
-
 window.onload = function () {
     //Array de parametros 'chave=valor'
     var params = window.location.search.substring(1).split('&');

@@ -33,5 +33,6 @@
       </div>
     </main>
     <script src="<?= BASEPATH  ?>public/js/app.js"></script>
+    <script src="<?= BASEPATH ?>public/js/alertas.js"></script>
   </body>
 </html>

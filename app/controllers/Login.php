@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Usuario;
-
+use App\Models\Pet;
 class LoginController extends Controller
 {
 
@@ -63,11 +63,19 @@ class LoginController extends Controller
     }
 
     /**
-     *  Função que renderiza a página (visão) de cadastro
+     *  Função que renderiza a página (visão) de cadastro de usuário
      */
     public function cadastroUsuario(): void
     {
         $this->view('cadastro');
+    }
+
+    /**
+     *  Função que renderiza a página (visão) de cadastro de pet
+     */
+    public function cadastroPet(): void
+    {
+        $this->view('cadastroPet');
     }
 
     /**
@@ -91,11 +99,36 @@ class LoginController extends Controller
             $user->salvar();
             header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . 'cidade=' . $_POST['cidade'] . '&mensagem=Usuário cadastrado com sucesso!');
         } catch (\Exception $e) {
-            //header('Location: ' . BASEPATH . 'user/register?email=' . $_POST['email'] . '&mensagem=Email já cadastrado!');
+            header('Location: ' . BASEPATH . 'user/register?email=' . $_POST['email'] . '&mensagem=Email já cadastrado!');
             echo ($e->getMessage());
-            //var_dump($th);
         }
     }
+
+    public function cadastrarPet(): void
+    {
+        header('Location: ' . BASEPATH . 'home');
+        // try {
+        //     $pet = new Pet(
+        //         $_SESSION['User']['id'], 
+        //         $_POST['nome'], 
+        //         $_POST['genero'], 
+        //         $_POST['castrado'], 
+        //         $_POST['forneceCastracao'],
+        //         $_POST['especie'],  
+        //         $_POST['dataNascimento'],   
+        //         $_POST['dataResgate'], 
+        //         $_POST['doencas'],  
+        //         $_POST['cutoMensal'],
+        //         $_POST['historia'],
+        //         $_POST['foto']);
+        //     $pet->salvar();
+        //     header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!');
+        // } catch (\Exception $e) {
+        //     header('Location: ' . BASEPATH . 'user/register?email=' . $_POST['email'] . '&mensagem=Email já cadastrado!');
+        //     echo ($e->getMessage());
+        // }
+    }
+
 
     /**
      *  Função responsável por renderizar as informações do usuário (se estiver logado).

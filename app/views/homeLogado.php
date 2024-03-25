@@ -19,10 +19,11 @@
         ?>
       </div>
       <div class="container">
-        <div><a href="<?= BASEPATH  ?>cadastrarPet">Cadastrar pet</a></div>
+        <div><a href="<?= BASEPATH  ?>cadastroPet">Cadastrar pet</a></div>
         <div><a href="">Administrar pets cadastrados</a></div>
       </div>
     </main>
     <script src="<?= BASEPATH  ?>public/js/app.js"></script>
+    <script src="<?= BASEPATH ?>public/js/alertas.js"></script>
   </body>
 </html>
