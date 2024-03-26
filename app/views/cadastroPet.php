@@ -92,18 +92,20 @@
                                 <tbody>
                                     <tr>
                                         <td><label for="dataNascimento">Data de nascimento (opcional)</label></td>
-                                        <td><input oninput="testarData()" type="date" name="dataNascimento" id="dataNascimento"></td>
+                                        <td><input oninput="testarData()" type="date" name="dataNascimento"
+                                                id="dataNascimento"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="dataResgate">Data do resgate</label></td>
-                                        <td><input required oninput="testarData()" type="date" name="dataResgate" id="dataResgate"></td>
+                                        <td><input required oninput="testarData()" type="date" name="dataResgate"
+                                                id="dataResgate"></td>
                                     </tr>
                                 </tbody>
                             </table>
                             <span class="invisible invalido" id="dataError"></span>
                             <tr>
                                 <td>
-                                    <fieldset class="doencas">
+                                    <fieldset>
                                         <table>
                                             <tbody>
                                                 <legend>Doenças em tratamento (opcional)</legend>
@@ -161,20 +163,23 @@
                                 <tbody>
                                     <tr>
                                         <td><label for="custoMensal">Custo Mensal (opcional) R$ </label></td>
-                                        <td><input type="text" size="12" onkeyup="mascaraMoeda(event)" name="custoMensal" id="custoMensal"></td>
+                                        <td><input type="text" size="12" onkeyup="mascaraMoeda(event)"
+                                                name="custoMensal" id="custoMensal"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="historia">História (opcional)</label></td>
                                         <td><textarea name="historia" id="historia" cols="30" rows="10"
-                                        placeholder="Utilize este campo para descrever um pouco o resgate do pet e algumas características dele"></textarea></td>
+                                                placeholder="Utilize este campo para descrever um pouco o resgate do pet e algumas características dele"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><label for="foto">Foto do pet (opcional)</label></td>
-                                        <td><input type="file" name="foto" id="foto" accept="image/png, image/jpeg"></td>
+                                        <td><input oninput="testarImg()" type="file" name="foto" id="foto"
+                                                accept="image/png, image/jpeg"></td>
                                     </tr>
                                 </tbody>
                             </table>
-
+                            <span class="invisible invalido" id="fotoError"></span>
                         </tbody>
                     </table>
                 </fieldset>

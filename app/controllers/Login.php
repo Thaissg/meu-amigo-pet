@@ -99,38 +99,18 @@ class LoginController extends Controller
         try {
             $dados = ['nome', 'genero', 'castrado', 'forneceCastracao', 'especie', 'dataNascimento', 'dataResgate', 'custoMensal', 'historia', 'foto'];
             for ($i = 0; $i < count($dados); $i++) {
-                if ($_POST[$dados[$i]] == null) {
+                if (!isset ($_POST[$dados[$i]])) {
                     $_POST[$dados[$i]] = "";
                 }
             }
             $doencas = [];
-            if (is_array($_POST['doencas'])) {
-                foreach ($_POST['doencas'] as $doenca) {
-                    array_push($doencas, $doenca);
+            if (isset ($_POST['doencas'])) {
+                if (is_array($_POST['doencas'])) {
+                    foreach ($_POST['doencas'] as $doenca) {
+                        array_push($doencas, $doenca);
+                    }
                 }
             }
-            // if ($_FILES["foto"]["tmp_name"] != '' ) {
-            //     $target_dir = BASEPATH . "uploads/";
-            //     $target_file = $target_dir . basename('pet_' . $_POST['nome'] . '_' . date("Y-m-d"));
-            //     $uploadOk = 1;
-            //     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-            //     $check = getimagesize($_FILES["foto"]["tmp_name"]);
-            //     if ($check) {
-            //         if ($_FILES["foto"]["size"] > 500000) {
-            //             header('Location: ' . BASEPATH . 'home?foto=muito_grande');
-            //         } else {
-            //             if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
-            //                 header('Location: ' . BASEPATH . 'home?foto=carregada');
-            //             } else{
-            //                 header('Location: ' . BASEPATH . 'home?foto=nao_carregada&fileType=' . $imageFileType);
-            //             }
-            //         }
-            //     } else {
-            //         header('Location: ' . BASEPATH . 'home?fotos=nok');
-            //     }
-            // } else {
-            //     header('Location: ' . BASEPATH . 'home?foto=vazio');
-            // }
 
             $pet = new Pet(
                 1,
@@ -139,18 +119,43 @@ class LoginController extends Controller
                 $_POST['castrado'],
                 $_POST['forneceCastracao'],
                 $_POST['especie'],
-                $_POST['dataNascimento'],  
+                $_POST['dataNascimento'],
                 $_POST['dataResgate'],
                 $doencas,
                 $_POST['custoMensal'],
                 $_POST['historia'],
-                $_POST['foto']);
-            $pet->salvar();
-            $str = '';
-            foreach($_POST['doencas'] as $doenca){
-                $str = $str . $doenca . ' ';
+                $_POST['foto']
+            );
+
+            $size = $_FILES["foto"]["size"];
+            if (isset ($_FILES["foto"])) {
+                if ($_FILES["foto"]["error"] == 0) {
+                    $str = '';
+                    foreach ($_FILES["foto"] as $chave => $valor) {
+                        $str = $str . ' &' . $chave . '=' . $valor;
+                    }
+                    $target_dir = "C:/wamp64/www/meu-amigo-pet/app/uploads/";
+                    $target_file = strtolower($target_dir . 'pet_' . $pet->__get('id') . '_' . str_replace(' ', '_', $_POST['nome']) . '_' . date("Y-m-d"));
+                    $imageFileType = strtolower(explode('.', $_FILES["foto"]['name'])[1]);
+                    $pet->__set('foto', $target_file . '.' . $imageFileType);
+                    $check = getimagesize($_FILES["foto"]["tmp_name"]);
+                    if ($check) {
+                        move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file . '.' . $imageFileType);
+                    }
+                }
             }
-            header('Location: ' . BASEPATH . 'home?id='. $pet->__get('id') . '&mensagem=Pet cadastrado com sucesso!' . '&doencas=' . $str);
+            if ($_FILES["foto"]["error"] == 0) {
+                $pet->salvar();
+                header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!&id=' . $pet->__get('id') . '&size=' . $size);
+            } else {
+                if ($_FILES["foto"]["error"] == 1 || $_FILES["foto"]["error"] == 2) {
+                    $msgErro = 'Arquivo de imagem muito grande!';
+                } else {
+                    $msgErro = 'Erro inesperado ao fazer upload da imagem ou upload feito parcialmente!';
+                }
+                header('Location: ' . BASEPATH . 'home?mensagem=Erro no cadastro! Erro: ' . $_FILES["foto"]["error"] . ' - ' . $msgErro);
+            }
+
         } catch (\Exception $e) {
             header('Location: ' . BASEPATH . 'cadastroPet?email=' . $_POST['nome'] . '&mensagem=' . $e->getMessage());
             echo ($e->getMessage());

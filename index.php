@@ -1,7 +1,4 @@
 <?php
-// Desabilita warnings
-error_reporting(E_ALL ^ E_WARNING);
-
 // Define o basepath globalmente
 define('BASEPATH', '/meu-amigo-pet/');
 

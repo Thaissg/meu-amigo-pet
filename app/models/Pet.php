@@ -92,6 +92,12 @@ class Pet
         $this->custoMensal = $custoMensal;
         $this->historia = $historia;
         $this->foto = $foto;
+
+        $con = Database::getConnection();
+        $stm = $con->prepare('SELECT id FROM pets ORDER BY 1 DESC LIMIT 1');
+        $stm->execute();
+        $id = $stm->fetch()[0] + 1;
+        $this->id = $id;
     }
 
 

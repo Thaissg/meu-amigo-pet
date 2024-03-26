@@ -179,12 +179,12 @@ tr{
 }
 
 /* alertas */
-#documentError, #phoneError, #emailError, #dataError {
+#documentError, #phoneError, #emailError, #dataError, #fotoError {
   display: none;
   font-size: 0.8em;
 }
 
-#documentError.visible, #phoneError.visible, #emailError.visible, #dataError.visible{
+#documentError.visible, #phoneError.visible, #emailError.visible, #dataError.visible, #fotoError.visible{
   display: block;
 }
 

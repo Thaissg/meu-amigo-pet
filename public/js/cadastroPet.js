@@ -4,11 +4,10 @@ cadastroForm.addEventListener("submit", validate);
 
 function validate(e) {
     e.preventDefault();
-    if (!testarData()){
-        alert("Verifique os campos!")
-    }
-    if (testarData() == true) {
+    if (testarData()&&testarImg()) {
         e.target.submit();
+    } else {
+        alert("Verifique os campos!")
     }
     return testarData();
 }
@@ -116,5 +115,23 @@ function mostrarForneceCastracao(radio) {
     } else {
         forneceCast.classList.add("invisible");
         forneceCast.innerHTML = "";
+    }
+}
+
+function testarImg() {
+    const foto =  document.getElementById("foto");
+    erro = document.getElementById("fotoError");
+    if(foto.files[0].size > 2097152){
+        erro.classList.remove("invisible");
+        foto.classList.add("invalid");
+        erro.classList.add("visible");
+        erro.innerHTML = "A imagem não pode ser maior do que 2Mb";
+        return false;
+    } else {
+        erro.classList.add("invisible");
+        erro.classList.remove("visible");
+        foto.classList.remove("invalid");
+        erro.innerHTML = "";
+        return true;
     }
 }
