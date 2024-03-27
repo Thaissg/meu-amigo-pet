@@ -30,7 +30,11 @@ class LoginController extends Controller
     public function home(): void
     {
         if (isset ($_SESSION['user'])) {
-            $this->view('homeLogado');
+            if ($_SESSION['user']->__get('tipo') == 'doador') {
+                $this->view('homeDoador');
+            } else {
+                $this->view('home');
+            }
         } else {
             $this->view('home');
         }
@@ -56,8 +60,7 @@ class LoginController extends Controller
 
         if ($usuario && $usuario->igual($_POST['email'], $_POST['password'])) {
             $_SESSION['user'] = $this->loggedUser = $usuario;
-            $this->view('home');
-            header('Location: ' . BASEPATH . 'home?email=' . $_POST['email'] . '&mensagem=Usuário logado!');
+            header('Location: ' . BASEPATH . 'home?' . $usuario->__get('tipo') . '&mensagem=Usuário logado!');
         } else {
             header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Usuário e/ou senha incorreta!');
         }
@@ -96,70 +99,79 @@ class LoginController extends Controller
 
     public function cadastrarPet(): void
     {
-        try {
-            $dados = ['nome', 'genero', 'castrado', 'forneceCastracao', 'especie', 'dataNascimento', 'dataResgate', 'custoMensal', 'historia', 'foto'];
-            for ($i = 0; $i < count($dados); $i++) {
-                if (!isset ($_POST[$dados[$i]])) {
-                    $_POST[$dados[$i]] = "";
-                }
-            }
-            $doencas = [];
-            if (isset ($_POST['doencas'])) {
-                if (is_array($_POST['doencas'])) {
-                    foreach ($_POST['doencas'] as $doenca) {
-                        array_push($doencas, $doenca);
+        if ($_SESSION['user']->__get('tipo') != 'doador') {
+            header('Location: ' . BASEPATH . 'home?mensagem=Usuário não tem permissão para cadastrar pet!');
+        } else {
+            try {
+                $dados = ['nome', 'genero', 'castrado', 'forneceCastracao', 'especie', 'dataNascimento', 'dataResgate', 'custoMensal', 'historia', 'foto'];
+                for ($i = 0; $i < count($dados); $i++) {
+                    if (!isset ($_POST[$dados[$i]])) {
+                        $_POST[$dados[$i]] = "";
                     }
                 }
-            }
+                $doencas = [];
+                if (isset ($_POST['doencas'])) {
+                    if (is_array($_POST['doencas'])) {
+                        foreach ($_POST['doencas'] as $doenca) {
+                            array_push($doencas, $doenca);
+                        }
+                    }
+                }
 
-            $pet = new Pet(
-                1,
-                $_POST['nome'],
-                $_POST['genero'],
-                $_POST['castrado'],
-                $_POST['forneceCastracao'],
-                $_POST['especie'],
-                $_POST['dataNascimento'],
-                $_POST['dataResgate'],
-                $doencas,
-                $_POST['custoMensal'],
-                $_POST['historia'],
-                $_POST['foto']
-            );
+                $pet = new Pet(
+                    $_SESSION['user']->__get('id'),
+                    $_POST['nome'],
+                    $_POST['genero'],
+                    $_POST['castrado'],
+                    $_POST['forneceCastracao'],
+                    $_POST['especie'],
+                    $_POST['dataNascimento'],
+                    $_POST['dataResgate'],
+                    $doencas,
+                    $_POST['custoMensal'],
+                    $_POST['historia'],
+                    $_POST['foto']
+                );
 
-            $size = $_FILES["foto"]["size"];
-            if (isset ($_FILES["foto"])) {
-                if ($_FILES["foto"]["error"] == 0) {
-                    $str = '';
-                    foreach ($_FILES["foto"] as $chave => $valor) {
-                        $str = $str . ' &' . $chave . '=' . $valor;
+                $size = $_FILES["foto"]["size"];
+                if ($_POST["foto"] != "") {
+                    if ($_FILES["foto"]["error"] == 0) {
+                        $str = '';
+                        foreach ($_FILES["foto"] as $chave => $valor) {
+                            $str = $str . ' &' . $chave . '=' . $valor;
+                        }
+                        $target_dir = "C:/wamp64/www/meu-amigo-pet/app/uploads/";
+                        $target_file = strtolower($target_dir . 'pet_' . $pet->__get('id') . '_' . str_replace(' ', '_', $_POST['nome']) . '_' . date("Y-m-d"));
+                        $imageFileType = strtolower(explode('.', $_FILES["foto"]['name'])[1]);
+                        $pet->__set('foto', $target_file . '.' . $imageFileType);
+                        $check = getimagesize($_FILES["foto"]["tmp_name"]);
+                        if ($check) {
+                            move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file . '.' . $imageFileType);
+                        }
                     }
-                    $target_dir = "C:/wamp64/www/meu-amigo-pet/app/uploads/";
-                    $target_file = strtolower($target_dir . 'pet_' . $pet->__get('id') . '_' . str_replace(' ', '_', $_POST['nome']) . '_' . date("Y-m-d"));
-                    $imageFileType = strtolower(explode('.', $_FILES["foto"]['name'])[1]);
-                    $pet->__set('foto', $target_file . '.' . $imageFileType);
-                    $check = getimagesize($_FILES["foto"]["tmp_name"]);
-                    if ($check) {
-                        move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file . '.' . $imageFileType);
+                    if ($_FILES["foto"]["error"] == 0) {
+                        $pet->salvar();
+                        header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!&id=' . $pet->__get('id') . '&size=' . $size);
+                    } else {
+                        if ($_FILES["foto"]["error"] == 1 || $_FILES["foto"]["error"] == 2) {
+                            $msgErro = 'Arquivo de imagem muito grande!';
+                        } else {
+                            $msgErro = 'Erro inesperado ao fazer upload da imagem ou upload feito parcialmente!';
+                        }
+                        header('Location: ' . BASEPATH . 'home?mensagem=Erro no cadastro! Erro: ' . $_FILES["foto"]["error"] . ' - ' . $msgErro);
                     }
-                }
-            }
-            if ($_FILES["foto"]["error"] == 0) {
-                $pet->salvar();
-                header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!&id=' . $pet->__get('id') . '&size=' . $size);
-            } else {
-                if ($_FILES["foto"]["error"] == 1 || $_FILES["foto"]["error"] == 2) {
-                    $msgErro = 'Arquivo de imagem muito grande!';
                 } else {
-                    $msgErro = 'Erro inesperado ao fazer upload da imagem ou upload feito parcialmente!';
+                    $pet->salvar();
+                    header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!&id=' . $pet->__get('id') . '&size=' . $size);
                 }
-                header('Location: ' . BASEPATH . 'home?mensagem=Erro no cadastro! Erro: ' . $_FILES["foto"]["error"] . ' - ' . $msgErro);
-            }
 
-        } catch (\Exception $e) {
-            header('Location: ' . BASEPATH . 'cadastroPet?email=' . $_POST['nome'] . '&mensagem=' . $e->getMessage());
-            echo ($e->getMessage());
+
+            } catch (\Exception $e) {
+                header('Location: ' . BASEPATH . 'cadastroPet?email=' . $_POST['nome'] . '&mensagem=' . $e->getMessage());
+                echo ($e->getMessage());
+            }
         }
+
     }
 
 

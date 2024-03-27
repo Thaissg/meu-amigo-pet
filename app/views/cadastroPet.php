@@ -29,7 +29,7 @@
                 <fieldset class="Dados">
                     <table>
                         <tbody>
-                            <tr>
+                            <tr class="cadastroPet">
                                 <td>
                                     <fieldset class="Gênero">
                                         <table>
@@ -49,7 +49,7 @@
                                     </fieldset>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="cadastroPet">
                                 <td>
                                     <fieldset class="Castrado">
                                         <table>
@@ -103,7 +103,7 @@
                                 </tbody>
                             </table>
                             <span class="invisible invalido" id="dataError"></span>
-                            <tr>
+                            <tr class="cadastroPet">
                                 <td>
                                     <fieldset>
                                         <table>

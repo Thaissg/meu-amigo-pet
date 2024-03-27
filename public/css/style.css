@@ -75,10 +75,88 @@ h1 {
   width: 100%;
   background-color: var(--main-bg-color);
   height: 75%;
+  display: grid;
+  justify-items: center;
 }
 
 .item-container {
   padding: 1rem;
+  text-align: center;
+}
+
+.filtro {
+  vertical-align: top;
+  padding-top: 3%;
+  width: 15%;
+}
+
+.pets {
+  display: flex;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.item-pet {
+  width: 21%;
+  border-radius: 10px;
+  border: solid black;
+  padding: 2%;
+  margin: 2%;
+  font-size: 16px;
+  height: auto;
+}
+
+.foto-pet {
+  max-height: 12em;
+  border-radius: 10px;
+  max-width: 90%;
+}
+
+.dadosPet {
+  max-width: 100%;
+  display: grid;
+  justify-items: center;
+}
+
+p {
+  margin: 4%;
+  text-align: center;
+}
+
+.cadastrarPet {
+  margin: 2%;
+  background-color: var(--header-bg-color);
+  min-width: fit-content;
+  padding: 2%;
+  border-radius: 5%;
+  border: solid black 1px;
+  display: flex;
+  align-items: end;
+}
+
+.cadastroPet{
+  display: grid;
+  justify-items: center;
+}
+
+ion-icon {
+  color: black;
+}
+
+.icones{
+  display: block;
+  text-align: center;
+  margin-top: 5%;
+}
+
+@media (max-width: 952px) {
+  .item-pet {
+    width: 29%;
+  }
+
+  p {
+    font-size: 12px;
+  }
 }
 
 
@@ -91,13 +169,13 @@ form,
 }
 
 fieldset {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
   padding: 0.5rem;
+  width: min-content;
+  justify-items: center;
 }
 
-legend{
+legend {
   text-align: center;
 }
 
@@ -127,13 +205,15 @@ button {
   display: flex;
   align-self: flex-end;
 }
-.alert{
+
+.alert {
   font-size: 10px;
   font-weight: bold;
   text-align: right;
   margin-right: 0.5rem;
 }
-.invalido{
+
+.invalido {
   background-color: #e6ff00;
   color: #ff0000;
   border-radius: 10px;
@@ -142,11 +222,12 @@ button {
   text-align: center;
 }
 
-.valido{
+.valido {
   color: #19ff00;
 }
 
-.mostrar-senha, .checkMostrarSenha{
+.mostrar-senha,
+.checkMostrarSenha {
   height: 0.7rem;
   font-size: 0.7rem;
   vertical-align: top;
@@ -155,6 +236,7 @@ button {
 }
 
 table {
+  width: 100%;
   border-collapse: separate;
   text-indent: initial;
   white-space-collapse: collapse;
@@ -163,28 +245,36 @@ table {
   font-weight: normal;
   font-size: medium;
   font-style: normal;
-  color: -internal-quirk-inherit;
   text-align: start;
   border-spacing: 2px;
   font-variant: normal;
+  justify-items: center;
 }
 
-.coluna1{
+.coluna1 {
   text-align: right;
 }
 
-tr{
+tr {
   display: table-row;
   vertical-align: inherit;
 }
 
-/* alertas */
-#documentError, #phoneError, #emailError, #dataError, #fotoError {
+/* alertas ------------------------------------------- */
+#documentError,
+#phoneError,
+#emailError,
+#dataError,
+#fotoError {
   display: none;
   font-size: 0.8em;
 }
 
-#documentError.visible, #phoneError.visible, #emailError.visible, #dataError.visible, #fotoError.visible{
+#documentError.visible,
+#phoneError.visible,
+#emailError.visible,
+#dataError.visible,
+#fotoError.visible {
   display: block;
 }
 

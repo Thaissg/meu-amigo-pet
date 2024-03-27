@@ -220,7 +220,7 @@ class Pet
      *  Função que busca por um pet a partir do id fornecido.
      *  Se não existir, emite um erro.
      */
-    static public function buscarUsuarioPorId($id): ?Pet
+    static public function buscarPetPorId($id): ?Pet
     {
         $con = Database::getConnection();
         $stm = $con->prepare('SELECT * FROM pets WHERE id = :id');

@@ -163,6 +163,7 @@ class Usuario
 
         if ($resultado) {
             $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
+            $usuario->id = $resultado['id'];
             $usuario->senha = $resultado['senha'];
             return $usuario;
         } else {

@@ -4,7 +4,7 @@ cadastroForm.addEventListener("submit", validate);
 
 function validate(e) {
     e.preventDefault();
-    if (testarData()&&testarImg()) {
+    if (testarData() && testarImg()) {
         e.target.submit();
     } else {
         alert("Verifique os campos!")
@@ -87,7 +87,7 @@ function testarData() {
                 erro.classList.add("visible");
                 erro.innerHTML = "A data do nascimento não pode ser data futura";
                 return false;
-            } else if (dataResgateValor.valueOf()- dataNascimentoValor.valueOf() < 0) {
+            } else if (dataResgateValor.valueOf() - dataNascimentoValor.valueOf() < 0) {
                 erro.classList.remove("invisible");
                 dataNascimento.classList.add("invalid");
                 dataResgate.classList.add("invalid");
@@ -119,19 +119,24 @@ function mostrarForneceCastracao(radio) {
 }
 
 function testarImg() {
-    const foto =  document.getElementById("foto");
-    erro = document.getElementById("fotoError");
-    if(foto.files[0].size > 2097152){
-        erro.classList.remove("invisible");
-        foto.classList.add("invalid");
-        erro.classList.add("visible");
-        erro.innerHTML = "A imagem não pode ser maior do que 2Mb";
-        return false;
-    } else {
-        erro.classList.add("invisible");
-        erro.classList.remove("visible");
-        foto.classList.remove("invalid");
-        erro.innerHTML = "";
+    var foto = document.getElementById("foto");
+    if (foto.value == "") {
         return true;
+    } else {
+        erro = document.getElementById("fotoError");
+        if (foto.files[0].size > 2097152) {
+            erro.classList.remove("invisible");
+            foto.classList.add("invalid");
+            erro.classList.add("visible");
+            erro.innerHTML = "A imagem não pode ser maior do que 2Mb";
+            return false;
+        } else {
+            erro.classList.add("invisible");
+            erro.classList.remove("visible");
+            foto.classList.remove("invalid");
+            erro.innerHTML = "";
+            return true;
+        }
     }
+
 }

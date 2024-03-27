@@ -25,6 +25,8 @@ Route::add('/login', fn () => $controller->visualizar('login'), ['get']);
 Route::add('/cadastro', fn() => $controller->visualizar('cadastro'), ['get']);
 Route::add('/cadastroPet', fn () => $controller->visualizar('cadastroPet'), ['get']);
 
+Route::add('/home', fn () => $controller->home(), ['post']);
+
 Route::add('/cadastroPet', fn() => $controller->cadastrarPet(), ['post']);
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
 Route::add('/login', fn() => $controller->login(), ['post']);
