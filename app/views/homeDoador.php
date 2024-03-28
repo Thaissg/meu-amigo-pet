@@ -57,7 +57,7 @@
                     <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>"
                       alt="Foto do pet <?= $pet['nome'] ?>">
                     <div class="icones">
-                      <a href=""><ion-icon name="create"></ion-icon></a>
+                      <a href="<?= BASEPATH ?>editarPet?<?= $pet['id']?>"><ion-icon name="create"></ion-icon></a>
                       <a href=""><ion-icon name="trash"></ion-icon></a>
                     </div>
                     <p>Nome:

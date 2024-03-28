@@ -143,6 +143,7 @@ ion-icon {
   color: black;
 }
 
+
 .icones{
   display: block;
   text-align: center;
@@ -192,7 +193,7 @@ input {
 button {
   font-weight: bold;
   font-size: 16px;
-  color: var(--main-text-color);
+  color: var(--main-bg-color);
   background-color: var(--header-bg-color);
   border: 2px solid var(--main-text-color);
   border-radius: 5px;
@@ -237,27 +238,25 @@ button {
 
 table {
   width: 100%;
-  border-collapse: separate;
-  text-indent: initial;
-  white-space-collapse: collapse;
-  text-wrap: wrap;
-  line-height: normal;
-  font-weight: normal;
-  font-size: medium;
-  font-style: normal;
-  text-align: start;
-  border-spacing: 2px;
-  font-variant: normal;
-  justify-items: center;
 }
 
+.emLinha{
+  display: flex;
+  align-items: center;
+}
+
+td {
+  min-width: 10em;
+}
 .coluna1 {
   text-align: right;
 }
 
-tr {
-  display: table-row;
-  vertical-align: inherit;
+
+.centralizado {
+  display: inline-grid;
+  justify-items: center;
+  align-items: center;
 }
 
 /* alertas ------------------------------------------- */

@@ -50,17 +50,22 @@ nav ul li {
 	margin: 0 5px;
 }
 
-nav ul li a {
+nav ul li a button{
 	color: var(--main-bg-color);
 	font-size: 17px;
 	padding: 7px 13px;
 	border-radius: 3px;
 	text-transform: uppercase;
+	margin: 7px;
 }
 
-a:hover {
+a:hover, button:hover{
 	background: var(--main-text-color);
 	transition: .5s;
+}
+
+a:visited{
+	color: var(--main-bg-color);
 }
 
 .checkbtn {

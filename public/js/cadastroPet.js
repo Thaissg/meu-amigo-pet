@@ -110,7 +110,7 @@ function mostrarForneceCastracao(radio) {
     const forneceCast = document.getElementById("forneceCastracao");
     const table = "";
     if (radio.value == "N") {
-        forneceCast.innerHTML = "<table><tbody><legend>Fornece castração?</legend><tr><td><input required type='radio' name='forneceCastracao' title='forneceCastracao' value='S'></input></td><td><label for='forneceCastracao'>Sim</label></td><td><input required type='radio' name='forneceCastracao' title='forneceCastracao' value='N'></input></td><td><label for='forneceCastracao'>Não</label></td></tr></tbody></table>";
+        forneceCast.innerHTML = "<table><tbody><legend>Fornece castração?</legend><tr><td><input required type='radio' name='forneceCastracao' title='forneceCastracao' value='S'></input><label for='forneceCastracao'>Sim</label></td><td><input required type='radio' name='forneceCastracao' title='forneceCastracao' value='N'></input><label for='forneceCastracao'>Não</label></td></tr></tbody></table>";
         forneceCast.classList.remove("invisible");
     } else {
         forneceCast.classList.add("invisible");
@@ -139,4 +139,23 @@ function testarImg() {
         }
     }
 
+}
+
+function removerFotoAnterior(fotoAnterior) {
+    var foto = document.getElementById("foto");
+    var fotoPet = document.getElementById("foto-pet")
+    if (foto.value != "") {
+        let reader = new FileReader();
+        reader.onload = () => {
+            fotoPet.classList.remove("invisible")
+            fotoPet.src = reader.result;
+        }
+        reader.readAsDataURL(foto.files[0])
+    } else {
+        if (fotoAnterior == "") {
+            fotoPet.classList.add("invisible")
+        } else {
+            fotoPet.src = fotoAnterior;
+        }
+    }
 }
