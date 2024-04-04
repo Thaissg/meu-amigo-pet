@@ -24,7 +24,7 @@ class LoginController extends Controller
             $this->loggedUser = $_SESSION['user'];
     }
 
-    /** 
+    /**
      * Função que coloca o usuário na home page do site
      */
     public function home(): void
@@ -133,7 +133,6 @@ class LoginController extends Controller
                     $_POST['foto']
                 );
 
-                $size = $_FILES["foto"]["size"];
                 if ($_POST["foto"] != "") {
                     if ($_FILES["foto"]["error"] == 0) {
                         $str = '';
@@ -151,7 +150,7 @@ class LoginController extends Controller
                     }
                     if ($_FILES["foto"]["error"] == 0) {
                         $pet->salvar();
-                        header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!&id=' . $pet->__get('id') . '&size=' . $size);
+                        header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!&id=' . $pet->__get('id'));
                     } else {
                         if ($_FILES["foto"]["error"] == 1 || $_FILES["foto"]["error"] == 2) {
                             $msgErro = 'Arquivo de imagem muito grande!';
@@ -162,12 +161,90 @@ class LoginController extends Controller
                     }
                 } else {
                     $pet->salvar();
-                    header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!&id=' . $pet->__get('id') . '&size=' . $size);
+                    header('Location: ' . BASEPATH . 'home?mensagem=Pet cadastrado com sucesso!&id=' . $pet->__get('id'));
                 }
 
 
             } catch (\Exception $e) {
                 header('Location: ' . BASEPATH . 'cadastroPet?email=' . $_POST['nome'] . '&mensagem=' . $e->getMessage());
+                echo ($e->getMessage());
+            }
+        }
+
+    }
+
+    public function atualizarPet(): void
+    {
+        if ($_SESSION['user']->__get('tipo') != 'doador') {
+            header('Location: ' . BASEPATH . 'home?mensagem=Usuário não tem permissão para atualizar pet!');
+        } else {
+            try {
+                $dados = ['nome', 'genero', 'castrado', 'forneceCastracao', 'especie', 'dataNascimento', 'dataResgate', 'custoMensal', 'historia', 'foto'];
+                for ($i = 0; $i < count($dados); $i++) {
+                    if (!isset ($_POST[$dados[$i]])) {
+                        $_POST[$dados[$i]] = "";
+                    }
+                }
+                $doencas = [];
+                if (isset ($_POST['doencas'])) {
+                    if (is_array($_POST['doencas'])) {
+                        foreach ($_POST['doencas'] as $doenca) {
+                            array_push($doencas, $doenca);
+                        }
+                    }
+                }
+
+                $pet = new Pet(
+                    $_SESSION['user']->__get('id'),
+                    $_POST['nome'],
+                    $_POST['genero'],
+                    $_POST['castrado'],
+                    $_POST['forneceCastracao'],
+                    $_POST['especie'],
+                    $_POST['dataNascimento'],
+                    $_POST['dataResgate'],
+                    $doencas,
+                    $_POST['custoMensal'],
+                    $_POST['historia'],
+                    $_POST['foto']
+                );
+
+                $pet->__set('id', $_POST['idPet']);
+
+                if ($_FILES["foto"]["name"]!="") {
+                    if ($_FILES["foto"]["error"] == 0) {
+                        $str = '';
+                        foreach ($_FILES["foto"] as $chave => $valor) {
+                            $str = $str . ' &' . $chave . '=' . $valor;
+                        }
+                        $target_dir = "C:/wamp64/www/meu-amigo-pet/app/uploads/";
+                        $target_file = strtolower($target_dir . 'pet_' . $pet->__get('id') . '_' . str_replace(' ', '_', $_POST['nome']) . '_' . date("Y-m-d"));
+                        $imageFileType = strtolower(explode('.', $_FILES["foto"]['name'])[1]);
+                        $pet->__set('foto', $target_file . '.' . $imageFileType);
+                        $check = getimagesize($_FILES["foto"]["tmp_name"]);
+                        if ($check) {
+                            move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file . '.' . $imageFileType);
+                        }
+                    }
+                    if ($_FILES["foto"]["error"] == 0) {
+                        $pet->atualizar();
+                        header('Location: ' . BASEPATH . 'home?mensagem=Pet atualizado com sucesso!&id=' . $pet->__get('id'));
+                    } else {
+                        if ($_FILES["foto"]["error"] == 1 || $_FILES["foto"]["error"] == 2) {
+                            $msgErro = 'Arquivo de imagem muito grande!';
+                        } else {
+                            $msgErro = 'Erro inesperado ao fazer upload da imagem ou upload feito parcialmente!';
+                        }
+                        header('Location: ' . BASEPATH . 'home?mensagem=Erro no cadastro! Erro: ' . $_FILES["foto"]["error"] . ' - ' . $msgErro);
+                    }
+                } else {
+                    $pet->atualizar();
+                    header('Location: ' . BASEPATH . 'home?mensagem=Pet atualizado com sucesso!&id=' . $pet->__get('id'));
+                }
+
+
+            } catch (\Exception $e) {
+                header('Location: ' . BASEPATH . 'home?' . $_POST['idPet'] . '&mensagem=' . $e->getTrace()[0]['args'][0]);
                 echo ($e->getMessage());
             }
         }

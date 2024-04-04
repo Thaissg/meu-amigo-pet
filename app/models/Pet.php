@@ -77,9 +77,20 @@ class Pet
     /**
      *  Contrutor da classe, responsável por inicializar os dados.
      */
-    function __construct(int $idResponsavel,string $nome, string $genero, string $castrado, string $forneceCastracao, string $especie, string $dataNascimento,
-    string $dataResgate, array $doencas, string $custoMensal, string $historia, string $foto)
-    {
+    function __construct(
+        int $idResponsavel,
+        string $nome,
+        string $genero,
+        string $castrado,
+        string $forneceCastracao,
+        string $especie,
+        string $dataNascimento,
+        string $dataResgate,
+        array $doencas,
+        string $custoMensal,
+        string $historia,
+        string $foto
+    ) {
         $this->idResponsavel = $idResponsavel;
         $this->nome = $nome;
         $this->genero = $genero;
@@ -175,7 +186,7 @@ class Pet
         $stm->execute();
         $this->id = $stm->fetch()[0];
 
-        foreach ($this->doencas as $i => $value){
+        foreach ($this->doencas as $i => $value) {
             $nomeDoenca = $this->doencas[$i];
             $stm = $con->prepare
             ('INSERT INTO doencasPet (idPet, nomeDoenca) 
@@ -183,7 +194,80 @@ class Pet
             $stm->bindValue(':idPet', $this->id);
             $stm->bindValue(':nomeDoenca', $nomeDoenca);
             $stm->execute();
-        }       
+        }
+    }
+
+
+    public function atualizar(): void
+    {
+        $con = Database::getConnection();
+        $stm = $con->prepare
+        ('SELECT * FROM pets WHERE id = :id');
+        $stm->bindValue(':id', $this->id);
+        $stm->execute();
+        $resultado = $stm->fetch();
+        $dadosAtualizar = [];
+
+        foreach ($resultado as $chave => $valor) {
+            if (is_string($chave) && !empty($this->$chave) && $valor != $this->$chave) {
+                array_push($dadosAtualizar, $chave . " = '" . $this->$chave . "'");
+            }
+        }
+
+        $strDadosAtualizar = '';
+
+        for ($i = 0; $i < count($dadosAtualizar); $i++) {
+
+            if ($i != count($dadosAtualizar) - 1) {
+                $strDadosAtualizar = $strDadosAtualizar . $dadosAtualizar[$i] . ', ';
+            } else {
+                $strDadosAtualizar = $strDadosAtualizar . $dadosAtualizar[$i];
+            }
+        }
+
+        if ($strDadosAtualizar != '') {
+            $stm = $con->prepare
+            ("UPDATE pets SET $strDadosAtualizar WHERE id = :id");
+            $stm->bindValue(':id', $this->id);
+            $stm->execute();
+        }
+
+        $stm = $con->prepare
+        ('SELECT nomeDoenca FROM doencasPet WHERE idPet = :id');
+        $stm->bindValue(':id', $this->id);
+        $stm->execute();
+        $resultado = $stm->fetchAll();
+        $doencas = [];
+        foreach ($resultado as $doenca){
+            array_push($doencas,$doenca['nomeDoenca']);
+        }
+
+
+        $insert= array_diff($this->doencas, $doencas);
+        if (isset($insert)) {
+            foreach ($insert as $ins) {
+                $stm = $con->prepare
+                ('INSERT INTO doencasPet (idPet, nomeDoenca) 
+                    VALUES (:idPet, :nomeDoenca)');
+                $stm->bindValue(':idPet', $this->id);
+                $stm->bindValue(':nomeDoenca', $ins);
+                $stm->execute();
+            }
+        }
+
+        $delete = array_diff($doencas, $this->doencas);
+        if (isset($delete)) {
+            foreach ($delete as $del) {
+                $stm = $con->prepare
+                ('DELETE FROM doencasPet WHERE idPet = :id AND nomeDoenca = :nomeDoenca');
+                $stm->bindValue(':id', $this->id);
+                $stm->bindValue(':nomeDoenca', $del);
+                $stm->execute();
+            }
+        }
+
+        
+
     }
 
 
@@ -207,9 +291,20 @@ class Pet
             $stm->bindParam(':id', $id);
             $stm->execute();
             $resultadoDoencas = $stm->fetch();
-            $pet = new Pet($resultadoPet['idResponsavel'], $resultadoPet['nome'], $resultadoPet['genero'], $resultadoPet['castrado'], $resultadoPet['forneceCastracao'],
-            $resultadoPet['especie'], $resultadoPet['dataNascimento'],  $resultadoPet['dataResgate'], $resultadoDoencas['nomeDoenca'], $resultadoPet['cutoMensal'],
-            $resultadoPet['historia'], $resultadoPet['foto']);
+            $pet = new Pet(
+                $resultadoPet['idResponsavel'],
+                $resultadoPet['nome'],
+                $resultadoPet['genero'],
+                $resultadoPet['castrado'],
+                $resultadoPet['forneceCastracao'],
+                $resultadoPet['especie'],
+                $resultadoPet['dataNascimento'],
+                $resultadoPet['dataResgate'],
+                $resultadoDoencas['nomeDoenca'],
+                $resultadoPet['cutoMensal'],
+                $resultadoPet['historia'],
+                $resultadoPet['foto']
+            );
             return $pet;
         } else {
             return NULL;
@@ -234,9 +329,20 @@ class Pet
             $stm->bindParam(':id', $id);
             $stm->execute();
             $resultadoDoencas = $stm->fetch();
-            $pet = new Pet($resultadoPet['idResponsavel'], $resultadoPet['nome'], $resultadoPet['genero'], $resultadoPet['castrado'], $resultadoPet['forneceCastracao'],
-            $resultadoPet['especie'], $resultadoPet['dataNascimento'],  $resultadoPet['dataResgate'], $resultadoDoencas['nomeDoenca'], $resultadoPet['cutoMensal'],
-            $resultadoPet['historia'], $resultadoPet['foto']);
+            $pet = new Pet(
+                $resultadoPet['idResponsavel'],
+                $resultadoPet['nome'],
+                $resultadoPet['genero'],
+                $resultadoPet['castrado'],
+                $resultadoPet['forneceCastracao'],
+                $resultadoPet['especie'],
+                $resultadoPet['dataNascimento'],
+                $resultadoPet['dataResgate'],
+                $resultadoDoencas['nomeDoenca'],
+                $resultadoPet['cutoMensal'],
+                $resultadoPet['historia'],
+                $resultadoPet['foto']
+            );
             return $pet;
         } else {
             return NULL;
@@ -266,9 +372,20 @@ class Pet
             $stm->bindParam(':id', $id);
             $stm->execute();
             $resultadoDoencas = $stm->fetch();
-            $pet = new Pet($resultadoPet['idResponsavel'], $resultadoPet['nome'], $resultadoPet['genero'], $resultadoPet['castrado'], $resultadoPet['forneceCastracao'],
-            $resultadoPet['especie'], $resultadoPet['dataNascimento'],  $resultadoPet['dataResgate'], $resultadoDoencas['nomeDoenca'], $resultadoPet['cutoMensal'],
-            $resultadoPet['historia'], $resultadoPet['foto']);
+            $pet = new Pet(
+                $resultadoPet['idResponsavel'],
+                $resultadoPet['nome'],
+                $resultadoPet['genero'],
+                $resultadoPet['castrado'],
+                $resultadoPet['forneceCastracao'],
+                $resultadoPet['especie'],
+                $resultadoPet['dataNascimento'],
+                $resultadoPet['dataResgate'],
+                $resultadoDoencas['nomeDoenca'],
+                $resultadoPet['cutoMensal'],
+                $resultadoPet['historia'],
+                $resultadoPet['foto']
+            );
             $pet->id = $animal['id'];
 
             array_push($pets, $pet);

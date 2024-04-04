@@ -28,6 +28,7 @@ Route::add('/editarPet', fn () => $controller->visualizar('editarPet'), ['get'])
 
 Route::add('/home', fn () => $controller->home(), ['post']);
 
+Route::add('/editarPet', fn () => $controller->atualizarPet(), ['post']);
 Route::add('/cadastroPet', fn() => $controller->cadastrarPet(), ['post']);
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
 Route::add('/login', fn() => $controller->login(), ['post']);

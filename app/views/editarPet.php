@@ -36,10 +36,22 @@
                 header('Location: ' . BASEPATH . "home?mensagem=Usuário não é responsável por esse pet!");
             }
             ?>
-            <form method="POST" name="editarPet__Form">
+            <form method="POST" id="editarPet__Form" class="editarPet__Form" enctype="multipart/form-data">
                 <fieldset class="Dados">
                     <table>
                         <tbody>
+                            <tr>
+                                <td>
+                                    <label for="idPet">ID</label>
+                                    <input class="readonly" type="text" name="idPet" value=<?=$petId?> readonly="readonly">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="nome">Nome/apelido</label>
+                                    <input required type="text" name="nome" id="nome" value=<?= $pet['nome'] ?>>
+                                </td>
+                            </tr>
                             <tr class="cadastroPet">
                                 <td>
                                     <fieldset class="Castrado">
@@ -73,14 +85,7 @@
                                     </fieldset>
                                     <fieldset id="forneceCastracao" class="invisible"></fieldset>
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label for="nome">Nome/apelido</label>
-                                    <input required type="text" name="nome" id="nome" value=<?= $pet['nome'] ?>>
-                                </td>
-                            </tr>
+                            </tr>                            
                             <tr class="cadastroPet">
                                 <td>
                                     <fieldset>

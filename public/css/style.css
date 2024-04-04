@@ -174,6 +174,7 @@ fieldset {
   padding: 0.5rem;
   width: min-content;
   justify-items: center;
+  margin: 0.5rem;
 }
 
 legend {
@@ -257,6 +258,13 @@ td {
   display: inline-grid;
   justify-items: center;
   align-items: center;
+}
+
+.readonly {
+  background-color:#a7a7a7;
+  border: none;
+  width: 15%;
+  text-align: center;
 }
 
 /* alertas ------------------------------------------- */
