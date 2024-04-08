@@ -16,19 +16,25 @@ use App\Controllers\LoginController;
 
 Database::createSchema();
 
+if (!file_exists('app/uploads')) {
+    $path = 'app/uploads';
+    mkdir($path);
+    copy('public/images/foto_padrao.png', "$path/foto_padrao.png");
+}
+
 $controller = new LoginController();
 
-Route::add('/home', fn () => $controller->home(), ['get']);
-Route::add('/adote', fn () => $controller->visualizar('adote'), ['get']);
-Route::add('/ongs-e-protetoras', fn () => $controller->visualizar('ongs-e-protetoras'), ['get']);
-Route::add('/login', fn () => $controller->visualizar('login'), ['get']);
+Route::add('/home', fn() => $controller->home(), ['get']);
+Route::add('/adote', fn() => $controller->visualizar('adote'), ['get']);
+Route::add('/ongs-e-protetoras', fn() => $controller->visualizar('ongs-e-protetoras'), ['get']);
+Route::add('/login', fn() => $controller->visualizar('login'), ['get']);
 Route::add('/cadastro', fn() => $controller->visualizar('cadastro'), ['get']);
-Route::add('/cadastroPet', fn () => $controller->visualizar('cadastroPet'), ['get']);
-Route::add('/editarPet', fn () => $controller->visualizar('editarPet'), ['get']);
+Route::add('/cadastroPet', fn() => $controller->visualizar('cadastroPet'), ['get']);
+Route::add('/editarPet', fn() => $controller->visualizar('editarPet'), ['get']);
 
-Route::add('/home', fn () => $controller->home(), ['post']);
+Route::add('/home', fn() => $controller->home(), ['post']);
 
-Route::add('/editarPet', fn () => $controller->atualizarPet(), ['post']);
+Route::add('/editarPet', fn() => $controller->atualizarPet(), ['post']);
 Route::add('/cadastroPet', fn() => $controller->cadastrarPet(), ['post']);
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
 Route::add('/login', fn() => $controller->login(), ['post']);
