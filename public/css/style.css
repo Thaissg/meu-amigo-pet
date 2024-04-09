@@ -145,9 +145,10 @@ ion-icon {
 
 
 .icones{
-  display: block;
+  display: flex;
   text-align: center;
   margin-top: 5%;
+  align-content: center;
 }
 
 @media (max-width: 952px) {

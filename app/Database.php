@@ -13,7 +13,8 @@ class Database
 
     static public function getConnection(): PDO
     {
-        if (isset(self::$con)) return self::$con;
+        if (isset(self::$con))
+            return self::$con;
 
         self::$con = new PDO('sqlite:meu-amigo-pet-db.sqlite');
         self::$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -47,6 +48,7 @@ class Database
             custoMensal FLOAT,
             historia VARCHAR(255),
             foto VARCHAR(255),
+            disponivel BOOLEAN NOT NULL,
             FOREIGN KEY (idResponsavel) REFERENCES usuarios(id)
         );
         CREATE TABLE IF NOT EXISTS doencasPet (
@@ -54,6 +56,22 @@ class Database
             nomeDoenca INTEGER NOT NULL,
             FOREIGN KEY (idPet) REFERENCES pets(id),
             PRIMARY KEY (idPet,nomeDoenca)
+        );
+        CREATE TABLE IF NOT EXISTS obitos (
+            idPet INTEGER NOT NULL,
+            dataObito DATE NOT NULL,
+            FOREIGN KEY (idPet) REFERENCES pets(id),
+            PRIMARY KEY (idPet,dataObito)
+        );
+        CREATE TABLE IF NOT EXISTS adocao (
+            idDoador INTEGER NOT NULL,
+            idAdotante INTEGER NOT NULL,
+            idPet INTEGER NOT NULL,
+            dataAdocao DATE NOT NULL,
+            FOREIGN KEY (idPet) REFERENCES pets(id),
+            FOREIGN KEY (idAdotante) REFERENCES usuarios(id),
+            FOREIGN KEY (idDoador) REFERENCES usuarios(id),
+            PRIMARY KEY (idPet,idAdotante,idDoador,dataAdocao)
         );
         ');
 
