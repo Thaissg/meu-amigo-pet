@@ -93,11 +93,14 @@ h1 {
 .pets {
   display: flex;
   height: 100%;
+  flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .item-pet {
-  width: 21%;
+  width: auto;
+  max-width: 21%;
   border-radius: 10px;
   border: solid black;
   padding: 2%;
@@ -161,6 +164,15 @@ ion-icon {
   }
 }
 
+a.cadastre-se {
+  color: var(--header-bg-color)
+}
+a.cadastre-se:visited {
+  color: var(--header-bg-color)
+}
+a.cadastre-se:hover {
+  color: var(--main-bg-color)
+}
 
 /* Forms --------------------------------------------------*/
 form,
@@ -173,7 +185,7 @@ form,
 fieldset {
   display: grid;
   padding: 0.5rem;
-  width: min-content;
+  width: max-content;
   justify-items: center;
   margin: 0.5rem;
 }

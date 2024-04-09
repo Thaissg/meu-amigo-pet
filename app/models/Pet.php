@@ -75,6 +75,12 @@ class Pet
 
 
     /**
+     * @var bool Identifica se o pet está disponível para adoção
+     */
+    private $disponivel;
+
+
+    /**
      *  Contrutor da classe, responsável por inicializar os dados.
      */
     function __construct(
@@ -89,7 +95,8 @@ class Pet
         array $doencas,
         string $custoMensal,
         string $historia,
-        string $foto
+        string $foto,
+        bool $disponivel
     ) {
         $this->idResponsavel = $idResponsavel;
         $this->nome = $nome;
@@ -103,6 +110,7 @@ class Pet
         $this->custoMensal = $custoMensal;
         $this->historia = $historia;
         $this->foto = $foto;
+        $this->disponivel = $disponivel;
 
         $con = Database::getConnection();
         $stm = $con->prepare('SELECT id FROM pets ORDER BY 1 DESC LIMIT 1');
@@ -145,8 +153,8 @@ class Pet
     {
         $con = Database::getConnection();
         $stm = $con->prepare
-        ('INSERT INTO pets (nome, genero, castrado, forneceCastracao, especie, dataNascimento, dataResgate, custoMensal, historia, foto, idResponsavel) 
-        VALUES (:nome, :genero, :castrado, :forneceCastracao, :especie, :dataNascimento, :dataResgate, :custoMensal, :historia, :foto, :idResponsavel)');
+        ('INSERT INTO pets (nome, genero, castrado, forneceCastracao, especie, dataNascimento, dataResgate, custoMensal, historia, foto, idResponsavel, disponivel) 
+        VALUES (:nome, :genero, :castrado, :forneceCastracao, :especie, :dataNascimento, :dataResgate, :custoMensal, :historia, :foto, :idResponsavel, :disponivel)');
         $stm->bindValue(':nome', $this->nome);
         $stm->bindValue(':genero', $this->genero);
         $stm->bindValue(':castrado', $this->castrado);
@@ -158,6 +166,7 @@ class Pet
         $stm->bindValue(':historia', $this->historia);
         $stm->bindValue(':foto', $this->foto);
         $stm->bindValue(':idResponsavel', $this->idResponsavel);
+        $stm->bindValue(':disponivel', $this->disponivel);
         $stm->execute();
 
         $stm = $con->prepare
@@ -171,7 +180,8 @@ class Pet
         AND custoMensal = :custoMensal
         AND historia = :historia
         AND foto = :foto
-        AND idResponsavel = :idResponsavel');
+        AND idResponsavel = :idResponsavel 
+        AND disponivel = :disponivel');
         $stm->bindValue(':nome', $this->nome);
         $stm->bindValue(':genero', $this->genero);
         $stm->bindValue(':castrado', $this->castrado);
@@ -183,6 +193,7 @@ class Pet
         $stm->bindValue(':historia', $this->historia);
         $stm->bindValue(':foto', $this->foto);
         $stm->bindValue(':idResponsavel', $this->idResponsavel);
+        $stm->bindValue(':disponivel', $this->disponivel);
         $stm->execute();
         $this->id = $stm->fetch()[0];
 
@@ -238,12 +249,12 @@ class Pet
         $stm->execute();
         $resultado = $stm->fetchAll();
         $doencas = [];
-        foreach ($resultado as $doenca){
-            array_push($doencas,$doenca['nomeDoenca']);
+        foreach ($resultado as $doenca) {
+            array_push($doencas, $doenca['nomeDoenca']);
         }
 
 
-        $insert= array_diff($this->doencas, $doencas);
+        $insert = array_diff($this->doencas, $doencas);
         if (isset($insert)) {
             foreach ($insert as $ins) {
                 $stm = $con->prepare
@@ -265,14 +276,11 @@ class Pet
                 $stm->execute();
             }
         }
-
-        
-
     }
 
 
     /**
-     *  Função que busca por um pet a partir do email fornecido.
+     *  Função que busca por um pet a partir do id do pet e do id do responsável fornecido.
      *  Se não existir, emite um erro.
      */
     static public function buscarPet($idResponsavel, $id): ?Pet
@@ -303,7 +311,8 @@ class Pet
                 $resultadoDoencas['nomeDoenca'],
                 $resultadoPet['cutoMensal'],
                 $resultadoPet['historia'],
-                $resultadoPet['foto']
+                $resultadoPet['foto'],
+                $resultadoPet['disponivel']
             );
             return $pet;
         } else {
@@ -341,7 +350,8 @@ class Pet
                 $resultadoDoencas['nomeDoenca'],
                 $resultadoPet['cutoMensal'],
                 $resultadoPet['historia'],
-                $resultadoPet['foto']
+                $resultadoPet['foto'],
+                $resultadoPet['disponivel']
             );
             return $pet;
         } else {
@@ -384,7 +394,8 @@ class Pet
                 $resultadoDoencas['nomeDoenca'],
                 $resultadoPet['cutoMensal'],
                 $resultadoPet['historia'],
-                $resultadoPet['foto']
+                $resultadoPet['foto'],
+                $resultadoPet['disponivel']
             );
             $pet->id = $animal['id'];
 

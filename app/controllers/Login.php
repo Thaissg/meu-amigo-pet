@@ -130,10 +130,11 @@ class LoginController extends Controller
                     $doencas,
                     $_POST['custoMensal'],
                     $_POST['historia'],
-                    $_POST['foto']
+                    $_POST['foto'],
+                    true
                 );
 
-                if ($_POST["foto"] != "") {
+                if ($_FILES["foto"]["name"]!="") {
                     if ($_FILES["foto"]["error"] == 0) {
                         $str = '';
                         foreach ($_FILES["foto"] as $chave => $valor) {
@@ -206,7 +207,8 @@ class LoginController extends Controller
                     $doencas,
                     $_POST['custoMensal'],
                     $_POST['historia'],
-                    $_POST['foto']
+                    $_POST['foto'],
+                    true
                 );
 
                 $pet->__set('id', $_POST['idPet']);
@@ -274,7 +276,7 @@ class LoginController extends Controller
         if (isset ($usuario)) {
             $this->view('users/info', [$usuario]);
         } else {
-            header('Location: ' . BASEPATH . 'login?mensagem=Usuario no encontrado');
+            header('Location: ' . BASEPATH . 'login?mensagem=Usuario não encontrado');
         }
     }
 

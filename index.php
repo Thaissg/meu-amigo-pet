@@ -31,6 +31,7 @@ Route::add('/login', fn() => $controller->visualizar('login'), ['get']);
 Route::add('/cadastro', fn() => $controller->visualizar('cadastro'), ['get']);
 Route::add('/cadastroPet', fn() => $controller->visualizar('cadastroPet'), ['get']);
 Route::add('/editarPet', fn() => $controller->visualizar('editarPet'), ['get']);
+Route::add('/excluirPet', fn() => $controller->visualizar('excluirPet'), ['get']);
 
 Route::add('/home', fn() => $controller->home(), ['post']);
 

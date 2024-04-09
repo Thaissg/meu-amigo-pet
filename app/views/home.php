@@ -11,6 +11,7 @@
 <?php
 
 use App\Database;
+
 $con = Database::getConnection();
 $filtro = '';
 $filtros = [];
@@ -27,7 +28,7 @@ if (isset($_POST['especie'])) {
 }
 
 if (count($filtros) > 0) {
-  $filtro = ' WHERE';
+  $filtro = ' AND';
   foreach ($filtros as $filt) {
     if ($filt == $filtros[0]) {
       $filtro = $filtro . $filt;
@@ -38,7 +39,7 @@ if (count($filtros) > 0) {
 }
 
 
-$stm = $con->prepare('SELECT * FROM pets' . $filtro . ';');
+$stm = $con->prepare('SELECT * FROM pets WHERE disponivel = true' . $filtro . ';');
 $stm->execute();
 $pets = $stm->fetchAll();
 ?>
@@ -145,35 +146,59 @@ $pets = $stm->fetchAll();
             $castrado = 'Não';
           }
           ?>
-          <div class='item-pet dadosPet'>
-            <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>" alt="Foto do pet <?= $pet['nome'] ?>">
-            <p>Nome:
-              <?= $pet['nome'] ?>
-            </p>
-            <p>Gênero:
-              <?= $genero ?>
-            </p>
-            <p>Castrado:
-              <?= $castrado ?>
-            </p>
-            <?php
-            if ($pet['forneceCastracao'] != "") {
-              if ($pet['forneceCastracao'] == 'S') {
-                $forneceCastracao = 'Sim';
-              } else {
-                $forneceCastracao = 'Não';
+          <div class='item-pet'>
+            <div class='dadosPet'>
+              <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>" alt="Foto do pet <?= $pet['nome'] ?>">
+              <p>Nome:
+                <?= $pet['nome'] ?>
+              </p>
+              <p>Gênero:
+                <?= $genero ?>
+              </p>
+              <p>Castrado:
+                <?= $castrado ?>
+              </p>
+              <?php
+              if ($pet['forneceCastracao'] != "") {
+                if ($pet['forneceCastracao'] == 'S') {
+                  $forneceCastracao = 'Sim';
+                } else {
+                  $forneceCastracao = 'Não';
+                }
+                ?>
+                <?= "<p>Fornece Castração: " . $forneceCastracao . ' </p>' ?>
+                <?php
               }
               ?>
-              <?= "<p>Fornece Castração: " . $forneceCastracao . ' </p>' ?>
-              <?php
-            }
-            ?>
-            <p>Espécie:
-              <?= $pet['especie'] ?>
-            </p>
-            <?php $today = new DateTimeImmutable(date("Y-m-d"));
-            if ($pet['dataNascimento'] != "") {
-              $idade = $today->diff(new DateTimeImmutable($pet['dataNascimento']));
+              <p>Espécie:
+                <?= $pet['especie'] ?>
+              </p>
+              <?php $today = new DateTimeImmutable(date("Y-m-d"));
+              if ($pet['dataNascimento'] != "") {
+                $idade = $today->diff(new DateTimeImmutable($pet['dataNascimento']));
+                if ($idade->y > 0) {
+                  if ($idade->y == 1) {
+                    $idade = $idade->format('%y ano');
+                  } else {
+                    $idade = $idade->format('%y anos');
+                  }
+                } elseif ($idade->m > 0) {
+                  if ($idade->m == 1) {
+                    $idade = $idade->format('%m mês');
+                  } else {
+                    $idade = $idade->format('%m meses');
+                  }
+                } else {
+                  if ($idade->d == 1) {
+                    $idade = $idade->format('%a dia');
+                  } else {
+                    $idade = $idade->format('%a dias');
+                  }
+                }
+                ?>
+                <?= "<p> Idade: " . $idade . ' </p>' ?>
+              <?php } ?>
+              <?php $idade = $today->diff(new DateTimeImmutable($pet['dataResgate']));
               if ($idade->y > 0) {
                 if ($idade->y == 1) {
                   $idade = $idade->format('%y ano');
@@ -194,39 +219,17 @@ $pets = $stm->fetchAll();
                 }
               }
               ?>
-              <?= "<p> Idade: " . $idade . ' </p>' ?>
-            <?php } ?>
-            <?php $idade = $today->diff(new DateTimeImmutable($pet['dataResgate']));
-            if ($idade->y > 0) {
-              if ($idade->y == 1) {
-                $idade = $idade->format('%y ano');
-              } else {
-                $idade = $idade->format('%y anos');
-              }
-            } elseif ($idade->m > 0) {
-              if ($idade->m == 1) {
-                $idade = $idade->format('%m mês');
-              } else {
-                $idade = $idade->format('%m meses');
-              }
-            } else {
-              if ($idade->d == 1) {
-                $idade = $idade->format('%a dia');
-              } else {
-                $idade = $idade->format('%a dias');
-              }
-            }
-            ?>
-            <?= "<p>Resgatado a " . $idade . ' </p>' ?>
-            <?php if ($pet['custoMensal'] != "") { ?>
-              <?= "<p> Custo mensal: " . $pet['custoMensal'] . ' </p>' ?>
-            <?php } ?>
-            <?php if ($pet['historia'] != "") { ?>
-              <?= "<p> História: " . $pet['historia'] . ' </p>' ?>
-            <?php } ?>
-            <p>Responsável:
-              <?= $reponsavel['nome'] ?>
-            </p>
+              <?= "<p>Resgatado a " . $idade . ' </p>' ?>
+              <?php if ($pet['custoMensal'] != "") { ?>
+                <?= "<p> Custo mensal: " . $pet['custoMensal'] . ' </p>' ?>
+              <?php } ?>
+              <?php if ($pet['historia'] != "") { ?>
+                <?= "<p> História: " . $pet['historia'] . ' </p>' ?>
+              <?php } ?>
+              <p>Responsável:
+                <?= $reponsavel['nome'] ?>
+              </p>
+            </div>
           </div>
           <?php
         }

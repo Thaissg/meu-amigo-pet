@@ -62,6 +62,7 @@ nav ul li a button{
 a:hover, button:hover{
 	background: var(--main-text-color);
 	transition: .5s;
+	border-radius: 5px;
 }
 
 a:visited{

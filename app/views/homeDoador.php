@@ -28,7 +28,7 @@
         use App\Database;
 
         $con = Database::getConnection();
-        $stm = $con->prepare('SELECT * FROM pets WHERE idResponsavel = :idResponsavel;');
+        $stm = $con->prepare('SELECT * FROM pets WHERE idResponsavel = :idResponsavel AND disponivel = true;');
         $stm->bindValue(':idResponsavel', $_SESSION['user']->__get('id'));
         $stm->execute();
         $pets = $stm->fetchAll();
@@ -50,58 +50,49 @@
           }
           ?>
           <div class='item-pet'>
-            <table>
-              <tr>
-                <td>
-                  <div class="dadosPet">
-                    <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>"
-                      alt="Foto do pet <?= $pet['nome'] ?>">
-                    <div class="icones">
-                      <a href="<?= BASEPATH ?>editarPet?<?= $pet['id']?>"><ion-icon name="create"></ion-icon></a>
-                      <a href=""><ion-icon name="trash"></ion-icon></a>
-                    </div>
-                    <p>Nome:
-                      <?= $pet['nome'] ?>
-                    </p>
-                    <p>Gênero:
-                      <?= $genero ?>
-                    </p>
-                    <p>Castrado:
-                      <?= $castrado ?>
-                    </p>
-                    <?php
-                    if ($pet['forneceCastracao'] != "") {
-                      if ($pet['forneceCastracao'] == 'S') {
-                        $forneceCastracao = 'Sim';
-                      } else {
-                        $forneceCastracao = 'Não';
-                      }
-                      ?>
-                      <?= "<p>Fornece Castração: " . $forneceCastracao . ' </p>' ?>
-                      <?php
-                    }
-                    ?>
-                    <p>Espécie:
-                    <?= $pet['especie'] ?>
-                    </p>
-                    <?php if ($pet['dataNascimento'] != "") { ?>
-                      <?= "<p> Data de nacimento: " . $pet['dataNascimento'] . ' </p>' ?>
-                    <?php } ?>
-                    <p>Data do resgate:
-                    <?= $pet['dataResgate'] ?>
-                    </p>
-                    <?php if ($pet['custoMensal'] != "") { ?>
-                      <?= "<p> Custo mensal: " . $pet['custoMensal'] . ' </p>' ?>
-                    <?php } ?>
-                    <?php if ($pet['historia'] != "") { ?>
-                      <?= "<p> História: " . $pet['historia'] . ' </p>' ?>
-                    <?php } ?>
-                  </div>
-                </td>
-
-
-              </tr>
-            </table>
+            <div class="dadosPet">
+              <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>" alt="Foto do pet <?= $pet['nome'] ?>">
+              <div class="icones">
+                <a href="<?= BASEPATH ?>editarPet?<?= $pet['id'] ?>"><ion-icon name="create"></ion-icon></a>
+                <a href="<?= BASEPATH ?>excluirPet?<?= $pet['id'] ?>"><ion-icon name="trash"></ion-icon></a>
+              </div>
+              <p>Nome:
+                <?= $pet['nome'] ?>
+              </p>
+              <p>Gênero:
+                <?= $genero ?>
+              </p>
+              <p>Castrado:
+                <?= $castrado ?>
+              </p>
+              <?php
+              if ($pet['forneceCastracao'] != "") {
+                if ($pet['forneceCastracao'] == 'S') {
+                  $forneceCastracao = 'Sim';
+                } else {
+                  $forneceCastracao = 'Não';
+                }
+                ?>
+                <?= "<p>Fornece Castração: " . $forneceCastracao . ' </p>' ?>
+                <?php
+              }
+              ?>
+              <p>Espécie:
+                <?= $pet['especie'] ?>
+              </p>
+              <?php if ($pet['dataNascimento'] != "") { ?>
+                <?= "<p> Data de nacimento: " . $pet['dataNascimento'] . ' </p>' ?>
+              <?php } ?>
+              <p>Data do resgate:
+                <?= $pet['dataResgate'] ?>
+              </p>
+              <?php if ($pet['custoMensal'] != "") { ?>
+                <?= "<p> Custo mensal: " . $pet['custoMensal'] . ' </p>' ?>
+              <?php } ?>
+              <?php if ($pet['historia'] != "") { ?>
+                <?= "<p> História: " . $pet['historia'] . ' </p>' ?>
+              <?php } ?>
+            </div>
           </div>
           <?php
         }

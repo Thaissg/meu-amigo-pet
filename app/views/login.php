@@ -56,7 +56,7 @@
                     <label for="password">Senha</label>
                     <input required type="password" name="password" id="password">
                 </div>
-                <p>Não possui conta? <a href="<?= BASEPATH ?>cadastro">Cadastre-se</a> </p>
+                <p>Não possui conta? <a href="<?= BASEPATH ?>cadastro" class="cadastre-se">Cadastre-se</a> </p>
                 <button class="btn" type="submit">Entrar</button>
             </form>
         </section>
