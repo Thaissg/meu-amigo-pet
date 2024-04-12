@@ -6,7 +6,7 @@ use App\Database;
 use ArrayObject;
 
 /**
- * Classe reponsável por representar os dados de um usuário na aplicação
+ * Classe reponsável por representar os dados de um pet na aplicação
  */
 class Pet
 {
@@ -278,6 +278,22 @@ class Pet
         }
     }
 
+    public function excluir($dadosPost): void{
+        $con = Database::getConnection();
+        
+        
+        if ($dadosPost[1] == "obito"){
+            $stm = $con->prepare
+            ('INSERT INTO obitos (idPet,dataObito) VALUES (:id, :dataObito);');
+            $stm->bindValue(':id', $this->id);
+            $stm->bindValue(':dataObito', $dadosPost[2]);
+            $stm->execute();
+        }
+        $stm = $con->prepare
+        ('UPDATE pets SET disponivel = false WHERE id = :id');
+        $stm->bindValue(':id', $this->id);
+        $stm->execute();
+    }
 
     /**
      *  Função que busca por um pet a partir do id do pet e do id do responsável fornecido.
@@ -314,6 +330,7 @@ class Pet
                 $resultadoPet['foto'],
                 $resultadoPet['disponivel']
             );
+            $pet -> __set('id', $id);
             return $pet;
         } else {
             return NULL;
@@ -337,7 +354,11 @@ class Pet
             $stm = $con->prepare('SELECT * FROM doencasPet WHERE idPet = :id');
             $stm->bindParam(':id', $id);
             $stm->execute();
-            $resultadoDoencas = $stm->fetch();
+            $resultadoDoencas = $stm->fetchAll();
+            $doencas = [];
+            foreach ($resultadoDoencas as $doenca){
+                array_push($doencas, $doenca['nomeDoenca']);
+            }
             $pet = new Pet(
                 $resultadoPet['idResponsavel'],
                 $resultadoPet['nome'],
@@ -347,12 +368,13 @@ class Pet
                 $resultadoPet['especie'],
                 $resultadoPet['dataNascimento'],
                 $resultadoPet['dataResgate'],
-                $resultadoDoencas['nomeDoenca'],
-                $resultadoPet['cutoMensal'],
+                $doencas,
+                $resultadoPet['custoMensal'],
                 $resultadoPet['historia'],
                 $resultadoPet['foto'],
                 $resultadoPet['disponivel']
             );
+            $pet -> __set('id', $id);
             return $pet;
         } else {
             return NULL;

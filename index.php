@@ -32,10 +32,12 @@ Route::add('/cadastro', fn() => $controller->visualizar('cadastro'), ['get']);
 Route::add('/cadastroPet', fn() => $controller->visualizar('cadastroPet'), ['get']);
 Route::add('/editarPet', fn() => $controller->visualizar('editarPet'), ['get']);
 Route::add('/excluirPet', fn() => $controller->visualizar('excluirPet'), ['get']);
+Route::add('/registrarAdocao', fn() => $controller->visualizar('registrarAdocao'), ['get']);
 
 Route::add('/home', fn() => $controller->home(), ['post']);
 
 Route::add('/editarPet', fn() => $controller->atualizarPet(), ['post']);
+Route::add('/excluirPet', fn() => $controller->excluirPet(), ['post']);
 Route::add('/cadastroPet', fn() => $controller->cadastrarPet(), ['post']);
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
 Route::add('/login', fn() => $controller->login(), ['post']);

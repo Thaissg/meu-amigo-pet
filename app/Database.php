@@ -68,6 +68,7 @@ class Database
             idAdotante INTEGER NOT NULL,
             idPet INTEGER NOT NULL,
             dataAdocao DATE NOT NULL,
+            devolvido BOOLEAN NOT NULL,
             FOREIGN KEY (idPet) REFERENCES pets(id),
             FOREIGN KEY (idAdotante) REFERENCES usuarios(id),
             FOREIGN KEY (idDoador) REFERENCES usuarios(id),

@@ -126,7 +126,8 @@ p {
   text-align: center;
 }
 
-.cadastrarPet {
+.cadastrarPet, 
+.registrarAdocao {
   margin: 2%;
   background-color: var(--header-bg-color);
   min-width: fit-content;

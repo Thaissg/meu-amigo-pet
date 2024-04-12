@@ -22,7 +22,11 @@
       ?>
     </div>
     <div class="container">
-      <div class="cadastrarPet"><a href="<?= BASEPATH ?>cadastroPet">Cadastrar pet</a></div>
+      <div class="emLinha">
+        <div class="cadastrarPet"><a href="<?= BASEPATH ?>cadastroPet">Cadastrar pet</a></div>
+        <div class="cadastrarPet"><a href="<?= BASEPATH ?>registrarDevolucao">Registrar Devolução</a></div>
+      </div>
+      
       <div class='pets'>
         <?php
         use App\Database;
@@ -92,6 +96,7 @@
               <?php if ($pet['historia'] != "") { ?>
                 <?= "<p> História: " . $pet['historia'] . ' </p>' ?>
               <?php } ?>
+              <div class="registrarAdocao"><a href="<?= BASEPATH ?>registrarAdocao?<?= $pet['id'] ?>">Registrar Adoção</a></div>
             </div>
           </div>
           <?php

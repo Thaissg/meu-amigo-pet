@@ -20,7 +20,7 @@ class LoginController extends Controller
     function __construct()
     {
         session_start();
-        if (isset ($_SESSION['user']))
+        if (isset($_SESSION['user']))
             $this->loggedUser = $_SESSION['user'];
     }
 
@@ -29,7 +29,7 @@ class LoginController extends Controller
      */
     public function home(): void
     {
-        if (isset ($_SESSION['user'])) {
+        if (isset($_SESSION['user'])) {
             if ($_SESSION['user']->__get('tipo') == 'doador') {
                 $this->view('homeDoador');
             } else {
@@ -97,6 +97,53 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     *  Função responsável por renderizar as informações do usuário (se estiver logado).
+     */
+    public function info(): void
+    {
+        if (!$this->loggedUser) {
+            header('Location: ' . BASEPATH . 'login?mensagem=Você precisa se identificar primeiro');
+            return;
+        }
+        $this->view('users/info', $this->loggedUser);
+    }
+
+    /**
+     *  Função responsável por renderizar as informações de qualquer usuário.
+     */
+    public function publicInfo($id, $tipo): void
+    {
+        $usuario = Usuario::buscarUsuarioPorId($id, $tipo);
+
+        if (isset($usuario)) {
+            $this->view('users/info', [$usuario]);
+        } else {
+            header('Location: ' . BASEPATH . 'login?mensagem=Usuario não encontrado');
+        }
+    }
+
+    /**
+     *  Função que remove o usuário da seção (deslogar)
+     */
+    public function sair(): void
+    {
+        if (!$this->loggedUser) {
+            header('Location: ' . BASEPATH . 'login?mensagem=Você precisa se identificar primeiro');
+            return;
+        }
+        unset($_SESSION['user']);
+        header('Location: ' . BASEPATH . 'login?mensagem=Usuário deslogado com sucesso!');
+    }
+
+    public function visualizar($view): void
+    {
+        $this->view($view);
+    }
+
+
+    // CRUD de pets
+
     public function cadastrarPet(): void
     {
         if ($_SESSION['user']->__get('tipo') != 'doador') {
@@ -105,12 +152,12 @@ class LoginController extends Controller
             try {
                 $dados = ['nome', 'genero', 'castrado', 'forneceCastracao', 'especie', 'dataNascimento', 'dataResgate', 'custoMensal', 'historia', 'foto'];
                 for ($i = 0; $i < count($dados); $i++) {
-                    if (!isset ($_POST[$dados[$i]])) {
+                    if (!isset($_POST[$dados[$i]])) {
                         $_POST[$dados[$i]] = "";
                     }
                 }
                 $doencas = [];
-                if (isset ($_POST['doencas'])) {
+                if (isset($_POST['doencas'])) {
                     if (is_array($_POST['doencas'])) {
                         foreach ($_POST['doencas'] as $doenca) {
                             array_push($doencas, $doenca);
@@ -134,7 +181,7 @@ class LoginController extends Controller
                     true
                 );
 
-                if ($_FILES["foto"]["name"]!="") {
+                if ($_FILES["foto"]["name"] != "") {
                     if ($_FILES["foto"]["error"] == 0) {
                         $str = '';
                         foreach ($_FILES["foto"] as $chave => $valor) {
@@ -176,18 +223,19 @@ class LoginController extends Controller
 
     public function atualizarPet(): void
     {
-        if ($_SESSION['user']->__get('tipo') != 'doador') {
+        $pet = Pet::buscarPetPorId($_POST['idPet']);
+        if (($_SESSION['user']->__get('tipo') != 'doador') && ($pet->__get('idResponsavel') != ($_SESSION['user']->__get('id')))) {
             header('Location: ' . BASEPATH . 'home?mensagem=Usuário não tem permissão para atualizar pet!');
         } else {
             try {
                 $dados = ['nome', 'genero', 'castrado', 'forneceCastracao', 'especie', 'dataNascimento', 'dataResgate', 'custoMensal', 'historia', 'foto'];
                 for ($i = 0; $i < count($dados); $i++) {
-                    if (!isset ($_POST[$dados[$i]])) {
+                    if (!isset($_POST[$dados[$i]])) {
                         $_POST[$dados[$i]] = "";
                     }
                 }
                 $doencas = [];
-                if (isset ($_POST['doencas'])) {
+                if (isset($_POST['doencas'])) {
                     if (is_array($_POST['doencas'])) {
                         foreach ($_POST['doencas'] as $doenca) {
                             array_push($doencas, $doenca);
@@ -195,25 +243,7 @@ class LoginController extends Controller
                     }
                 }
 
-                $pet = new Pet(
-                    $_SESSION['user']->__get('id'),
-                    $_POST['nome'],
-                    $_POST['genero'],
-                    $_POST['castrado'],
-                    $_POST['forneceCastracao'],
-                    $_POST['especie'],
-                    $_POST['dataNascimento'],
-                    $_POST['dataResgate'],
-                    $doencas,
-                    $_POST['custoMensal'],
-                    $_POST['historia'],
-                    $_POST['foto'],
-                    true
-                );
-
-                $pet->__set('id', $_POST['idPet']);
-
-                if ($_FILES["foto"]["name"]!="") {
+                if ($_FILES["foto"]["name"] != "") {
                     if ($_FILES["foto"]["error"] == 0) {
                         $str = '';
                         foreach ($_FILES["foto"] as $chave => $valor) {
@@ -253,48 +283,33 @@ class LoginController extends Controller
 
     }
 
-
-    /**
-     *  Função responsável por renderizar as informações do usuário (se estiver logado).
-     */
-    public function info(): void
+    public function excluirPet(): void
     {
-        if (!$this->loggedUser) {
-            header('Location: ' . BASEPATH . 'login?mensagem=Você precisa se identificar primeiro');
-            return;
-        }
-        $this->view('users/info', $this->loggedUser);
-    }
-
-    /**
-     *  Função responsável por renderizar as informações de qualquer usuário.
-     */
-    public function publicInfo($id, $tipo): void
-    {
-        $usuario = Usuario::buscarUsuarioPorId($id, $tipo);
-
-        if (isset ($usuario)) {
-            $this->view('users/info', [$usuario]);
+        $pet = Pet::buscarPetPorId($_POST['id']);
+        if (($_SESSION['user']->__get('tipo') != 'doador') && ($pet->__get('idResponsavel' != $_SESSION['user']->__get('id')))) {
+            header('Location: ' . BASEPATH . 'home?mensagem=Usuário não tem permissão para atualizar pet!');
         } else {
-            header('Location: ' . BASEPATH . 'login?mensagem=Usuario não encontrado');
+            try {
+                if ($pet->__get('idResponsavel') != $_SESSION['user']->__get('id')) {
+                    header('Location: ' . BASEPATH . 'home?mensagem=Você não é responsável por este pet!');
+                } else {
+                    $dadosPost = [];
+                    foreach ($_POST as $dado) {
+                        array_push($dadosPost, $dado);
+                    }
+                    $pet->excluir($dadosPost);
+                    header('Location: ' . BASEPATH . 'home?mensagem=Pet excluído com sucesso!&id=' . $pet->__get('id'));
+                }
+            } catch (\Exception $e) {
+                header('Location: ' . BASEPATH . 'home?' . $_POST['idPet'] . '&mensagem=' . $e->getTrace()[0]['args'][0]);
+                echo ($e->getMessage());
+            }
         }
     }
 
-    /**
-     *  Função que remove o usuário da seção (deslogar)
-     */
-    public function sair(): void
+    public function registrarAdocao(): void
     {
-        if (!$this->loggedUser) {
-            header('Location: ' . BASEPATH . 'login?mensagem=Você precisa se identificar primeiro');
-            return;
-        }
-        unset($_SESSION['user']);
-        header('Location: ' . BASEPATH . 'login?mensagem=Usuário deslogado com sucesso!');
-    }
-
-    public function visualizar($view): void
-    {
-        $this->view($view);
+        $_POST['idPet'];
+        $_POST['documentoAdotante'];
     }
 }

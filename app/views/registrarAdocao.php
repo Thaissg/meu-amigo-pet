@@ -22,7 +22,7 @@
             ?>
         </div>
         <section id="form">
-            <h1 class="form__title">Exluir pet</h1>
+            <h1 class="form__title">Registrar Adoção</h1>
             <?php $petId = explode('?', $_SERVER['REQUEST_URI'])[1];
             use App\Database;
 
@@ -36,7 +36,7 @@
                 header('Location: ' . BASEPATH . "home?mensagem=Usuário não é responsável por esse pet!");
             }
             ?>
-            <form method="POST" id="exluirPet__Form" class="exluirPet__Form">
+            <form method="POST" id="registrarAdocao__Form" class="registrarAdocao__Form">
                 <div class='pets'>
                     <?php
                     $foto = explode('/', $pet['foto']);
@@ -110,6 +110,7 @@
                                         readonly="readonly">
                                 </td>
                             </tr>
+                            <!-- Continuar daqui -->
                             <tr>
                                 <td>
                                     <div class='emLinha'>
@@ -154,7 +155,6 @@
     <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="<?= BASEPATH ?>public/js/app.js"></script>
     <script src="<?= BASEPATH ?>public/js/alertas.js"></script>
-    <script src="<?= BASEPATH ?>public/js/excluirPet.js"></script>
 </body>
 
 </html>
