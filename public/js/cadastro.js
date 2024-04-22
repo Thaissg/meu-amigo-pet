@@ -147,7 +147,7 @@ function testaSenha(senha) {
         }
         elem.addClass('invisible');
         elem.addClass('valido');
-        return false;
+        return true;
     }
 }
 
@@ -225,6 +225,18 @@ function validate(e) {
         valid = false;
     } else {
         email.classList.remove("invalid");
+    }
+    if (!testaSenha(senha.value)) {
+        senha.classList.add("invalid");
+        valid = false;
+    } else {
+        senha.classList.remove("invalid");
+    }
+    if (!testaConfSenha(confSenha.value)) {
+        confSenha.classList.add("invalid");
+        valid = false;
+    } else {
+        confSenha.classList.remove("invalid");
     }
     if (valid == true) {
         e.target.submit();
