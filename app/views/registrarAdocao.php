@@ -25,6 +25,7 @@
             <h1 class="form__title">Registrar Adoção</h1>
             <?php $petId = explode('?', $_SERVER['REQUEST_URI'])[1];
             use App\Database;
+            use App\Models\Usuario;
 
             $con = Database::getConnection();
             $stm = $con->prepare('SELECT * FROM pets WHERE id = :idPet AND idResponsavel = :idResponsavel;');
@@ -36,7 +37,7 @@
                 header('Location: ' . BASEPATH . "home?mensagem=Usuário não é responsável por esse pet!");
             }
             ?>
-            <form method="POST" id="registrarAdocao__Form" class="registrarAdocao__Form">
+            <form id="registrarAdocao__Form" class="registrarAdocao__Form" method="POST">
                 <div class='pets'>
                     <?php
                     $foto = explode('/', $pet['foto']);
@@ -110,29 +111,45 @@
                                         readonly="readonly">
                                 </td>
                             </tr>
-                            <!-- Continuar daqui -->
+                            <?php
+                            $stm = $con->prepare('SELECT cpf_cnpj FROM usuarios WHERE tipo = :tipo;');
+                            $stm->bindValue(':tipo', 'adotante');
+                            $stm->execute();
+                            $usuariosDoc = $stm->fetchAll();
+                            ?>
                             <tr>
                                 <td>
                                     <div class='emLinha'>
-                                        <label for="motivo">Qual motivo da exclusão?</label>
-                                        <select required name="motivo" id="motivo" onchange="mostrarInputDataObito()">
-                                            <option value=""></option>
-                                            <option value="obito">Óbito</option>
-                                            <option value="desaparecimento">Desaparecimento</option>
-                                            <option value="doacao">Doação por outro meio</option>
+                                        <label for="adotante">CPF/CNPJ do adotante:</label>
+                                        <input required type="text" name="cpf-cnpj" id="cpf-cnpj"
+                                            onkeyup="docMaskEvent(event)"
+                                            onchange="testaDocumento(this.value,['<?=implode('\',\'',$usuariosDoc[0])?>'])">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <div class='emLinha' id='divDataObito'></div>
+                                    <div id="validaDoc" class="alert invalido invisible"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <span class="invisible invalido" id="dataError"></span>
+                                    <div id="adotante">
+                                    </div>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <div class='emLinha' id='dadosAdotante'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="invisible invalido" id="cpfError"></span>
+                                </td>
+                            </tr>
+
+                            <!-- futuramente adicionar uma opção para fazer o download do termo de adoção -->
                         </tbody>
                     </table>
 
@@ -140,7 +157,7 @@
                         <tr>
                             <td class="centralizado">
                                 <button class="btn" type="submit" id="enviar"
-                                    onclick="return confirm('Deseja mesmo excluir o pet?')">Salvar</button>
+                                    onclick="return confirm('Confirma a doação do pet?')">Salvar</button>
                             </td>
                             <td class="centralizado">
                                 <button class="btn" type="button"><a href="<?= BASEPATH ?>home">Cancelar</a></button>
@@ -155,6 +172,7 @@
     <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="<?= BASEPATH ?>public/js/app.js"></script>
     <script src="<?= BASEPATH ?>public/js/alertas.js"></script>
+    <script src="<?= BASEPATH ?>public/js/doacaoPet.js"></script>
 </body>
 
 </html>

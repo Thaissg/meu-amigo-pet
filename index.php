@@ -4,15 +4,19 @@ define('BASEPATH', '/meu-amigo-pet/');
 
 include_once __DIR__ . '/app/Database.php';
 include_once __DIR__ . '/libs/Route.php';
+include_once __DIR__ . '/libs/vendor/autoload.php';
 include_once __DIR__ . '/app/controllers/Controller.php';
 include_once __DIR__ . '/app/controllers/Login.php';
 include_once __DIR__ . '/app/models/Usuario.php';
 include_once __DIR__ . '/app/models/Pet.php';
+include_once __DIR__ . '/app/models/Adocao.php';
 
 use App\Database;
 use Steampixel\Route;
 use App\Controllers\LoginController;
-
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 Database::createSchema();
 
@@ -34,6 +38,8 @@ Route::add('/editarPet', fn() => $controller->visualizar('editarPet'), ['get']);
 Route::add('/excluirPet', fn() => $controller->visualizar('excluirPet'), ['get']);
 Route::add('/registrarAdocao', fn() => $controller->visualizar('registrarAdocao'), ['get']);
 
+Route::add('/confirmarEmail', fn() => $controller->confirmarEmail(), ['get']);
+
 Route::add('/home', fn() => $controller->home(), ['post']);
 
 Route::add('/editarPet', fn() => $controller->atualizarPet(), ['post']);
@@ -42,6 +48,7 @@ Route::add('/cadastroPet', fn() => $controller->cadastrarPet(), ['post']);
 Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
 Route::add('/login', fn() => $controller->login(), ['post']);
 Route::add('/logout', fn() => $controller->sair(), ['get']);
+Route::add('/registrarAdocao', fn() => $controller->registrarAdocao(), ['post']);
 
 
 // Rota auxiliar para redirecionar o usuário.

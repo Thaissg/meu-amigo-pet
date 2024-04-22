@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Database;
 use ArrayObject;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 /**
  * Classe reponsável por representar os dados de um usuário na aplicação
@@ -44,10 +47,21 @@ class Usuario
     private $tipo;
 
     /**
+     * @var string Tipo de cadastro fornecido pelo usuário
+     */
+    private $chave;
+
+    /**
+     * @var bool Tipo de cadastro fornecido pelo usuário
+     */
+    private $confEmail;
+
+
+    /**
      *  Contrutor da classe, responsável por inicializar os dados.
      *  A senha é codificada usando sha256.
      */
-    function __construct(string $email, string $senha, string $nome, string $documento, string $endereco, string $complemento, string $telefone, string $tipo)
+    function __construct(string $email, string $senha, string $nome, string $documento, string $endereco, string $complemento, string $telefone, string $tipo, bool $confEmail = false)
     {
         $this->email = $email;
         $this->senha = hash('sha256', $senha);
@@ -57,6 +71,15 @@ class Usuario
         $this->complemento = $complemento;
         $this->telefone = $telefone;
         $this->tipo = $tipo;
+        $this->confEmail = $confEmail;
+
+        $con = Database::getConnection();
+        $stm = $con->prepare('SELECT id FROM usuarios ORDER BY 1 DESC LIMIT 1');
+        $stm->execute();
+        $id = $stm->fetch()[0] + 1;
+        $this->id = $id;
+
+        $this->chave = hash('sha256', $email . $id . date("Y-m-d"));
     }
 
 
@@ -91,11 +114,11 @@ class Usuario
      */
     public function salvar(): string
     {
-        if ($this->buscarUsuario($this->email, $this->tipo, $this->documento)==null){
+        if ($this->buscarUsuario($this->email, $this->tipo, $this->documento) == null) {
             $con = Database::getConnection();
             $stm = $con->prepare
-            ('INSERT INTO usuarios (nome, tipo, cpf_cnpj, endereco, complemento,  telefone, email, senha) 
-            VALUES (:nome, :tipo, :documento, :endereco, :complemento, :telefone, :email, :senha)');
+            ('INSERT INTO usuarios (nome, tipo, cpf_cnpj, endereco, complemento,  telefone, email, senha, chave, confEmail) 
+            VALUES (:nome, :tipo, :documento, :endereco, :complemento, :telefone, :email, :senha, :chave, :confEmail)');
             $stm->bindValue(':nome', $this->nome);
             $stm->bindValue(':tipo', $this->tipo);
             $stm->bindValue(':documento', $this->documento);
@@ -104,9 +127,11 @@ class Usuario
             $stm->bindValue(':telefone', $this->telefone);
             $stm->bindValue(':email', $this->email);
             $stm->bindValue(':senha', $this->senha);
+            $stm->bindValue(':chave', $this->chave);
+            $stm->bindValue(':confEmail', $this->confEmail);
             $stm->execute();
             return 'OK';
-        } else{
+        } else {
             return 'Email ou CPF/CNPJ já cadastrado para esse tipo de usuário!';
         }
     }
@@ -128,7 +153,7 @@ class Usuario
         $resultado = $stm->fetch();
 
         if ($resultado) {
-            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo'], $resultado['confEmail']);
             $usuario->senha = $resultado['senha'];
             return $usuario;
         } else {
@@ -140,13 +165,13 @@ class Usuario
             $stm->execute();
             $resultado = $stm->fetch();
             if ($resultado) {
-                $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
+                $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo'], $resultado['confEmail']);
                 $usuario->senha = $resultado['senha'];
                 return $usuario;
-            } else{
+            } else {
                 return NULL;
             }
-            
+
         }
     }
 
@@ -162,7 +187,29 @@ class Usuario
         $resultado = $stm->fetch();
 
         if ($resultado) {
-            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo'], $resultado['confEmail']);
+            $usuario->id = $resultado['id'];
+            $usuario->senha = $resultado['senha'];
+            return $usuario;
+        } else {
+            return NULL;
+        }
+    }
+
+
+    static public function buscarUsuarioPorDocumento($documento, $tipo): ?Usuario
+    {
+        $con = Database::getConnection();
+        $stm = $con->prepare('SELECT * FROM usuarios WHERE cpf_cnpj = :cpf_cnpj AND tipo = :tipo');
+        $stm->bindParam(':cpf_cnpj', $documento);
+        $stm->bindParam(':tipo', $tipo);
+
+
+        $stm->execute();
+        $resultado = $stm->fetch();
+
+        if ($resultado) {
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado['cpf_cnpj'], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo'], $resultado['confEmail']);
             $usuario->id = $resultado['id'];
             $usuario->senha = $resultado['senha'];
             return $usuario;
@@ -190,7 +237,7 @@ class Usuario
             } else {
                 $documento = $resultado['cpf_cnpj'];
             }
-            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo'], $resultado['confEmail']);
             $usuario->id = $resultado['id'];
             $usuario->senha = $resultado['senha'];
             return $usuario;
@@ -218,7 +265,7 @@ class Usuario
 
         foreach ($resultado as $user) {
             $documento = $resultado['cpf_cnpj'];
-            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo']);
+            $usuario = new Usuario($resultado['email'], $resultado['senha'], $resultado['nome'], $resultado[$documento], $resultado['endereco'], $resultado['complemento'], $resultado['telefone'], $resultado['tipo'], $resultado['confEmail']);
             $usuario->id = $user['id'];
             $usuario->senha = $user['senha'];
 
@@ -226,5 +273,60 @@ class Usuario
         }
 
         return $usuarios;
+    }
+
+    public function enviarEmailConfirmação(): void
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            //Server settings
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->CharSet = "UTF-8";
+            $mail->isSMTP();
+            $mail->Host = 'sandbox.smtp.mailtrap.io';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'cc2790016b4e20';
+            $mail->Password = '301307f6b0f9d8';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 2525;
+
+            //Recipients
+            $mail->setFrom('thais@meu-amigo-pet.com.br', 'Mailer');
+            $mail->addAddress($this->email);
+
+            //Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Confirmar cadastro no Meu Amigo Pet';
+            $mail->Body = "Prezado (a) " . $this->nome . ",<br><br>
+            Obrigada por se cadastrar em nosso sistema!<br><br>
+            Para que possamos liberar o seu cadastro, solicitamos a confirmação do e-mail clicando no link abaixo: <br><br>
+            <a href='http://localhost/meu-amigo-pet/confirmarEmail?email=". $this->email ."&tipo=". $this->tipo."&chave=" . $this->chave . "'>Clique aqui</a><br><br>
+            Esta mensagem foi enviada a você por está cadastrado em nosso banco de dados. Não enviamos emails com arquivos anexados 
+            ou solicitando preenchimento de senhas e informações cadastrais.<br><br>";
+            $mail->AltBody = "Prezado (a) " . $this->nome . "\n\n
+            Obrigada por se cadastrar em nosso sistema!\n\n
+            Para que possamos liberar o seu cadastro, solicitamos a confirmação do e-mail clicando no link abaixo: \n\n
+            'http://localhost/meu-amigo-pet/confirmarEmail?email=". $this->email ."&tipo=". $this->tipo."&chave=" . $this->chave . "' \n\n
+            Esta mensagem foi enviada a você por está cadastrado em nosso banco de dados. Não enviamos emails com arquivos anexados 
+            ou solicitando preenchimento de senhas e informações cadastrais.\n\n";
+
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+
+    static public function confirmarEmail($chave, $email, $tipo): void
+    {
+
+        $con = Database::getConnection();
+        $stm = $con->prepare('UPDATE usuarios SET confEmail = true WHERE chave = :chave AND email = :email AND tipo = :tipo');
+        $stm->bindValue(':chave', $chave);
+        $stm->bindValue(':email', $email);
+        $stm->bindValue(':tipo', $tipo);
+        $stm->execute();
+        header('Location: ' . BASEPATH . 'login?mensagem=Teste!');
     }
 }

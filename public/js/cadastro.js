@@ -234,7 +234,4 @@ function validate(e) {
     return valid;
 }
 
-String.prototype.reverse = function () {
-    return this.split('').reverse().join('');
-};
 

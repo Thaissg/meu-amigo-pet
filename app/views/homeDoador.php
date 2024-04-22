@@ -24,7 +24,7 @@
     <div class="container">
       <div class="emLinha">
         <div class="cadastrarPet"><a href="<?= BASEPATH ?>cadastroPet">Cadastrar pet</a></div>
-        <div class="cadastrarPet"><a href="<?= BASEPATH ?>registrarDevolucao">Registrar Devolução</a></div>
+        <!-- <div class="cadastrarPet"><a href="<?= BASEPATH ?>registrarDevolucao">Registrar Devolução</a></div> -->
       </div>
       
       <div class='pets'>

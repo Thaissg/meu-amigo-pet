@@ -10,6 +10,10 @@ use ArrayObject;
  */
 class Adocao
 {
+    /**
+     * Summary of id
+     * @var 
+     */
     private $id;
 
     /**
@@ -57,7 +61,12 @@ class Adocao
         $con = Database::getConnection();
         $stm = $con->prepare('SELECT id FROM adocao ORDER BY 1 DESC LIMIT 1');
         $stm->execute();
-        $id = $stm->fetch()[0] + 1;
+        if (isset($stm->fetch()[0])){
+            $id = $stm->fetch()[0] + 1;
+        }
+        else{
+            $id = 1;
+        }
         $this->id = $id;
     }
 
@@ -84,7 +93,8 @@ class Adocao
     {
         $con = Database::getConnection();
         $stm = $con->prepare
-        ('INSERT INTO adocao (idAdotante, idDoador, idPet, dataAdocao, devolvido) VALUES (:idAdotante, :idDoador, :idPet, :dataAdocao, :devolvido);');
+        ('INSERT INTO adocao (id, idAdotante, idDoador, idPet, dataAdocao, devolvido) VALUES (:id, :idAdotante, :idDoador, :idPet, :dataAdocao, :devolvido);');
+        $stm->bindValue(':id', $this->id);
         $stm->bindValue(':idAdotante', $this->idAdotante);
         $stm->bindValue(':idDoador', $this->idDoador);
         $stm->bindValue(':idPet', $this->idPet);
@@ -92,13 +102,16 @@ class Adocao
         $stm->bindValue(':devolvido', $this->devolvido);
         $stm->execute();
 
-        $con = Database::getConnection();
         $stm = $con->prepare
-        ('UPDATE pets SET disponivel = false WHERE id = :idPET;');
+        ('UPDATE pets SET disponivel = false WHERE id = :idPet;');
         $stm->bindValue(':idPet', $this->idPet);
         $stm->execute();
     }
 
+    /**
+     * Summary of resgistrarDevolução
+     * @return void
+     */
     public function resgistrarDevolução(): void
     {
         $con = Database::getConnection();

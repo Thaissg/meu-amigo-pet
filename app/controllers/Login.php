@@ -2,9 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\Usuario;
+use App\Models\Adocao;
 use App\Models\Pet;
+use App\Models\Usuario;
 
+/**
+ * Summary of LoginController
+ */
 class LoginController extends Controller
 {
 
@@ -54,6 +58,10 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * Summary of login
+     * @return void
+     */
     public function login(): void
     {
         $usuario = Usuario::buscarUsuarioPorEmail($_POST['email'], $_POST['tipo_cadastro']);
@@ -86,7 +94,8 @@ class LoginController extends Controller
             );
             $salvar = $user->salvar();
             if ($salvar == 'OK') {
-                header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Usuário cadastrado com sucesso!');
+                header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Usuário cadastrado com sucesso. Necessário acessar a caixa de e-mail para confirmar!');
+                $user->enviarEmailConfirmação();
             } else {
                 header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=' . $salvar);
             }
@@ -94,6 +103,19 @@ class LoginController extends Controller
         } catch (\Exception $e) {
             header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Email ou cpf/cnpj já cadastrado!');
             echo ($e->getMessage());
+        }
+    }
+
+    public function confirmarEmail(): void{
+        $chave = filter_input(INPUT_GET,'chave', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_GET,'email', FILTER_SANITIZE_STRING);
+        $tipo = filter_input(INPUT_GET,'tipo', FILTER_SANITIZE_STRING);
+        Usuario::confirmarEmail($chave, $email, $tipo);
+        $user = Usuario::buscarUsuarioPorEmail($email, $tipo);
+        if ($user->__get('confEmail')==true) {
+            header('Location: ' . BASEPATH . 'login?mensagem=Email confirmado com sucesso!');
+        } else {
+            header('Location: ' . BASEPATH . 'home?mensagem=Erro na confirmação do email!');
         }
     }
 
@@ -136,6 +158,11 @@ class LoginController extends Controller
         header('Location: ' . BASEPATH . 'login?mensagem=Usuário deslogado com sucesso!');
     }
 
+    /**
+     * Summary of visualizar
+     * @param mixed $view
+     * @return void
+     */
     public function visualizar($view): void
     {
         $this->view($view);
@@ -144,6 +171,10 @@ class LoginController extends Controller
 
     // CRUD de pets
 
+    /**
+     * Summary of cadastrarPet
+     * @return void
+     */
     public function cadastrarPet(): void
     {
         if ($_SESSION['user']->__get('tipo') != 'doador') {
@@ -221,6 +252,10 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * Summary of atualizarPet
+     * @return void
+     */
     public function atualizarPet(): void
     {
         $pet = Pet::buscarPetPorId($_POST['idPet']);
@@ -283,6 +318,10 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * Summary of excluirPet
+     * @return void
+     */
     public function excluirPet(): void
     {
         $pet = Pet::buscarPetPorId($_POST['id']);
@@ -301,15 +340,31 @@ class LoginController extends Controller
                     header('Location: ' . BASEPATH . 'home?mensagem=Pet excluído com sucesso!&id=' . $pet->__get('id'));
                 }
             } catch (\Exception $e) {
-                header('Location: ' . BASEPATH . 'home?' . $_POST['idPet'] . '&mensagem=' . $e->getTrace()[0]['args'][0]);
+                header('Location: ' . BASEPATH . 'home?' . $_POST['idPet'] . '&mensagem=' . $e->getMessage());
                 echo ($e->getMessage());
             }
         }
     }
 
+    /**
+     * Summary of registrarAdocao
+     * @return void
+     */
     public function registrarAdocao(): void
     {
-        $_POST['idPet'];
-        $_POST['documentoAdotante'];
+        if ($_SESSION['user']->__get('tipo') != 'doador') {
+            header('Location: ' . BASEPATH . 'home?mensagem=Usuário não tem permissão para registrar adoção!');
+        } else {
+            try {
+                $adotante = Usuario::buscarUsuarioPorDocumento($_POST['cpf-cnpj'], 'adotante');
+                $adocao = new Adocao($adotante->__get('id'), $_SESSION['user']->__get('id'), $_POST['id'], date("Y-m-d"));
+                $adocao->salvar();
+                header('Location: ' . BASEPATH . 'home?mensagem=Adoção registrada com sucesso!');
+            } catch (\Exception $e) {
+                header('Location: ' . BASEPATH . 'home?' . $_POST['id'] . '&mensagem=' . $e->getMessage());
+                echo ($e->getMessage());
+            }
+        }
+
     }
 }

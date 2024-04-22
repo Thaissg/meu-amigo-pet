@@ -25,7 +25,7 @@ class Database
     {
         $con = self::getConnection();
         $con->exec('CREATE TABLE IF NOT EXISTS usuarios (
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            id INTEGER NOT NULL PRIMARY KEY,
             tipo VARCHAR(60) NOT NULL,
             nome VARCHAR(60) NOT NULL,
             cpf_cnpj VARCHAR(14) NOT NULL,
@@ -33,10 +33,12 @@ class Database
             complemento  VARCHAR(255),
             telefone INTEGER NOT NULL, 
             email VARCHAR(60) NOT NULL,
-            senha TEXT NOT NULL
+            senha TEXT NOT NULL,
+            chave TEXT NOT NULL,
+            confEmail BOOLEAN NOT NULL
         );
         CREATE TABLE IF NOT EXISTS pets (
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            id INTEGER NOT NULL PRIMARY KEY,
             idResponsavel INTEGER NOT NULL,
             nome VARCHAR(60) NOT NULL,
             genero VARCHAR(1) NOT NULL,
@@ -64,6 +66,7 @@ class Database
             PRIMARY KEY (idPet,dataObito)
         );
         CREATE TABLE IF NOT EXISTS adocao (
+            id INTEGER NOT NULL,
             idDoador INTEGER NOT NULL,
             idAdotante INTEGER NOT NULL,
             idPet INTEGER NOT NULL,
@@ -72,7 +75,7 @@ class Database
             FOREIGN KEY (idPet) REFERENCES pets(id),
             FOREIGN KEY (idAdotante) REFERENCES usuarios(id),
             FOREIGN KEY (idDoador) REFERENCES usuarios(id),
-            PRIMARY KEY (idPet,idAdotante,idDoador,dataAdocao)
+            PRIMARY KEY (id, idPet,idAdotante,idDoador,dataAdocao)
         );
         ');
 
