@@ -1,9 +1,11 @@
 /* Variáveis -----------------------------------------*/
 :root {
-	--main-text-color: white;
+	--main-text-color: #ffffff;
 	--header-bg-color: #96E1E6;
-	--main-bg-color: #0F67D1;
-	--hover-color: beige;
+	--main-bg-color: #ffffff;
+	--hover-color: #f5f5dc;
+	--nav-bg-color: #84b0b3;
+	--nav-txt-color: #515151;
 }
 
 
@@ -11,6 +13,17 @@
 	height: 90%;
 	margin: 0.5%;
 	float: right;
+}
+
+a.login{
+	line-height: 80px;
+	margin-right: 0.5rem;
+}
+
+.icone-login {
+	font-size: 5rem;
+	float: right;
+	color: var(--nav-txt-color);
 }
 
 * {
@@ -26,7 +39,8 @@ body {
 }
 
 nav {
-	background: var(--header-bg-color);
+	background: var(--nav-bg-color);
+	color: var(--nav-txt-color);
 	height: 80px;
 	width: 100%;
 }
@@ -51,7 +65,7 @@ nav ul li {
 }
 
 nav ul li a button{
-	color: var(--main-bg-color);
+	color: var(--nav-txt-color);
 	font-size: 17px;
 	padding: 7px 13px;
 	border-radius: 3px;
@@ -66,7 +80,7 @@ a:hover, button:hover{
 }
 
 a:visited{
-	color: var(--main-bg-color);
+	color: var(--nav-txt-color);
 }
 
 .checkbtn {
@@ -92,6 +106,15 @@ a:visited{
 
 	nav ul li a {
 		font-size: 16px;
+		align-items: center;
+	}
+
+	.icone-login {
+		visibility: hidden;
+	}
+
+	a.login { 
+		margin-right: 0;
 	}
 }
 
@@ -111,10 +134,15 @@ a:visited{
 		transition: all .5s;
 	}
 
+	.icone-login {
+		visibility: hidden;
+	}
+
 	nav ul li {
-		display: block;
+		display: flex;
 		margin: 50px 0;
 		line-height: 30px;
+		flex-direction: column;
 	}
 
 	nav ul li a {

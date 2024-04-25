@@ -3,9 +3,10 @@
 /* Variáveis -----------------------------------------*/
 :root {
   --main-text-color: white;
-  --header-bg-color: #96E1E6;
-  --main-bg-color: #0F67D1;
+  --filtro-bg-color: #96E1E6;
+  --main-bg-color: #ffffff;
   --hover-color: beige;
+  --second-bg-color: #2b4e9a
 }
 
 
@@ -45,6 +46,32 @@ h1 {
 }
 
 /* Body ------------------------------------------------*/
+.cont2{
+  display: flex;
+}
+
+.cont1 {
+  margin-top: 0.5rem;
+  background-color: var(--second-bg-color);
+  color: #dceaf6;
+  display: flex;
+  align-items: center;
+}
+
+.icon-pet {
+  height: 5rem;
+}
+
+.linha-divisoria-info {
+  height: 80%;
+  width: 0.1rem;
+  background-color: var(--filtro-bg-color);
+}
+
+.info{
+  margin-top: 2%;
+}
+
 .acoes {
   display: flex;
   flex-direction: column;
@@ -82,17 +109,20 @@ h1 {
 .item-container {
   padding: 1rem;
   text-align: center;
+  width: 50%;
+  height: fit-content;
 }
 
-.filtro {
+.filtro__form {
   vertical-align: top;
   padding-top: 3%;
-  width: 15%;
+  width: 25%;
+  background-color: var(--filtro-bg-color);
 }
 
 .pets {
   display: flex;
-  min-width: 100%;
+  min-width: 75%;
   height: 100%;
   flex-direction: row;
   flex-wrap: wrap;
@@ -103,7 +133,7 @@ h1 {
   width: auto;
   max-width: 21%;
   border-radius: 10px;
-  border: solid black;
+  background-color: #dceaf6;
   padding: 2%;
   margin: 2%;
   font-size: 16px;
@@ -122,9 +152,15 @@ h1 {
   justify-items: center;
 }
 
+.info-pet{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: start;
+}
+
 p {
-  margin: 4%;
-  text-align: center;
+  margin: 3%;
 }
 
 .cadastrarPet, 
@@ -148,6 +184,15 @@ ion-icon {
   color: black;
 }
 
+
+ion-icon.icone-funil {
+  font-size: 3rem;
+}
+
+.div-icone-funil {
+  text-align: start;
+  padding-left: 10%;
+}
 
 .icones{
   display: flex;
@@ -184,6 +229,22 @@ form,
   align-items: center;
 }
 
+.itens-form-filtro {
+  text-align: start;
+}
+
+.filtrar-btn {
+  background-color: var(--second-bg-color);
+  color: white;
+  border: 0;
+  border-radius: 0;
+}
+
+.filtrar-btn:hover{
+  color: var(--second-bg-color);
+  border: 0;
+  border-radius: 0;
+}
 fieldset {
   display: grid;
   padding: 0.5rem;
@@ -262,8 +323,9 @@ table {
 }
 
 td {
-  min-width: 10em;
+  min-width:min-content;
 }
+
 .coluna1 {
   text-align: right;
 }

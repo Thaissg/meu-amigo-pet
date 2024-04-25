@@ -9,11 +9,10 @@
         <img class="logo" src="<?= BASEPATH ?>public/images/Logo Meu amigo pet.png" alt="Logo Meu amigo pet">
     </label>
     <ul>
-        <li><a id="home" class="" href="<?= BASEPATH ?>home" onclick="ativar(this.id)"> Home </a></li>
-        <li><a id="adote" class="" href="<?= BASEPATH ?>adote" onclick="ativar(this.id)">Adote</a></li>
-        <li><a id="ongs-protetores" class="" href="<?= BASEPATH ?>ongs-e-protetoras" onclick="ativar(this.id)">ONGs e
-                Protetores(as)</a></li>
-        <li><a href="<?= BASEPATH ?>logout" onclick="ativar(this.id)">Sair</a></li>
+        <li><a id="home" class="" href="<?= BASEPATH ?>home" onclick="ativar(this.id)">HOME</a></li>
+        <li><a id="adote" class="" href="<?= BASEPATH ?>adote" onclick="ativar(this.id)">ADOTE</a></li>
+        <li><a id="ongs-protetores" class="" href="<?= BASEPATH ?>ongs-e-protetoras" onclick="ativar(this.id)">ONGs E PROTETORES</a></li>
+        <li><a href="<?= BASEPATH ?>logout" onclick="ativar(this.id)">SAIR</a></li>
     </ul>
 </nav>
 <script>
