@@ -8,22 +8,26 @@
 	--nav-txt-color: #515151;
 }
 
+a {
+	width: min-content;
+	display: contents;
+}
 
-.logo {
-	height: 90%;
+p.item-header{
+	width: min-content;
+	line-height: 1.5vw;
+	margin-top: .5vw;
+}
+
+img.img-header {
+	width: 2vw;
 	margin: 0.5%;
 	float: right;
 }
 
-a.login{
-	line-height: 80px;
-	margin-right: 0.5rem;
-}
-
 .icone-login {
-	font-size: 5rem;
+	font-size: 2vw;
 	float: right;
-	color: var(--nav-txt-color);
 }
 
 * {
@@ -41,32 +45,35 @@ body {
 nav {
 	background: var(--nav-bg-color);
 	color: var(--nav-txt-color);
-	height: 80px;
+	height: 100%;
 	width: 100%;
-}
-
-label.logo {
-	color: var(--main-text-color);
-	font-size: 35px;
-	line-height: 80px;
-	padding: 0 10px;
-	font-weight: bold;
+	display: grid;
+	justify-items: end;
+	align-items: center;
+	align-content: center;
 }
 
 nav ul {
-	float: right;
 	margin-right: 20px;
 }
 
-nav ul li {
-	display: inline-block;
-	line-height: 80px;
-	margin: 0 5px;
+nav ul{
+	display: flex;
+	align-items: center;
 }
+
+li{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	margin: 1vw;
+}
+
 
 nav ul li a button{
 	color: var(--nav-txt-color);
-	font-size: 17px;
+	font-size: 5vw;
 	padding: 7px 13px;
 	border-radius: 3px;
 	text-transform: uppercase;
@@ -109,22 +116,22 @@ a:visited{
 		align-items: center;
 	}
 
-	.icone-login {
-		visibility: hidden;
-	}
-
 	a.login { 
 		margin-right: 0;
 	}
 }
 
 @media (max-width: 858px) {
+	nav{
+		justify-items: start;
+	}
+
 	.checkbtn {
 		display: block;
 	}
 
 	ul {
-		position: fixed;
+		position: absolute;
 		width: 100%;
 		height: 100vh;
 		background: var(--header-bg-color);
@@ -132,21 +139,25 @@ a:visited{
 		left: -100%;
 		text-align: center;
 		transition: all .5s;
-	}
-
-	.icone-login {
-		visibility: hidden;
+		padding-left: 3vw;
 	}
 
 	nav ul li {
 		display: flex;
-		margin: 50px 0;
-		line-height: 30px;
-		flex-direction: column;
+		margin: 2vw;
+		flex-direction: row;
 	}
 
-	nav ul li a {
-		font-size: 20px;
+	img.img-header {
+		width: 5vw;
+	}
+
+	.icone-login {
+		font-size: 5vw;
+	}
+
+	p.item-header {
+		line-height: 2vw;
 	}
 
 	a:hover {
@@ -156,5 +167,10 @@ a:visited{
 
 	#check:checked~ul {
 		left: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		flex-wrap: nowrap;
+		align-items: flex-start;
 	}
 }

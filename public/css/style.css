@@ -19,7 +19,7 @@
 
 body {
   font-family: 'Josefin Sans';
-  font-size: 1rem;
+  font-size: 1vw;
 }
 
 body,
@@ -46,8 +46,9 @@ h1 {
 }
 
 /* Body ------------------------------------------------*/
-.cont2{
+.cont2 {
   display: flex;
+  width: 100%;
 }
 
 .cont1 {
@@ -56,6 +57,21 @@ h1 {
   color: #dceaf6;
   display: flex;
   align-items: center;
+  width: 100%;
+}
+
+.genero,
+.especie {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+select.custom-select {
+  background-color: var(--second-bg-color);
+  color: var(--main-bg-color);
+  height: auto;
+  font-size: 1vw;
 }
 
 .icon-pet {
@@ -68,7 +84,7 @@ h1 {
   background-color: var(--filtro-bg-color);
 }
 
-.info{
+.info {
   margin-top: 2%;
 }
 
@@ -116,13 +132,13 @@ h1 {
 .filtro__form {
   vertical-align: top;
   padding-top: 3%;
-  width: 25%;
   background-color: var(--filtro-bg-color);
+  font-size: 1vw;
 }
 
 .pets {
   display: flex;
-  min-width: 75%;
+  min-width: 80%;
   height: 100%;
   flex-direction: row;
   flex-wrap: wrap;
@@ -130,8 +146,7 @@ h1 {
 }
 
 .item-pet {
-  width: auto;
-  max-width: 21%;
+  width: 21%;
   border-radius: 10px;
   background-color: #dceaf6;
   padding: 2%;
@@ -152,7 +167,7 @@ h1 {
   justify-items: center;
 }
 
-.info-pet{
+.info-pet {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -163,7 +178,7 @@ p {
   margin: 3%;
 }
 
-.cadastrarPet, 
+.cadastrarPet,
 .registrarAdocao {
   margin: 2%;
   background-color: var(--header-bg-color);
@@ -175,7 +190,7 @@ p {
   align-items: end;
 }
 
-.cadastroPet{
+.cadastroPet {
   display: grid;
   justify-items: center;
 }
@@ -185,8 +200,8 @@ ion-icon {
 }
 
 
-ion-icon.icone-funil {
-  font-size: 3rem;
+.icone-funil {
+  height: 5vw;
 }
 
 .div-icone-funil {
@@ -194,7 +209,7 @@ ion-icon.icone-funil {
   padding-left: 10%;
 }
 
-.icones{
+.icones {
   display: flex;
   text-align: center;
   margin-top: 5%;
@@ -214,9 +229,11 @@ ion-icon.icone-funil {
 a.cadastre-se {
   color: var(--header-bg-color)
 }
+
 a.cadastre-se:visited {
   color: var(--header-bg-color)
 }
+
 a.cadastre-se:hover {
   color: var(--main-bg-color)
 }
@@ -230,21 +247,26 @@ form,
 }
 
 .itens-form-filtro {
-  text-align: start;
+  display: grid;
+  margin-left: 1vw;
+  justify-items: center;
 }
+
 
 .filtrar-btn {
   background-color: var(--second-bg-color);
   color: white;
   border: 0;
   border-radius: 0;
+  font-size: 1vw;
 }
 
-.filtrar-btn:hover{
+.filtrar-btn:hover {
   color: var(--second-bg-color);
   border: 0;
   border-radius: 0;
 }
+
 fieldset {
   display: grid;
   padding: 0.5rem;
@@ -317,13 +339,13 @@ table {
   width: 100%;
 }
 
-.emLinha{
+.emLinha {
   display: flex;
   align-items: center;
 }
 
 td {
-  min-width:min-content;
+  min-width: min-content;
 }
 
 .coluna1 {
@@ -338,7 +360,7 @@ td {
 }
 
 .readonly {
-  background-color:#a7a7a7;
+  background-color: #a7a7a7;
   border: none;
   width: 15%;
   text-align: center;

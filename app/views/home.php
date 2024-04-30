@@ -81,43 +81,30 @@ $pets = $stm->fetchAll();
       <div class="cont2">
         <div class="filtro__form">
           <div class="div-icone-funil">
-            <ion-icon class="icone-funil" name="funnel-outline"></ion-icon>
+            <img class="icone-funil" src="<?= BASEPATH ?>public/images/funnel-outline.svg" alt="Icone de funil">
           </div>
           <form method="POST">
             <div class="itens-form-filtro">
-              <table>
-                <tr>
-                  <td>
-                    <label for="genero">GÊNERO: </label>
-                  </td>
-                  <td>
-                    <select name="genero" id="genero">
-                      <option value="">Selecione</option>
-                      <option value="M">Macho</option>
-                      <option value="F">Fêmea</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label for="especie">ESPÉCIE: </label>
-                  </td>
-                  <td>
-                    <select name="especie" id="especie">
-                      <option value="">Selecione</option>
-                      <option value="Cachorro">Cachorro</option>
-                      <option value="Gato">Gato</option>
-                    </select>
-                  </td>
-                </tr>
-              </table>
+              <div class="genero">
+                <label for="genero">GÊNERO: </label>
+                <select class="custom-select" name="genero" id="genero">
+                  <option value="">Selecione</option>
+                  <option value="M">Macho</option>
+                  <option value="F">Fêmea</option>
+                </select>
+              </div>
+              <div class="especie">
+                <label for="especie">ESPÉCIE: </label>
+                <select class="custom-select" name="especie" id="especie">
+                  <option value="">Selecione</option>
+                  <option value="Cachorro">Cachorro</option>
+                  <option value="Gato">Gato</option>
+                </select>
+              </div>
+
             </div>
 
-            <tr>
-              <td>
-                <button class="filtrar-btn" type="submit">FILTRAR</button>
-              </td>
-            </tr>
+            <button class="filtrar-btn" type="submit">FILTRAR</button>
 
           </form>
         </div>
@@ -206,7 +193,7 @@ $pets = $stm->fetchAll();
                   ?>
                   <?= "<p>Resgatado a " . $idade . ' </p>' ?>
                   <p>Responsável:
-                    <?= explode(" ",$reponsavel['nome'])[0] ?>
+                    <?= explode(" ", $reponsavel['nome'])[0] ?>
                   </p>
                 </div>
               </div>
