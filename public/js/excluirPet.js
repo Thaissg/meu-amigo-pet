@@ -34,13 +34,7 @@ function testarData() {
     } else {
         dataObito = document.getElementById("divDataObito");
         if (dataObito != null) {
-            console.log('dataObito = ' + dataObito.value);
-            console.log('dataResgate = ' + dataResgate.split("\n")[1].split("-")[0]);
-            diferenca = parseInt(dataObito.value.split("-")[0]) - parseInt(dataResgate.split("\n")[1].split("-")[0]);
-            console.log('anoObito - anoResgate =' + diferenca.toString());
-        }
-        if (dataObito != null) {
-            dataObitoValue = dataObito.value.split("-");
+            dataObitoValue = String(dataObito.value).split("-");
             for (i = 0; i < dataObitoValue.length; i++) {
                 dataObitoValue[i] = parseInt(dataObitoValue[i]);
             }
@@ -57,7 +51,8 @@ function testarData() {
                     dataResgate[i] = parseInt(dataResgate[i]);
                 }
                 dataResgate = new Date(dataResgate[0], dataResgate[1] - 1, dataResgate[2]);
-            } if (dataObitoValue.valueOf() - dataResgate.valueOf() < 0) {
+            } 
+            if (dataObitoValue.valueOf() - dataResgate.valueOf() < 0) {
                 erro.classList.remove("invisible");
                 dataObito.classList.add("invalid");
                 erro.classList.add("visible");

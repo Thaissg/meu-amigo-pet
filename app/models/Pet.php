@@ -284,7 +284,7 @@ class Pet
         
         if ($dadosPost[1] == "obito"){
             $stm = $con->prepare
-            ('INSERT INTO obitos (idPet,dataObito) VALUES (:id, :dataObito);');
+            ('UPDATE pets SET dataObito = :dataObito WHERE id == :id;');
             $stm->bindValue(':id', $this->id);
             $stm->bindValue(':dataObito', $dadosPost[2]);
             $stm->execute();
