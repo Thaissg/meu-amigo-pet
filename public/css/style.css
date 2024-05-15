@@ -272,16 +272,10 @@ fieldset {
   padding: 0.5rem;
   width: max-content;
   justify-items: center;
-  margin: 0.5rem;
 }
 
 legend {
   text-align: center;
-}
-
-.dados_pessoais,
-.tipo_cadastro {
-  margin: 0.5rem;
 }
 
 select,

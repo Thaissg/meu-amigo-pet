@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* Variáveis -----------------------------------------*/
+:root {
+  --main-text-color: white;
+  --filtro-bg-color: #96E1E6;
+  --main-bg-color: #ffffff;
+  --hover-color: beige;
+  --second-bg-color: #2b4e9a
+}
+
+
+/*Geral ----------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Josefin Sans';
+  font-size: 1vw;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-bg-color);
+}
+
+main {
+  width: 95%;
+  margin-top: 2.5%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  text-align: center;
+}
+
+h1 {
+  margin: 0.5rem;
+}
+
+.invisible {
+  display: none;
+}
+
+/* Body ------------------------------------------------*/
+section {
+  font-family: 'Liberation Sans';
+  background-color: #DCEAF6;
+  font-weight: bold;
+  margin: auto;
+  width: 50%;
+  color: #3d4450;
+  padding: 3%;
+}
+
+p.tipo_cadastro{
+  text-align: start;
+  padding-left: 2%;
+}
+
+div.form__field {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 2%;
+  align-items: center;
+}
+
+.tipo_cadastro {
+  padding-right: 35%;
+  padding-left: 2%;
+}
+
+.input-txt {
+  font-size: 2vw;
+  padding-left: 2%;
+  padding-right: 2%;
+  margin-left: 2%;
+  border-radius: 0;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: #2B4E9A;
+  width: 70%;
+}
+div.submit{
+  display: flex;
+  justify-content: flex-end;
+}
+
+button{
+  font-family: 'Liberation Sans';
+  font-weight: bold;
+  color: #3d4450;
+  border-radius: 0;
+  border-width: 0;
+  background-color: #84b0B3;
+  width: 67%;
+  margin: 2%;
+  font-size: 2vw;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+p a {
+  color: #84b0B3;
+}
+
+div.cadastre-se{
+  margin: 10%;
+}
+
+@media (max-width: 952px) {
+  section {
+    font-size: 1.5vw;
+  }
+}
+
+@media (max-width: 835px) {
+  section {
+    font-size: 2vw;
+  }
+}
+
+
