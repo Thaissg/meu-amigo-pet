@@ -77,7 +77,7 @@ li{
 
 nav ul li a.header{
 	color: var(--nav-txt-color);
-	font-size: 3vw;
+	font-size: 1.5vw;
 	padding: 7px 13px;
 	border-radius: 3px;
 	text-transform: uppercase;
