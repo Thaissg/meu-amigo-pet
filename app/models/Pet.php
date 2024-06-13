@@ -209,7 +209,7 @@ class Pet
     }
 
 
-    public function atualizar(): string
+    public function atualizar(): void
     {
         $con = Database::getConnection();
         $stm = $con->prepare
@@ -220,7 +220,7 @@ class Pet
         $dadosAtualizar = [];
 
         foreach ($resultado as $chave => $valor) {
-            if (is_string($chave) && !empty($this->$chave) && $valor != $this->$chave) {
+            if (is_string($chave) && $valor != $this->$chave) {
                 array_push($dadosAtualizar, $chave . " = '" . $this->$chave . "'");
             }
         }
@@ -266,7 +266,7 @@ class Pet
             }
         }
 
-        $delete = array_diff($doencas, $this->doencas);
+        $delete = array_diff($doencas,$this->doencas);
         if (isset($delete)) {
             foreach ($delete as $del) {
                 $stm = $con->prepare
@@ -276,8 +276,6 @@ class Pet
                 $stm->execute();
             }
         }
-
-        return $strDadosAtualizar;
     }
 
     public function excluir($dadosPost): void{

@@ -14,8 +14,9 @@
 .pet {
     display: flex;
     flex-direction: row;
-    width: 100%;
     flex-wrap: wrap;
+    width: 100%;
+    height: 10vw;
 }
 
 h1 {
@@ -40,12 +41,15 @@ p.dado-pet, label {
 .div-foto-pet {
     display: flex;
     width: 50%;
+    height: 100%;
+    max-height: fit-content;
 }
 
 .foto-pet {
-    max-width: 20vw;
-    max-height: fit-content;
-    margin: 0 10% 10% 0;
+    max-width: 50%;
+    max-height: 100%;
+    height: auto;
+    margin: 0;
     border-radius: 10px;
     align-self: auto;
 }
@@ -53,6 +57,7 @@ p.dado-pet, label {
 .dados-pet {
     text-align: left;
     width: 30%;
+    height: 100%;
 }
 
 .preencher-cpf{

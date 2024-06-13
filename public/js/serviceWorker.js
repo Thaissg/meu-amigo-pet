@@ -3,10 +3,7 @@ const meuAmigoPet = "meu-amigo-pet"
 
 // Lista de recursos a serem armazenados em cache
 const assets = [
-  "/",
-  "/index.php",
-  "/css/style.css",
-  "/js/app.js"
+  "/"
 ]
 
 // Evento de instalação do service worker

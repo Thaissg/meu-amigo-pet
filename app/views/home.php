@@ -134,7 +134,9 @@ $pets = $stm->fetchAll();
             ?>
             <div class='item-pet'>
               <div class='dadosPet'>
+                <div class="foto-pet">
                 <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>" alt="Foto do pet <?= $pet['nome'] ?>">
+                </div>
                 <div class='info-pet'>
                   <p>Gênero:
                     <?= $genero ?>
@@ -195,6 +197,12 @@ $pets = $stm->fetchAll();
                   <p>Responsável:
                     <?= explode(" ", $reponsavel['nome'])[0] ?>
                   </p>
+
+                  <?php 
+                  if (isset($_SESSION['user'])) {
+                    echo("<button class='queroAdotar'><a class='queroAdotar' href='".BASEPATH."home'>QUERO ADOTAR!</a></button>");
+                  }
+                  ?>
                 </div>
               </div>
             </div>

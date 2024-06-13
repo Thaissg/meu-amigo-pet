@@ -42,11 +42,13 @@ a.cadastrarPet:visited {
     font-size: 22px;
     height: auto;
     flex-direction: column;
+    max-width: 35%;
+    height: min-content;
 }
 
 .opcoesPet {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 5% 0 0 0;
 }
 
@@ -88,9 +90,14 @@ a.registrarAdocao {
 
 img.foto-pet {
     max-width: 80%;
+    width: auto;
+    height: auto;
+    max-height: 100%;
 }
 
 div.foto-pet {
+    max-width: 80%;
+    max-height: 15%;
     align-self: center;
     display: flex;
     justify-content: center;

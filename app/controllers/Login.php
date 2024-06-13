@@ -265,8 +265,8 @@ class LoginController extends Controller
             try {
                 $dados = ['nome', 'genero', 'castrado', 'forneceCastracao', 'especie', 'dataNascimento', 'dataResgate', 'custoMensal', 'historia', 'foto'];
                 for ($i = 0; $i < count($dados); $i++) {
-                    if (!isset($_POST[$dados[$i]])) {
-                        $_POST[$dados[$i]] = "";
+                    if (isset($_POST[$dados[$i]])) {
+                        $pet->__set($dados[$i], $_POST[$dados[$i]]);
                     }
                 }
                 $doencas = [];
@@ -277,6 +277,7 @@ class LoginController extends Controller
                         }
                     }
                 }
+                $pet->__set('doencas', $doencas);
 
                 if ($_FILES["foto"]["name"] != "") {
                     if ($_FILES["foto"]["error"] == 0) {
@@ -305,8 +306,8 @@ class LoginController extends Controller
                         header('Location: ' . BASEPATH . 'home?mensagem=Erro no cadastro! Erro: ' . $_FILES["foto"]["error"] . ' - ' . $msgErro);
                     }
                 } else {
-                    $teste = $pet->atualizar();
-                    header('Location: ' . BASEPATH . 'home?mensagem=Pet atualizado com sucesso!&id=' . $pet->__get('id'). $teste);
+                    $pet->atualizar();
+                    header('Location: ' . BASEPATH . 'home?mensagem=Pet atualizado com sucesso!&id=' . $pet->__get('id'));
                 }
 
 

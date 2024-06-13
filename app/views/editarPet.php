@@ -85,11 +85,8 @@
                 $nomeDoencas = [];
                 foreach ($doencas as $doenca) {
                     array_push($nomeDoencas, $doenca[0]);
-                    echo($doenca[0]);
                 }
                 ?>
-
-
                 <div class="doencas">
                     <div class='emLinha'>
                         <?php
