@@ -1,0 +1,106 @@
+/* Variáveis -----------------------------------------*/
+:root {
+    --main-text-color: white;
+    --filtro-bg-color: #96E1E6;
+    --main-bg-color: #ffffff;
+    --nav-bg-color: #84b0b3;
+    --hover-color: beige;
+    --second-bg-color: #2B4E9A;
+    --carvao: #3a414a;
+    --nuvem: #f2f3f5;
+    --fumaça: #4c535d;
+    --nevoa: #ced4db;
+}
+
+form div{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+div.emLinha{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+section#form{
+    font-size: 10px;
+}
+
+section#form p{
+    text-align: start;
+    margin: 2% 0 0 0;
+    font-size: 15px;
+}
+
+h1{
+    color: var(--second-bg-color);
+    font-size: 15px;
+    text-align: start;
+}
+
+h1.form__title{
+    text-align: center;
+}
+
+input,textarea, div.foto input::file-selector-button{
+    background-color: var(--nuvem);
+    border: 2px solid;
+    border-color: var(--second-bg-color);
+    padding: 2px;
+}
+
+.readonly{
+    border-color: var(--fumaça);
+    border: 2px solid;
+    background-color: var(--nevoa);
+}
+
+div.doencas{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+div.doencas div.emLinha{
+    width: 50%;
+}
+
+textarea{
+    height: 100px;
+    padding: 1%;
+}
+
+div.foto input{
+    background-color: transparent;
+    border-color: transparent;
+}
+
+div.botoes{
+    display: flex;
+    justify-content: space-between;
+}
+
+button a:visited{
+    text-decoration: none;
+}
+
+button.btn, button a{
+    background-color: var(--second-bg-color);
+    color: var(--main-bg-color);
+    border-radius: 0;
+    font-size: 15px;
+}
+
+button.btn{
+    padding: 5px;
+}
+
+img.foto-pet{
+    width: max-content;
+    max-width: max-content;
+    height: auto;
+}

@@ -305,8 +305,8 @@ class LoginController extends Controller
                         header('Location: ' . BASEPATH . 'home?mensagem=Erro no cadastro! Erro: ' . $_FILES["foto"]["error"] . ' - ' . $msgErro);
                     }
                 } else {
-                    $pet->atualizar();
-                    header('Location: ' . BASEPATH . 'home?mensagem=Pet atualizado com sucesso!&id=' . $pet->__get('id'));
+                    $teste = $pet->atualizar();
+                    header('Location: ' . BASEPATH . 'home?mensagem=Pet atualizado com sucesso!&id=' . $pet->__get('id'). $teste);
                 }
 
 

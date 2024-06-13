@@ -4,6 +4,7 @@
 <head>
     <title>Meu amigo pet</title>
     <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style.css" />
+    <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style-excluirPet.css" />
     <?php
     include ('head.php');
     ?>
@@ -22,7 +23,6 @@
             ?>
         </div>
         <section id="form">
-            <h1 class="form__title">Exluir pet</h1>
             <?php $petId = explode('?', $_SERVER['REQUEST_URI'])[1];
             use App\Database;
 
@@ -35,9 +35,10 @@
             if (!$pet) {
                 header('Location: ' . BASEPATH . "home?mensagem=Usuário não é responsável por esse pet!");
             }
+            $dataResgate = explode('-', $pet['dataResgate']);
             ?>
             <form method="POST" id="exluirPet__Form" class="exluirPet__Form">
-                <div class='pets'>
+                <div class="pet">
                     <?php
                     $foto = explode('/', $pet['foto']);
                     $foto = $foto[count($foto) - 1];
@@ -55,98 +56,52 @@
                         $castrado = 'Não';
                     }
                     ?>
-                    <table>
-                        <tr>
-                            <td>
-                                <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>"
-                                    alt="Foto do pet <?= $pet['nome'] ?>">
-                                <p>Nome:
-                                    <?= $pet['nome'] ?>
-                                </p>
-                                <p>Gênero:
-                                    <?= $genero ?>
-                                </p>
-                                <p>Castrado:
-                                    <?= $castrado ?>
-                                </p>
-                                <?php
-                                if ($pet['forneceCastracao'] != "") {
-                                    if ($pet['forneceCastracao'] == 'S') {
-                                        $forneceCastracao = 'Sim';
-                                    } else {
-                                        $forneceCastracao = 'Não';
-                                    }
-                                    ?>
-                                    <?= "<p>Fornece Castração: " . $forneceCastracao . ' </p>' ?>
-                                    <?php
-                                }
-                                ?>
-                                <p>Espécie:
-                                    <?= $pet['especie'] ?>
-                                </p>
-                                <?php if ($pet['dataNascimento'] != "") { ?>
-                                    <?= "<p id='dataNascimento'> Data de nacimento: " . $pet['dataNascimento'] . ' </p>' ?>
-                                <?php } ?>
-                                <p id='dataResgate'>Data do resgate:
-                                    <?= $pet['dataResgate'] ?>
-                                </p>
-                                <?php if ($pet['custoMensal'] != "") { ?>
-                                    <?= "<p> Custo mensal: " . $pet['custoMensal'] . ' </p>' ?>
-                                <?php } ?>
-                                <?php if ($pet['historia'] != "") { ?>
-                                    <?= "<p> História: " . $pet['historia'] . ' </p>' ?>
-                                <?php } ?>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="info-pet">
+                        <h1 class="form__title">EXCLUIR PET</h1>
+                        <p>NOME/APELIDO:
+                            <?= mb_strtoupper($pet['nome'],'UTF-8') ?>
+                        </p>
+                        <p>GÊNERO:
+                            <?= mb_strtoupper($genero,'UTF-8') ?>
+                        </p>
+                        <p>ESPÉCIE:
+                            <?= mb_strtoupper($pet['especie'],'UTF-8') ?>
+                        </p>
+                        <p id='dataResgate'>DATA DE RESGATE:
+                            <?= $dataResgate[2] . '/' . $dataResgate[1] . '/' . $dataResgate[0] ?>
+                        </p>
+                    </div>
+                    <div class="fotoPet">
+                        <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>"
+                            alt="Foto do pet <?= $pet['nome'] ?>">
+                    </div>
                 </div>
-                <fieldset class="Dados">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <label for="id">ID</label>
-                                    <input class="readonly" type="text" name="id" value=<?= $petId ?>
-                                        readonly="readonly">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class='emLinha'>
-                                        <label for="motivo">Qual motivo da exclusão?</label>
-                                        <select required name="motivo" id="motivo" onchange="mostrarInputDataObito()">
-                                            <option value=""></option>
-                                            <option value="obito">Óbito</option>
-                                            <option value="desaparecimento">Desaparecimento</option>
-                                            <option value="doacao">Doação por outro meio</option>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class='emLinha' id='divDataObito'></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="invisible invalido" id="dataError"></span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="centralizado">
-                        <tr>
-                            <td class="centralizado">
-                                <button class="btn" type="submit" id="enviar"
-                                    onclick="return confirm('Deseja mesmo excluir o pet?')">Salvar</button>
-                            </td>
-                            <td class="centralizado">
-                                <button class="btn" type="button"><a href="<?= BASEPATH ?>home">Cancelar</a></button>
-                            </td>
-                        </tr>
-                    </table>
-                </fieldset>
+                <div class="linhaDivisoria"></div>
+                <div>
+                    <div>
+                        <label for="id">ID</label>
+                        <input class="readonly" type="text" name="id" value=<?= $petId ?> readonly="readonly">
+                    </div>
+                    <div>
+                        <div class='emLinha motivo'>
+                            <label for="motivo">Qual motivo da exclusão?</label>
+                            <select required name="motivo" id="motivo" onchange="mostrarInputDataObito()">
+                                <option value=""></option>
+                                <option value="obito">Óbito</option>
+                                <option value="desaparecimento">Desaparecimento</option>
+                                <option value="doacao">Doação por outro meio</option>
+                            </select>
+                        </div>
+                        <div class='emLinha motivo' id='divDataObito'></div>
+                        <span class="invisible invalido" id="dataError"></span>
+                    </div>
+                </div>
+                <div class="emLinha botoes">
+                    <button class="btn" type="button"><a href="<?= BASEPATH ?>home">CANCELAR
+                        </a></button>
+                    <button class="btn excluir" type="submit" id="enviar"
+                        onclick="return confirm('Deseja mesmo excluir o pet?')">EXCLUIR</button>
+                </div>
             </form>
         </section>
     </main>

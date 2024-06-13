@@ -12,7 +12,7 @@
                 <p class="item-header">HOME</p>
             </a>
         </li>
-        <li>
+        <!-- <li>
             <a id="adote" class="header" href="<?= BASEPATH ?>adote" onclick="ativar(this.id)"><img class="img-header"
                     src="<?= BASEPATH ?>public/images/heart-outline.svg" alt="icone de coração">
                 <p class="item-header">ADOTE</p>
@@ -24,7 +24,7 @@
                     alt="icone de mão">
                 <p class="item-header">ONGs E PROTETORES</p>
             </a>
-        </li>
+        </li> -->
         <li>
             <a class="header" href="<?= BASEPATH ?>logout" onclick="ativar(this.id)"><img class="img-header"
                     src="<?= BASEPATH ?>public/images/log-out-outline.svg" alt="icone de logout">

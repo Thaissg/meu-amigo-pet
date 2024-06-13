@@ -209,7 +209,7 @@ class Pet
     }
 
 
-    public function atualizar(): void
+    public function atualizar(): string
     {
         $con = Database::getConnection();
         $stm = $con->prepare
@@ -276,6 +276,8 @@ class Pet
                 $stm->execute();
             }
         }
+
+        return $strDadosAtualizar;
     }
 
     public function excluir($dadosPost): void{

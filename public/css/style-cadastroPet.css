@@ -106,7 +106,7 @@ textarea, .detalhes{
 }
 
 section button, section a{
-    font-size: 2vw;
+    font-size: 15px;
     max-width: max-content;
     border-radius: 0;
     background-color: var(--second-bg-color);

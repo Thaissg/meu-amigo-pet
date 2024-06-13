@@ -1,0 +1,100 @@
+/* Variáveis -----------------------------------------*/
+:root {
+    --main-text-color: white;
+    --filtro-bg-color: #96E1E6;
+    --main-bg-color: #ffffff;
+    --nav-bg-color: #84b0b3;
+    --hover-color: beige;
+    --second-bg-color: #2B4E9A;
+    --carvao: #3a414a;
+    --nuvem: #f2f3f5;
+    --fumaça: #4c535d;
+    --nevoa: #ced4db;
+}
+
+section{
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    padding: 0 10px 0 10px;
+    margin-top: 5px;
+}
+
+section h1{
+    margin: 0;
+    font-size: 20px;
+    color: var(--second-bg-color);
+}
+
+section p, section label, section input, section select{
+    font-size: 15px;
+}
+
+div.pet{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+div.fotoPet{
+    width: 25%;
+    text-align: center;
+}
+
+div.info-pet{
+    width: 50%;
+    text-wrap: nowrap;
+}
+
+div.info-pet p{
+    margin: 3px;
+}
+
+img.foto-pet{
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+    max-height: max-content;
+}
+
+.readonly{
+    border: solid 1px var(--carvao);
+}
+
+div.motivo select, div.motivo input{
+    border: solid 1px var(--carvao);
+    background-color: var(--nevoa);
+}
+
+div.botoes{
+    display: flex;
+    justify-content: space-between;
+}
+
+button a:visited{
+    text-decoration: none;
+}
+
+button.btn, button a{
+    background-color: var(--second-bg-color);
+    color: var(--main-bg-color);
+    border-radius: 0;
+}
+
+button.btn{
+    padding: 5px;
+}
+
+button.excluir{
+    background-color: red;
+}
+
+@media (max-width: 956px) {
+    section p, section label, section input, section select{
+        font-size: 10px;
+    }
+
+    section h1{
+        font-size: 15px;
+    }
+}

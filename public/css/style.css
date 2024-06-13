@@ -232,7 +232,6 @@ form,
   display: flex;
   flex-direction: column;
   height: 100%;
-  /* align-items: center; */
 }
 
 div.filtro__form {
@@ -378,10 +377,6 @@ input.invalid {
 @media (max-width: 952px) {
   p {
     font-size: 12px;
-  }
-
-  .foto-pet {
-    /* max-width: 15vw; */
   }
 
   .cont2 {

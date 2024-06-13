@@ -58,7 +58,7 @@
           <div class='item-pet'>
             <div class="dadosPet">
               <div>
-                <p><?= strtoupper($pet['nome']) ?></p>
+                <p><?= mb_strtoupper($pet['nome'],'UTF-8') ?></p>
               </div>
               <div class='foto-pet'><img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>"
                   alt="Foto do pet <?= $pet['nome'] ?>"></div>
