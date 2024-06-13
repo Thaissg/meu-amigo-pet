@@ -1,7 +1,7 @@
 {
 	"name": "Meu amigo pet",
 	"short_name": "Meu amigo pet",
-	"start_url": "index.php",
+	"start_url": "/meu-amigo-pet/home",
 	"display": "standalone",
 	"background_color": "#0F67D1",
 	"theme_color": "#96E1E6",

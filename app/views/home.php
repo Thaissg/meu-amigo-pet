@@ -79,35 +79,9 @@ $pets = $stm->fetchAll();
         </div>
       </div>
       <div class="cont2">
-        <div class="filtro__form">
-          <form method="POST" class="filtro__form">
-            <div class="div-icone-funil">
-              <img class="icone-funil" src="<?= BASEPATH ?>public/images/funnel-outline.svg" alt="Icone de funil">
-            </div>
-            <div class="itens-form-filtro">
-              <div class="genero">
-                <label for="genero">GÊNERO: </label>
-                <select class="custom-select" name="genero" id="genero">
-                  <option value="">Selecione</option>
-                  <option value="M">Macho</option>
-                  <option value="F">Fêmea</option>
-                </select>
-              </div>
-              <div class="especie">
-                <label for="especie">ESPÉCIE: </label>
-                <select class="custom-select" name="especie" id="especie">
-                  <option value="">Selecione</option>
-                  <option value="Cachorro">Cachorro</option>
-                  <option value="Gato">Gato</option>
-                </select>
-              </div>
-
-            </div>
-
-            <button class="filtrar-btn" type="submit">FILTRAR</button>
-
-          </form>
-        </div>
+        <?php
+        include ('menuLateral.php');
+        ?>
 
         <div class='pets'>
           <?php
@@ -135,7 +109,8 @@ $pets = $stm->fetchAll();
             <div class='item-pet'>
               <div class='dadosPet'>
                 <div class="foto-pet">
-                <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>" alt="Foto do pet <?= $pet['nome'] ?>">
+                  <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>"
+                    alt="Foto do pet <?= $pet['nome'] ?>">
                 </div>
                 <div class='info-pet'>
                   <p>Gênero:
@@ -195,12 +170,12 @@ $pets = $stm->fetchAll();
                   ?>
                   <?= "<p>Resgatado a " . $idade . ' </p>' ?>
                   <p>Responsável:
-                    <?= explode(" ", $reponsavel['nome'])[0] ?>
+                    <?= $reponsavel['nome']?>
                   </p>
 
-                  <?php 
+                  <?php
                   if (isset($_SESSION['user'])) {
-                    echo("<button class='queroAdotar'><a class='queroAdotar' href='".BASEPATH."home'>QUERO ADOTAR!</a></button>");
+                    echo ("<button class='queroAdotar'><a class='queroAdotar' href='" . BASEPATH . "home'>QUERO ADOTAR!</a></button>");
                   }
                   ?>
                 </div>

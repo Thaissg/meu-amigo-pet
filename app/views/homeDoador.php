@@ -23,10 +23,9 @@
       ?>
     </div>
     <div class="container">
-      <div class="opcoes">
-        <a class="cadastrarPet" href="<?= BASEPATH ?>cadastroPet">CADASTRAR ANIMAL</a>
-        <!-- <div class="cadastrarPet"><a href="<?= BASEPATH ?>registrarDevolucao">REGISTRAR DEVOLUÇÃO</a></div> -->
-      </div>
+      <?php
+      include ('menuLateral.php');
+      ?>
 
       <div class='pets'>
         <?php
