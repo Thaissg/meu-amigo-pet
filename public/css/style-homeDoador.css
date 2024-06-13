@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* Variáveis -----------------------------------------*/
+:root {
+    --main-text-color: white;
+    --filtro-bg-color: #96E1E6;
+    --main-bg-color: #ffffff;
+    --nav-bg-color: #84b0b3;
+    --hover-color: beige;
+    --second-bg-color: #2B4E9A;
+    --carvao: #3a414a
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+}
+
+.opcoes {
+    background-color: var(--filtro-bg-color);
+    min-width: fit-content;
+    padding: 2%;
+    text-align: start;
+    margin-right: 2%;
+}
+
+a.cadastrarPet,
+a.cadastrarPet:visited {
+    color: var(--carvao);
+    padding: 0;
+    text-decoration: underline;
+    display: inline-block;
+}
+
+.item-pet {
+    display: flex;
+    text-align: start;
+    width: fit-content;
+    background-color: #dceaf6;
+    padding: 2%;
+    margin: 2%;
+    font-size: 22px;
+    height: auto;
+    flex-direction: column;
+}
+
+.opcoesPet {
+    display: flex;
+    justify-content: space-between;
+    padding: 5% 0 0 0;
+}
+
+.editarPet,
+.excluirPet {
+    margin: 2%;
+    padding: 2%;
+}
+
+a.editarPet,
+a.excluirPet {
+    display: flex;
+    align-items: center;
+    color: BLACK;
+}
+
+ion-icon.icone {
+    font-size: 3vw;
+}
+
+a.editarPet:visited,
+a.excluirPet:visited,
+a.registrarAdocao {
+    text-decoration: none;
+}
+
+.editarPet {
+    background-color: var(--filtro-bg-color);
+}
+
+.excluirPet {
+    background-color: #f2adad;
+}
+
+.dadosPet {
+    display: flex;
+    flex-direction: column;
+}
+
+img.foto-pet {
+    max-width: 80%;
+}
+
+div.foto-pet {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+}
+
+div.registrarAdocao {
+    background-color: var(--nav-bg-color);
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+a.registrarAdocao {
+    display: inline-block;
+    padding: 3%;
+    text-align: center;
+    color: black;
+}
+
+@media (max-width: 952px) {
+    .item-pet {
+        font-size: 12px;
+    }
+
+    div.container{
+        flex-direction: column;
+    }
+    .opcoes{
+        margin: 0;
+        font-size: 2vw;
+    }
+}
+
+@media (max-width: 446px) {
+    ion-icon.icone{
+        font-size: 5vw;
+    }
+}

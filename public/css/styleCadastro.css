@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* Variáveis -----------------------------------------*/
+:root {
+    --main-text-color: white;
+    --filtro-bg-color: #96E1E6;
+    --main-bg-color: #ffffff;
+    --nav-bg-color: #84b0b3;
+    --hover-color: beige;
+    --second-bg-color: #2B4E9A
+}
+
+/* Geral */
+p {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 0;
+}
+
+section {
+    padding: 5%;
+}
+
+section,
+p,
+label,
+input {
+    font-size: 1vw;
+}
+
+h1 {
+    font-size: 2vw;
+}
+
+p,
+h1 {
+    color: var(--second-bg-color);
+    font-weight: bold;
+}
+
+/* Form */
+form {
+    align-items: start;
+}
+
+.tipoCadastro,
+.dadosPessoais,
+.endereco,
+.senha {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    width: 100%;
+    vertical-align: middle;
+}
+
+label,
+.tipoCadastro input,
+.checkMostrarSenha input {
+    margin: 1% 1%;
+    vertical-align: middle;
+}
+
+input,
+.tipoCadastro label,
+.checkMostrarSenha label {
+    margin-right: 3%;
+    vertical-align: middle;
+}
+
+input,
+select {
+    border-radius: 0;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color: #2B4E9A;
+    background-color: #f2f3f5;
+    padding: 0.5%;
+}
+
+.dadosPessoais label,
+.endereco label {
+    display: inline-block;
+    width: 10%;
+}
+
+.dadosPessoais input,
+.endereco input,
+.endereco select {
+    display: inline-block;
+    width: 75%;
+    margin: 0.5%;
+}
+
+.tipoLogradouro label {
+    width: 15%;
+}
+
+.tipoLogradouro select {
+    width: 70%;
+}
+
+.checkMostrarSenha {
+    text-align: end;
+    width: 85%;
+    vertical-align: middle;
+    height: auto;
+}
+
+.checkMostrarSenha p {
+    color: red;
+}
+
+.senhaText label {
+    display: inline-block;
+    width: 13%;
+}
+
+.senhaText input {
+    display: inline-block;
+    width: 72%;
+    margin: 0.5%;
+}
+
+.btn {
+    display: flex;
+    width: 85%;
+    justify-content: flex-end;
+}
+
+button {
+    background-color: var(--second-bg-color);
+    border-radius: 0;
+    padding: 1%;
+}
+
+@media (max-width: 952px) {
+
+    section,
+    p,
+    label,
+    input,
+    select {
+        font-size: 1.5vw;
+    }
+
+    h1 {
+        font-size: 3vw;
+    }
+
+    .dadosPessoais label,
+    .endereco label {
+        width: 20%;
+    }
+
+    .dadosPessoais input,
+    .endereco input,
+    .endereco select {
+        width: 75%;
+    }
+
+    .tipoLogradouro label {
+        width: 25%;
+    }
+
+    .tipoLogradouro select {
+        width: 70%;
+    }
+
+    .senhaText label {
+        width: 30%;
+    }
+
+    .senhaText input {
+        width: 65%;
+    }
+}
+
+@media (max-width: 835px) {
+
+    section,
+    p,
+    label,
+    input,
+    select {
+        font-size: 2vw;
+    }
+
+    h1 {
+        font-size: 4vw;
+    }
+}

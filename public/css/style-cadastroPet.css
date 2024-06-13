@@ -1,0 +1,133 @@
+/* Variáveis -----------------------------------------*/
+:root {
+    --main-text-color: white;
+    --filtro-bg-color: #96E1E6;
+    --main-bg-color: #ffffff;
+    --nav-bg-color: #84b0b3;
+    --hover-color: beige;
+    --second-bg-color: #2B4E9A;
+    --carvao: #3a414a
+}
+
+h1{
+    color: var(--second-bg-color);
+    font-size: 3vw;
+}
+
+h2{
+    color: var(--second-bg-color);
+    font-size: 1.8vw;
+    margin-bottom: 2%;
+}
+
+section{
+    margin: 0 2% 0 2%;
+    width: max-content;
+    max-width: 100%;
+}
+
+section, form, div{
+    display: flex;
+    flex-direction: column;
+}
+
+form{
+    align-items: start;
+}
+
+section div{
+    display: flex;
+    align-items: start;
+    font-size: 1vw;
+}
+
+div.emLinha{
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: -webkit-fill-available;
+    align-items: center;
+}
+
+label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+input, select, textarea{
+    font-size: 1vw;
+    background-color: #ced4db;
+    border: solid 0.5px var(--second-bg-color);;
+}
+
+input#foto{
+    border: 0px;
+}
+
+section p{
+    color: red;
+    margin: 0;
+    font-size: 1.5vw;
+}
+
+div.linhaDivisoria{
+    margin: 2%;
+}
+
+div.doencas{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 2%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div.doencas .emLinha{
+    justify-content: normal;
+    min-width: 45%;
+}
+
+.historia{
+    width: 100%;
+}
+
+form.cadastroPet__form{
+    width: 100%;
+    padding-right: 3%;
+}
+
+.detalhes .emLinha, .detalhes label{
+    justify-content: normal;
+    align-items: center;
+}
+
+textarea, .detalhes{
+    width: 100%;
+}
+
+section button, section a{
+    font-size: 2vw;
+    max-width: max-content;
+    border-radius: 0;
+    background-color: var(--second-bg-color);
+    color: var(--main-bg-color);
+    padding: 1%;
+}
+
+section a:visited{
+    text-decoration: none;
+}
+
+@media (max-width: 952px){
+    h2{
+        font-size: 20px;
+    }
+
+    section div{
+        font-size: 10px;
+    }
+
+    input, select, textarea{
+        font-size: 10px;
+    }
+}

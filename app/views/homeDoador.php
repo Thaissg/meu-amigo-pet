@@ -4,6 +4,7 @@
 <head>
   <title>Meu amigo pet</title>
   <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style.css" />
+  <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style-homeDoador.css" />
   <?php
   include ('head.php');
   ?>
@@ -22,11 +23,11 @@
       ?>
     </div>
     <div class="container">
-      <div class="emLinha">
-        <div class="cadastrarPet"><a href="<?= BASEPATH ?>cadastroPet">Cadastrar pet</a></div>
-        <!-- <div class="cadastrarPet"><a href="<?= BASEPATH ?>registrarDevolucao">Registrar Devolução</a></div> -->
+      <div class="opcoes">
+        <a class="cadastrarPet" href="<?= BASEPATH ?>cadastroPet">CADASTRAR ANIMAL</a>
+        <!-- <div class="cadastrarPet"><a href="<?= BASEPATH ?>registrarDevolucao">REGISTRAR DEVOLUÇÃO</a></div> -->
       </div>
-      
+
       <div class='pets'>
         <?php
         use App\Database;
@@ -39,6 +40,7 @@
         foreach ($pets as $pet) {
           $foto = explode('/', $pet['foto']);
           $foto = $foto[count($foto) - 1];
+          $dataResgate = explode('-', $pet['dataResgate']);
           if ($foto == "") {
             $foto = 'foto_padrao.png';
           }
@@ -55,48 +57,44 @@
           ?>
           <div class='item-pet'>
             <div class="dadosPet">
-              <img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>" alt="Foto do pet <?= $pet['nome'] ?>">
-              <div class="icones">
-                <a href="<?= BASEPATH ?>editarPet?<?= $pet['id'] ?>"><ion-icon name="create"></ion-icon></a>
-                <a href="<?= BASEPATH ?>excluirPet?<?= $pet['id'] ?>"><ion-icon name="trash"></ion-icon></a>
+              <div>
+                <p><?= strtoupper($pet['nome']) ?></p>
               </div>
-              <p>Nome:
-                <?= $pet['nome'] ?>
-              </p>
-              <p>Gênero:
-                <?= $genero ?>
-              </p>
-              <p>Castrado:
-                <?= $castrado ?>
-              </p>
-              <?php
-              if ($pet['forneceCastracao'] != "") {
-                if ($pet['forneceCastracao'] == 'S') {
-                  $forneceCastracao = 'Sim';
-                } else {
-                  $forneceCastracao = 'Não';
-                }
-                ?>
-                <?= "<p>Fornece Castração: " . $forneceCastracao . ' </p>' ?>
-                <?php
-              }
-              ?>
-              <p>Espécie:
-                <?= $pet['especie'] ?>
-              </p>
-              <?php if ($pet['dataNascimento'] != "") { ?>
-                <?= "<p> Data de nacimento: " . $pet['dataNascimento'] . ' </p>' ?>
-              <?php } ?>
-              <p>Data do resgate:
-                <?= $pet['dataResgate'] ?>
-              </p>
-              <?php if ($pet['custoMensal'] != "") { ?>
-                <?= "<p> Custo mensal: " . $pet['custoMensal'] . ' </p>' ?>
-              <?php } ?>
-              <?php if ($pet['historia'] != "") { ?>
-                <?= "<p> História: " . $pet['historia'] . ' </p>' ?>
-              <?php } ?>
-              <div class="registrarAdocao"><a href="<?= BASEPATH ?>registrarAdocao?<?= $pet['id'] ?>">Registrar Adoção</a></div>
+              <div class='foto-pet'><img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>"
+                  alt="Foto do pet <?= $pet['nome'] ?>"></div>
+              <div class="opcoesPet">
+                <div>
+                  <a class="editarPet" href="<?= BASEPATH ?>editarPet?<?= $pet['id'] ?>"><ion-icon class="icone"
+                      name="create"></ion-icon>
+                    <p>EDITAR</p>
+                  </a>
+                </div>
+                <div>
+                  <a class="excluirPet" href="<?= BASEPATH ?>excluirPet?<?= $pet['id'] ?>"><ion-icon class="icone"
+                      name="trash"></ion-icon>
+                    <p>APAGAR</p>
+                  </a>
+                </div>
+              </div>
+              <div class="infoPet">
+                <p>Gênero:
+                  <?= $genero ?>
+                </p>
+                <p>Castrado:
+                  <?= $castrado ?>
+                </p>
+                <p>Espécie:
+                  <?= $pet['especie'] ?>
+                </p>
+                <p>Data do resgate:
+                  <?= $dataResgate[2] . '/' . $dataResgate[1] . '/' . $dataResgate[0] ?>
+                </p>
+              </div>
+              <div class="registrarAdocao">
+                <a class="registrarAdocao" href="<?= BASEPATH ?>registrarAdocao?<?= $pet['id'] ?>">
+                REGISTRAR ADOÇÃO
+                </a>
+              </div>
             </div>
           </div>
           <?php
@@ -105,8 +103,8 @@
       </div>
     </div>
   </main>
-  <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
-  <script src="<?= BASEPATH ?>public/js/app.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script><script src="<?= BASEPATH ?>public/js/app.js"></script>
   <script src="<?= BASEPATH ?>public/js/alertas.js"></script>
 </body>
 

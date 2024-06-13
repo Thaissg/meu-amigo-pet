@@ -4,6 +4,7 @@
 <head>
     <title>Meu amigo pet</title>
     <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style.css" />
+    <link rel="stylesheet" href="<?= BASEPATH ?>public/css/style-cadastroPet.css" />
     <?php
     include ('head.php');
     ?>
@@ -23,221 +24,123 @@
             ?>
         </div>
         <section id="form">
-            <h1 class="form__title">Cadastro</h1>
-
+            <h1>CADASTRO</h1>
             <form class="cadastroPet__form" id="cadastroPet__form" method="POST" enctype="multipart/form-data">
-                <fieldset class="Dados">
-                    <table>
-                        <tbody>
-                            <tr class="cadastroPet">
-                                <td>
-                                    <fieldset class="Gênero">
-                                        <table>
-                                            <tbody>
-                                                <legend>Gênero</legend>
-                                                <tr>
-                                                    <td><input required type="radio" name="genero" title="genero"
-                                                            value="M">
-                                                        <label for="genero">Macho</label>
-                                                    </td>
-                                                    <td><input required type="radio" name="genero" title="genero"
-                                                            value="F"><label for="genero">Fêmea</label></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </fieldset>
-                                </td>
-                            </tr>
-                            <tr class="cadastroPet">
-                                <td>
-                                    <fieldset class="Castrado">
-                                        <table>
-                                            <tbody>
-                                                <legend>Animal castrado?</legend>
-                                                <tr>
-                                                    <td><input required type="radio" name="castrado" title="castrado"
-                                                            value="S" onclick="mostrarForneceCastracao(this)">
+                <div>
+                    <h2>DADOS</h2>
+                    <div class="dados">
+                        <div>
+                            <div>GÊNERO</div>
+                            <div class="emLinha">
+                                <input required type="radio" name="genero" title="genero" value="M">
+                                <label for="genero">Macho</label>
+                                <input required type="radio" name="genero" title="genero" value="F">
+                                <label for="genero">Fêmea</label></td>
+                            </div>
+                        </div>
+                        <div>
+                            <div>CASTRADO</div>
+                            <div class="emLinha">
+                                <input required type="radio" name="castrado" title="castrado" value="S"
+                                    onclick="mostrarForneceCastracao(this)">
 
-                                                        <label for="castrado">Sim</label>
-                                                    </td>
-                                                    <td><input required type="radio" name="castrado" title="castrado"
-                                                            value="N" onclick="mostrarForneceCastracao(this)">
-                                                        <label for="castrado">Não</label>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </fieldset>
-                                    <fieldset id="forneceCastracao" class="invisible"></fieldset>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="nome">Nome/apelido</label>
-                                    <input required type="text" name="nome" id="nome">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="especie">Espécie</label>
-                                    <select required name="especie" id="especie">
-                                        <option value="">Espécie</option>
-                                        <option value="Cachorro">Cachorro</option>
-                                        <option value="Gato">Gato</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="dataNascimento">Data de nascimento (opcional)</label>
-                                    <input oninput="testarData()" type="date" name="dataNascimento" id="dataNascimento">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label for="dataResgate">Data do resgate</label>
-                                    <input required oninput="testarData()" type="date" name="dataResgate"
-                                        id="dataResgate">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="invisible invalido" id="dataError"></span>
-                                </td>
-                            </tr>
-
-                            <tr class="cadastroPet">
-                                <td>
-                                    <div class="emLinha">
-                                        <fieldset>
-                                            <table>
-                                                <tbody>
-                                                    <legend>Doenças em tratamento (opcional)</legend>
-                                                    <tr>
-                                                        <td>
-                                                            <div class='emLinha'>
-                                                                <input type="checkbox" name="doencas[]"
-                                                                    title="doencas[]"
-                                                                    value="Erlichiose (doença do carrapato)">
-                                                                <label for="doencas[]">Erlichiose (doença do
-                                                                    carrapato)</label>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class='emLinha'><input type="checkbox" name="doencas[]"
-                                                                    title="doencas[]" value="Insuficiência renal">
-                                                                <label for="doencas[]">Insuficiência renal</label>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class='emLinha'>
-                                                                <input type="checkbox" name="doencas[]"
-                                                                    title="doencas[]" value="Cinomose">
-                                                                <label for="doencas[]">Cinomose</label>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class='emLinha'>
-                                                                <input type="checkbox" name="doencas[]"
-                                                                    title="doencas[]" value="Leishmaniose">
-                                                                <label for="doencas[]">Leishmaniose</label>
-                                                            </div>
-                                                        </td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class='emLinha'>
-                                                                <input type="checkbox" name="doencas[]"
-                                                                    title="doencas[]" value="FIV">
-                                                                <label for="doencas[]">FIV</label>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class='emLinha'>
-                                                                <input type="checkbox" name="doencas[]"
-                                                                    title="doencas[]" value="FELV">
-                                                                <label for="doencas[]">FELV</label>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class='emLinha'>
-                                                                <input type="checkbox" name="doencas[]"
-                                                                    title="doencas[]" value="Raiva">
-                                                                <label for="doencas[]">Raiva</label>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class='emLinha'>
-                                                                <input type="checkbox" name="doencas[]"
-                                                                    title="doencas[]" value="Escabiose (Sarna)">
-                                                                <label for="doencas[]">Escabiose (Sarna)</label>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </fieldset>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label for="custoMensal">Custo Mensal (opcional) R$ </label>
-                                    <input type="text" size="12" onkeyup="mascaraMoeda(event)" name="custoMensal"
-                                        id="custoMensal">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="emLinha">
-                                        <label for="historia">História (opcional)</label>
-                                        <textarea name="historia" id="historia" cols="30" rows="10"
-                                            placeholder="Utilize este campo para descrever um pouco o resgate do pet e algumas características dele"></textarea>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="emLinha">
-                                        <label for="foto">Foto do pet (opcional)</label>
-                                        <input oninput="testarImg(), removerFotoAnterior('')" type="file" name="foto"
-                                            id="foto" accept="image/png, image/jpeg">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="invisible invalido" id="fotoError"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img class='foto-pet invisible' id='foto-pet' src=""
-                                        alt="Prévia da foto selecionada">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="centralizado">
-                        <tr>
-                            <td class="centralizado">
-                                <button class="btn" type="submit" id="enviar">Cadastrar</button>
-                            </td>
-                            <td class="centralizado">
-                                <button class="btn" type="button"><a href="<?= BASEPATH ?>home">Cancelar</a></button>
-                            </td>
-                        </tr>
-                    </table>
-                </fieldset>
+                                <label for="castrado">Sim</label>
+                                <input required type="radio" name="castrado" title="castrado" value="N"
+                                    onclick="mostrarForneceCastracao(this)">
+                                <label for="castrado">Não</label>
+                            </div>
+                        </div>
+                        <div id="forneceCastracao" class="invisible"></div>
+                        <div>
+                            <div class="emLinha">
+                                <label for="nome">NOME/APELIDO <p>*</p></label>
+                                <input required type="text" name="nome" id="nome">
+                            </div>
+                            <div class="emLinha">
+                                <label for="especie">ESPÉCIE <p>*</p></label>
+                                <select required name="especie" id="especie">
+                                    <option value="">SELECIONE</option>
+                                    <option value="Cachorro">CACHORRO</option>
+                                    <option value="Gato">GATO</option>
+                                </select>
+                            </div>
+                            <div class="emLinha">
+                                <label for="dataNascimento">DATA DE NASCIMENTO</label>
+                                <input oninput="testarData()" type="date" name="dataNascimento" id="dataNascimento">
+                            </div>
+                            <div class="emLinha">
+                                <label for="dataResgate">DATA DE RESGATE <p>*</p></label>
+                                <input required oninput="testarData()" type="date" name="dataResgate" id="dataResgate">
+                            </div>
+                            <span class="invisible invalido" id="dataError"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="linhaDivisoria"></div>
+                <div>
+                    <h2>DOENÇAS EM TRATAMENTO</h2>
+                    <div class="doencas">
+                        <div class="emLinha">
+                            <input type="checkbox" name="doencas[]" title="doencas[]"
+                                value="Erlichiose (doença do carrapato)">
+                            <label for="doencas[]">Erlichiose (doença do
+                                carrapato)</label>
+                        </div>
+                        <div class='emLinha'><input type="checkbox" name="doencas[]" title="doencas[]"
+                                value="Insuficiência renal">
+                            <label for="doencas[]">Insuficiência renal</label>
+                        </div>
+                        <div class='emLinha'>
+                            <input type="checkbox" name="doencas[]" title="doencas[]" value="Cinomose">
+                            <label for="doencas[]">Cinomose</label>
+                        </div>
+                        <div class='emLinha'>
+                            <input type="checkbox" name="doencas[]" title="doencas[]" value="Leishmaniose">
+                            <label for="doencas[]">Leishmaniose</label>
+                        </div>
+                        <div class='emLinha'>
+                            <input type="checkbox" name="doencas[]" title="doencas[]" value="FIV">
+                            <label for="doencas[]">FIV</label>
+                        </div>
+                        <div class='emLinha'>
+                            <input type="checkbox" name="doencas[]" title="doencas[]" value="FELV">
+                            <label for="doencas[]">FELV</label>
+                        </div>
+                        <div class='emLinha'>
+                            <input type="checkbox" name="doencas[]" title="doencas[]" value="Raiva">
+                            <label for="doencas[]">Raiva</label>
+                        </div>
+                        <div class='emLinha'>
+                            <input type="checkbox" name="doencas[]" title="doencas[]" value="Escabiose (Sarna)">
+                            <label for="doencas[]">Escabiose (Sarna)</label>
+                        </div>
+                        <div class='emLinha'>
+                            <label for="custoMensal">Custo Mensal (opcional) R$ </label>
+                            <input type="text" size="12" onkeyup="mascaraMoeda(event)" name="custoMensal"
+                                id="custoMensal">
+                        </div>
+                    </div>
+                </div>
+                <div class="linhaDivisoria"></div>
+                <div class="detalhes">
+                    <h2>DETALHES</h2>
+                    <div class="historia">
+                        <label for="historia">HISTÓRIA</label>
+                        <textarea name="historia" id="historia" cols="30" rows="10"
+                            placeholder="Descreva um pouco o resgate do pet e algumas características"></textarea>
+                    </div>
+                    <div class="emLinha">
+                        <label for="foto">FOTO</label>
+                        <input oninput="testarImg(), removerFotoAnterior('')" type="file" name="foto" id="foto"
+                            accept="image/png, image/jpeg">
+                    </div>
+                    <span class="invisible invalido" id="fotoError"></span>
+                    <img class='foto-pet invisible' id='foto-pet' src="" alt="Prévia da foto selecionada">
+                </div>
+                <div class="emLinha botoes">
+                    <button class="btn" type="submit" id="enviar">CADASTRAR</button>
+                    <button class="btn" type="button"><a href="<?= BASEPATH ?>home">CANCELAR</a></button>
+                </div>
             </form>
         </section>
     </main>

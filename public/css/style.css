@@ -45,6 +45,15 @@ h1 {
   display: none;
 }
 
+.linhaDivisoria {
+  background-color: var(--nav-bg-color);
+  height: 1px;
+  width: 98%;
+  align-self: center;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
 /* Body ------------------------------------------------*/
 .cont2 {
   display: flex;
@@ -75,12 +84,12 @@ select.custom-select {
 }
 
 .icon-pet {
-  height: 5rem;
+  height: 10vw;
 }
 
 .linha-divisoria-info {
-  height: 80%;
-  width: 0.1rem;
+  height: 15vw;
+  width: 1px;
   background-color: var(--filtro-bg-color);
 }
 
@@ -118,8 +127,9 @@ select.custom-select {
   width: 100%;
   background-color: var(--main-bg-color);
   height: 75%;
-  display: grid;
+  display: flex;
   justify-items: center;
+  flex-direction: column;
 }
 
 .item-container {
@@ -138,7 +148,7 @@ select.custom-select {
 
 .pets {
   display: flex;
-  min-width: 80%;
+  min-width: max-content;
   height: 100%;
   flex-direction: row;
   flex-wrap: wrap;
@@ -146,19 +156,17 @@ select.custom-select {
 }
 
 .item-pet {
-  width: 21%;
-  border-radius: 10px;
   background-color: #dceaf6;
-  padding: 2%;
-  margin: 2%;
+  padding: 3%;
+  margin: 3%;
   font-size: 16px;
   height: auto;
 }
 
 .foto-pet {
-  max-height: 12em;
+  max-height: 10em;
   border-radius: 10px;
-  max-width: 90%;
+  max-width: 30vw;
 }
 
 .dadosPet {
@@ -176,18 +184,6 @@ select.custom-select {
 
 p {
   margin: 3%;
-}
-
-.cadastrarPet,
-.registrarAdocao {
-  margin: 2%;
-  background-color: var(--header-bg-color);
-  min-width: fit-content;
-  padding: 2%;
-  border-radius: 5%;
-  border: solid black 1px;
-  display: flex;
-  align-items: end;
 }
 
 .cadastroPet {
@@ -216,15 +212,7 @@ ion-icon {
   align-content: center;
 }
 
-@media (max-width: 952px) {
-  .item-pet {
-    width: 29%;
-  }
 
-  p {
-    font-size: 12px;
-  }
-}
 
 a.cadastre-se {
   color: var(--header-bg-color)
@@ -243,7 +231,12 @@ form,
 .form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 100%;
+  /* align-items: center; */
+}
+
+div.filtro__form {
+  margin-right: 2%;
 }
 
 .itens-form-filtro {
@@ -320,8 +313,7 @@ button {
   color: #19ff00;
 }
 
-.mostrar-senha,
-.checkMostrarSenha {
+.mostrar-senha {
   height: 0.7rem;
   font-size: 0.7rem;
   vertical-align: top;
@@ -380,4 +372,61 @@ td {
 
 input.invalid {
   border-color: red;
+}
+
+
+@media (max-width: 952px) {
+  p {
+    font-size: 12px;
+  }
+
+  .foto-pet {
+    /* max-width: 15vw; */
+  }
+
+  .cont2 {
+    flex-direction: column;
+    align-content: end;
+  }
+
+  div.filtro__form,
+  form.filtro__form,
+  .itens-form-filtro {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    font-size: 2.5vw;
+    margin: 0;
+    justify-content: center;
+  }
+
+  form.filtro__form{
+  width: min-content;
+  }
+  
+  div.div-icone-funil{
+    padding: 0;
+  }
+
+  select.custom-select{
+    font-size: 2.5vw;
+  }
+
+  .filtrar-btn{
+    padding: 2%;
+    font-size: 2.5vw;
+  }
+}
+
+@media (max-width: 858px) {
+  p {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 335px) {
+  .foto-pet {
+    max-width: 30vw;
+  }
 }

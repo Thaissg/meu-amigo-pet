@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* Variáveis -----------------------------------------*/
+:root {
+    --main-text-color: white;
+    --filtro-bg-color: #96E1E6;
+    --main-bg-color: #ffffff;
+    --nav-bg-color: #84b0b3;
+    --hover-color: beige;
+    --second-bg-color: #2B4E9A;
+    --carvao: #3a414a
+}
+
+.pet {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+h1 {
+    font-size: 17px;
+    color: var(--second-bg-color);
+    font-weight: bold;
+}
+
+p.dado-pet, label {
+    color: var(--carvao);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 2%;
+}
+
+.div-foto-pet {
+    display: flex;
+    width: 50%;
+}
+
+.foto-pet {
+    max-width: 20vw;
+    max-height: fit-content;
+    margin: 0 10% 10% 0;
+    border-radius: 10px;
+    align-self: auto;
+}
+
+.dados-pet {
+    text-align: left;
+    width: 30%;
+}
+
+.preencher-cpf{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.emLinha{
+    text-align: start;
+}
+
+label{
+    min-width: fit-content;
+}
+
+input.readonly{
+    border-color: var(--carvao);
+    border-width: 1.5px;
+    border-style: solid;
+}
+
+input{
+    border-radius: 0;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color: #2B4E9A;
+    background-color: #f2f3f5;
+    padding: 0.5%;
+}
+
+.botoes{
+    display: flex;
+    justify-content: space-around;
+}
+
+button {
+    background-color: var(--second-bg-color);
+    border-radius: 0;
+    padding: 1%;
+    color: white;
+}
+
+button a:visited{
+    color: white;
+}
+
+@media (max-width: 952px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    p.dado-pet, label {
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width: 835px) {
+    h1 {
+        font-size: 15px;
+    }
+
+    p.dado-pet, label {
+        font-size: 10px;
+    }
+
+}
+
+@media (max-width: 565px) {
+    .dados-pet {
+        width: 50%;
+    }
+
+    .foto-pet {
+        max-width: -webkit-fill-available;
+        margin: 0 20% 20% 0;
+    }
+}

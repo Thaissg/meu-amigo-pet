@@ -1,6 +1,7 @@
 <?php
 // Define o basepath globalmente
 define('BASEPATH', '/meu-amigo-pet/');
+error_reporting(E_ALL ^ E_DEPRECATED);
 
 include_once __DIR__ . '/app/Database.php';
 include_once __DIR__ . '/libs/Route.php';

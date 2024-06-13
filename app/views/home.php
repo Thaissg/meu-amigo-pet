@@ -80,10 +80,10 @@ $pets = $stm->fetchAll();
       </div>
       <div class="cont2">
         <div class="filtro__form">
-          <div class="div-icone-funil">
-            <img class="icone-funil" src="<?= BASEPATH ?>public/images/funnel-outline.svg" alt="Icone de funil">
-          </div>
-          <form method="POST">
+          <form method="POST" class="filtro__form">
+            <div class="div-icone-funil">
+              <img class="icone-funil" src="<?= BASEPATH ?>public/images/funnel-outline.svg" alt="Icone de funil">
+            </div>
             <div class="itens-form-filtro">
               <div class="genero">
                 <label for="genero">GÊNERO: </label>
