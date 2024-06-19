@@ -32,7 +32,31 @@
         use App\Database;
 
         $con = Database::getConnection();
-        $stm = $con->prepare('SELECT * FROM pets WHERE idResponsavel = :idResponsavel AND disponivel = true;');
+        $filtro = '';
+        $filtros = [];
+        if (isset($_POST['genero'])) {
+          if ($_POST['genero'] != "") {
+            array_push($filtros, ' genero = \'' . $_POST['genero'] . '\'');
+          }
+        }
+
+        if (isset($_POST['especie'])) {
+          if ($_POST['especie'] != "") {
+            array_push($filtros, ' especie = \'' . $_POST['especie'] . '\'');
+          }
+        }
+
+        if (count($filtros) > 0) {
+          $filtro = ' AND';
+          foreach ($filtros as $filt) {
+            if ($filt == $filtros[0]) {
+              $filtro = $filtro . $filt;
+            } else {
+              $filtro = $filtro . ' AND' . $filt;
+            }
+          }
+        }
+        $stm = $con->prepare('SELECT * FROM pets WHERE idResponsavel = :idResponsavel AND disponivel = true' . $filtro . ';');
         $stm->bindValue(':idResponsavel', $_SESSION['user']->__get('id'));
         $stm->execute();
         $pets = $stm->fetchAll();
@@ -57,7 +81,7 @@
           <div class='item-pet'>
             <div class="dadosPet">
               <div>
-                <p><?= mb_strtoupper($pet['nome'],'UTF-8') ?></p>
+                <p><?= mb_strtoupper($pet['nome'], 'UTF-8') ?></p>
               </div>
               <div class='foto-pet'><img class='foto-pet' src="<?= BASEPATH ?>app/uploads/<?= $foto ?>"
                   alt="Foto do pet <?= $pet['nome'] ?>"></div>
@@ -91,7 +115,7 @@
               </div>
               <div class="registrarAdocao">
                 <a class="registrarAdocao" href="<?= BASEPATH ?>registrarAdocao?<?= $pet['id'] ?>">
-                REGISTRAR ADOÇÃO
+                  REGISTRAR ADOÇÃO
                 </a>
               </div>
             </div>
@@ -103,7 +127,8 @@
     </div>
   </main>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script><script src="<?= BASEPATH ?>public/js/app.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="<?= BASEPATH ?>public/js/app.js"></script>
   <script src="<?= BASEPATH ?>public/js/alertas.js"></script>
 </body>
 
