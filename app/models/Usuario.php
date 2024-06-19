@@ -302,7 +302,7 @@ class Usuario
             Obrigada por se cadastrar em nosso sistema!<br><br>
             Para que possamos liberar o seu cadastro, solicitamos a confirmação do e-mail clicando no link abaixo: <br><br>
             <a href='http://localhost/meu-amigo-pet/confirmarEmail?email=". $this->email ."&tipo=". $this->tipo."&chave=" . $this->chave . "'>Clique aqui</a><br><br>
-            Esta mensagem foi enviada a você por está cadastrado em nosso banco de dados. Não enviamos emails com arquivos anexados 
+            Esta mensagem foi enviada a você por estar cadastrado em nosso banco de dados. Não enviamos emails com arquivos anexados 
             ou solicitando preenchimento de senhas e informações cadastrais.<br><br>";
             $mail->AltBody = "Prezado (a) " . $this->nome . "\n\n
             Obrigada por se cadastrar em nosso sistema!\n\n
