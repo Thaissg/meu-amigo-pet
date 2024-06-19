@@ -31,11 +31,22 @@
           <div>
             <p>TIPO DE CADASTRO</p>
           </div>
+          <?php
+          if (isset($_GET["check"])){
+            $check = htmlspecialchars($_GET["check"]);
+          }
+          ?>
           <div>
-            <input required type="radio" name="tipo_cadastro" title="tipo_cadastro" value="adotante">
+            <input required type="radio" name="tipo_cadastro" title="tipo_cadastro" value="adotante" 
+            <?php if (isset($check) && ($check=="adotante")){ ?> 
+              <?="checked"?> 
+            <?php } ?>>
             <label for="tipo_cadastro">Adotante</label>
 
-            <input required type="radio" name="tipo_cadastro" title="tipo_cadastro" value="doador">
+            <input required type="radio" name="tipo_cadastro" title="tipo_cadastro" value="doador" 
+            <?php if (isset($check) && ($check=="doador")){ ?> 
+              <?="checked"?> 
+            <?php } ?>>
             <label for="tipo_cadastro">Doador</label>
           </div>
         </div>

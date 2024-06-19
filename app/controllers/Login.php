@@ -67,8 +67,12 @@ class LoginController extends Controller
         $usuario = Usuario::buscarUsuarioPorEmail($_POST['email'], $_POST['tipo_cadastro']);
 
         if ($usuario && $usuario->igual($_POST['email'], $_POST['password'])) {
-            $_SESSION['user'] = $this->loggedUser = $usuario;
-            header('Location: ' . BASEPATH . 'home?' . $usuario->__get('tipo') . '&mensagem=Usuário logado!');
+            if ($usuario ->__get('confEmail') == True){
+                $_SESSION['user'] = $this->loggedUser = $usuario;
+                header('Location: ' . BASEPATH . 'home?' . $usuario->__get('tipo') . '&mensagem=Usuário logado!');
+            } else {
+                header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Confirme seu email para logar!');
+            }
         } else {
             header('Location: ' . BASEPATH . 'login?email=' . $_POST['email'] . '&mensagem=Usuário e/ou senha incorreta!');
         }

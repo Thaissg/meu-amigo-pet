@@ -57,27 +57,35 @@ $pets = $stm->fetchAll();
       ?>
     </div>
     <div class="container">
-      <div class="cont1">
-        <div class="item-container">
-          <h3>ADOTE UM PET</h3>
-          <img class="icon-pet" src="<?= BASEPATH ?>public/images/icon-dog.png" alt="Icone de cachorro">
-          <p class="info">Conheça os pets que estão disponíveis para adoção, faça uma cadastro e adote um novo membro
-            para sua
-            família
-          </p>
-        </div>
+      <?php
+      if (!isset($_SESSION['user'])) {
+        ?>
+        <div class="cont1">
+          <div class="item-container">
+            <h3>ADOTE UM PET</h3>
+            <a href="<?= BASEPATH ?>cadastro?check=adotante"><img class="icon-pet"
+                src="<?= BASEPATH ?>public/images/icon-dog.png" alt="Icone de cachorro"></a>
+            <p class="info">Conheça os pets que estão disponíveis para adoção, faça uma cadastro e adote um novo membro
+              para sua
+              família
+            </p>
+          </div>
 
-        <div class="linha-divisoria-info"></div>
+          <div class="linha-divisoria-info"></div>
 
-        <div class="item-container">
-          <h3>PARA ONGs OU PROTETORES</h3>
-          <img class="icon-pet" src="<?= BASEPATH ?>public/images/icon-cat.png" alt="Icone de gato">
-          <p class="info">
-            Se você possui uma ONG ou realiza resgates faça um cadastro e registre o seu animalzinho. Podemos ajudar a
-            encontrar um lar para ele(a).
-          </p>
+          <div class="item-container">
+            <h3>PARA ONGs OU PROTETORES</h3>
+            <a href="<?= BASEPATH ?>cadastro?check=doador"><img class="icon-pet"
+                src="<?= BASEPATH ?>public/images/icon-cat.png" alt="Icone de gato"></a>
+            <p class="info">
+              Se você possui uma ONG ou realiza resgates faça um cadastro e registre o seu animalzinho. Podemos ajudar a
+              encontrar um lar para ele(a).
+            </p>
+          </div>
         </div>
-      </div>
+        <?php
+      }
+      ?>
       <div class="cont2">
         <?php
         include ('menuLateral.php');
@@ -170,7 +178,7 @@ $pets = $stm->fetchAll();
                   ?>
                   <?= "<p>Resgatado a " . $idade . ' </p>' ?>
                   <p>Responsável:
-                    <?= $reponsavel['nome']?>
+                    <?= $reponsavel['nome'] ?>
                   </p>
 
                   <?php
