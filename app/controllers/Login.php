@@ -362,13 +362,30 @@ class LoginController extends Controller
         } else {
             try {
                 $adotante = Usuario::buscarUsuarioPorDocumento($_POST['cpf-cnpj'], 'adotante');
-                $adocao = new Adocao($adotante->__get('id'), $_SESSION['user']->__get('id'), $_POST['id'], date("Y-m-d"));
+                $idAdotante = $adotante->__get('id');
+                $idDoador = $_SESSION['user']->__get('id');
+                $adocao = new Adocao($idAdotante, $idDoador, $_POST['id'], date("Y-m-d"));
                 $adocao->salvar();
                 header('Location: ' . BASEPATH . 'home?mensagem=Adoção registrada com sucesso!');
             } catch (\Exception $e) {
                 header('Location: ' . BASEPATH . 'home?' . $_POST['id'] . '&mensagem=' . $e->getMessage());
                 echo ($e->getMessage());
             }
+        }
+
+    }
+
+    public function queroadotar():void{
+        header('Location: ' . BASEPATH . 'home?mensagem=Enviado interesse de adoção!');
+        try {
+            $adotante = $_SESSION['user'];
+            $pet = Pet::buscarPetPorId($_POST['id']);
+            $doador = Usuario::buscarUsuarioPorId($pet->__get('idResponsavel'),'doador');
+            $adotante->eviaremailqueroadotar($pet, $doador);
+            header('Location: ' . BASEPATH . 'home?mensagem=Enviado interesse de adoção!');
+        } catch (\Exception $e) {
+            header('Location: ' . BASEPATH . 'home?' . $_POST['id'] . '&mensagem=' . $e->getMessage());
+            echo ($e->getMessage());
         }
 
     }

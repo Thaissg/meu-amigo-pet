@@ -110,7 +110,7 @@ function mostrarForneceCastracao(radio) {
     const forneceCast = document.getElementById("forneceCastracao");
     const table = "";
     if (radio.value == "N") {
-        forneceCast.innerHTML = "<table><tbody><legend>Fornece castração?</legend><tr><td><input required type='radio' name='forneceCastracao' title='forneceCastracao' value='S'></input><label for='forneceCastracao'>Sim</label></td><td><input required type='radio' name='forneceCastracao' title='forneceCastracao' value='N'></input><label for='forneceCastracao'>Não</label></td></tr></tbody></table>";
+        forneceCast.innerHTML = "<div>FORNECE CASTRAÇÃO?</div><div class='emLinha'><input required type='radio' name='forneceCastracao' title='forneceCastracao' value='S'></input><label for='forneceCastracao'>Sim</label><input required type='radio' name='forneceCastracao' title='forneceCastracao' value='N'></input><label for='forneceCastracao'>Não</label></div>";
         forneceCast.classList.remove("invisible");
     } else {
         forneceCast.classList.add("invisible");

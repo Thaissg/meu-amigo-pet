@@ -14,7 +14,9 @@ window.onload = function () {
     }
 
     if ('mensagem' in paramArray){
-        msg = decodeURIComponent(paramArray['mensagem'])
-        alert(msg)
+        msg = decodeURIComponent(paramArray['mensagem']);
+        alert(msg);
+        window.location.search = "";
+        console.log(window.location.search);
     }
 }

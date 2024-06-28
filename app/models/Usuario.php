@@ -301,13 +301,13 @@ class Usuario
             $mail->Body = "Prezado (a) " . $this->nome . ",<br><br>
             Obrigada por se cadastrar em nosso sistema!<br><br>
             Para que possamos liberar o seu cadastro, solicitamos a confirmação do e-mail clicando no link abaixo: <br><br>
-            <a href='http://localhost/meu-amigo-pet/confirmarEmail?email=". $this->email ."&tipo=". $this->tipo."&chave=" . $this->chave . "'>Clique aqui</a><br><br>
+            <a href='http://localhost/meu-amigo-pet/confirmarEmail?email=" . $this->email . "&tipo=" . $this->tipo . "&chave=" . $this->chave . "'>Clique aqui</a><br><br>
             Esta mensagem foi enviada a você por estar cadastrado em nosso banco de dados. Não enviamos emails com arquivos anexados 
             ou solicitando preenchimento de senhas e informações cadastrais.<br><br>";
             $mail->AltBody = "Prezado (a) " . $this->nome . "\n\n
             Obrigada por se cadastrar em nosso sistema!\n\n
             Para que possamos liberar o seu cadastro, solicitamos a confirmação do e-mail clicando no link abaixo: \n\n
-            'http://localhost/meu-amigo-pet/confirmarEmail?email=". $this->email ."&tipo=". $this->tipo."&chave=" . $this->chave . "' \n\n
+            'http://localhost/meu-amigo-pet/confirmarEmail?email=" . $this->email . "&tipo=" . $this->tipo . "&chave=" . $this->chave . "' \n\n
             Esta mensagem foi enviada a você por estar cadastrado em nosso banco de dados. Não enviamos emails com arquivos anexados 
             ou solicitando preenchimento de senhas e informações cadastrais.\n\n";
 
@@ -328,5 +328,45 @@ class Usuario
         $stm->bindValue(':tipo', $tipo);
         $stm->execute();
         header('Location: ' . BASEPATH . 'login?mensagem=Teste!');
+    }
+
+    public function eviaremailqueroadotar($pet, $doador): void
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            //Server settings
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->CharSet = "UTF-8";
+            $mail->isSMTP();
+            $mail->Host = 'sandbox.smtp.mailtrap.io';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'cc2790016b4e20';
+            $mail->Password = '301307f6b0f9d8';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 2525;
+
+            //Recipients
+            $mail->setFrom('thais@meu-amigo-pet.com.br', 'Mailer');
+            $mail->addAddress($doador->email);
+
+            //Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Interesse de adoção';
+            $mail->Body = "Prezado (a) " . $doador->nome . ",<br><br>
+            O adotante " . $this->nome . " está interessado em adotar o seu pet " . $pet->nome . " Entre em contato com ele pelo número " . $this->telefone . "<br><br>
+            Esta mensagem foi enviada a você por estar cadastrado em nosso banco de dados. Não enviamos emails com arquivos anexados 
+            ou solicitando preenchimento de senhas e informações cadastrais.<br><br>";
+            $mail->AltBody = "Prezado (a) " . $doador->nome . ",\n\n
+            Obrigada por se cadastrar em nosso sistema!\n\n
+            O adotante " . $this->nome . " está interessado em adotar o seu pet " . $pet->nome . " Entre em contato com ele pelo número " . $this->telefone . "\n\n
+            Esta mensagem foi enviada a você por estar cadastrado em nosso banco de dados. Não enviamos emails com arquivos anexados 
+            ou solicitando preenchimento de senhas e informações cadastrais.\n\n";
+
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
     }
 }

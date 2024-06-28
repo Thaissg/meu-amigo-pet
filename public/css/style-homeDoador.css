@@ -35,7 +35,7 @@ a.cadastrarPet:visited {
 .item-pet {
     display: flex;
     text-align: start;
-    width: fit-content;
+    min-width: fit-content;
     background-color: #dceaf6;
     padding: 2%;
     margin: 2%;
@@ -43,7 +43,13 @@ a.cadastrarPet:visited {
     height: auto;
     flex-direction: column;
     max-width: 35%;
-    height: min-content;
+    height: fit-content;
+    text-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.pets{
+    width: 100%;
 }
 
 .opcoesPet {
@@ -73,6 +79,7 @@ a.editarPet:visited,
 a.excluirPet:visited,
 a.registrarAdocao {
     text-decoration: none;
+    text-wrap: balance;
 }
 
 .editarPet {
@@ -86,13 +93,14 @@ a.registrarAdocao {
 .dadosPet {
     display: flex;
     flex-direction: column;
+    min-width: fit-content;
 }
 
 img.foto-pet {
-    max-width: 80%;
+    max-width: 100px;
     width: auto;
     height: auto;
-    max-height: 100%;
+    max-height: 100px;
 }
 
 div.foto-pet {

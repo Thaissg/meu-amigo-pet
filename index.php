@@ -50,7 +50,7 @@ Route::add('/cadastro', fn() => $controller->cadastrar(), ['post']);
 Route::add('/login', fn() => $controller->login(), ['post']);
 Route::add('/logout', fn() => $controller->sair(), ['get']);
 Route::add('/registrarAdocao', fn() => $controller->registrarAdocao(), ['post']);
-
+Route::add('/queroadotar', fn() => $controller->queroadotar(), ['post']);
 
 // Rota auxiliar para redirecionar o usuário.
 Route::add('/', function () {

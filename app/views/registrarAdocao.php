@@ -99,12 +99,21 @@
                     $stm->bindValue(':tipo', 'adotante');
                     $stm->execute();
                     $usuariosDoc = $stm->fetchAll();
+                    $strUsuariosDoc = "";
+                    for ($i=0; $i<count($usuariosDoc);$i++){
+                        $doc = $usuariosDoc[$i][0];
+                        if ($i == 0){
+                            $strUsuariosDoc = $strUsuariosDoc." '".$doc."'";
+                        }else{
+                            $strUsuariosDoc = $strUsuariosDoc.", '".$doc."'";
+                        }
+                    }
                     ?>
 
                     <div class='emLinha'>
                         <label for="adotante">CPF/CNPJ DO ADOTANTE</label>
                         <input required type="text" name="cpf-cnpj" id="cpf-cnpj" onkeyup="docMaskEvent(event)"
-                            onchange="testaDocumento(this.value,['<?= implode('\',\'', $usuariosDoc[0]) ?>'])">
+                            onchange="testaDocumento(this.value,[<?= $strUsuariosDoc ?>])">
                     </div>
 
                     <div id="validaDoc" class="alert invalido invisible"></div>

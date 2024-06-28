@@ -183,7 +183,11 @@ $pets = $stm->fetchAll();
 
                   <?php
                   if (isset($_SESSION['user'])) {
-                    echo ("<button class='queroAdotar'><a class='queroAdotar' href='" . BASEPATH . "home'>QUERO ADOTAR!</a></button>");
+                    ?>
+                    <button class='queroAdotar'><a class='queroAdotar' href="#"
+                        onclick="queroadotar(<?= $pet['id'] ?>,'<?= BASEPATH ?>queroadotar')">QUERO
+                        ADOTAR!</a></button>
+                    <?php
                   }
                   ?>
                 </div>
@@ -200,6 +204,7 @@ $pets = $stm->fetchAll();
   </main>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="<?= BASEPATH ?>public/js/queroadotar.js"></script>
   <script src="<?= BASEPATH ?>public/js/app.js"></script>
   <script src="<?= BASEPATH ?>public/js/alertas.js"></script>
 </body>
